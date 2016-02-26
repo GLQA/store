@@ -19,7 +19,7 @@ namespace Store.Demoqa
         private IWebDriver driver;
 
         /// <summary>
-        /// Start Firefox browser
+        /// Starts Firefox browser, opens site "http://store.demoqa.com/" and maximizes window
         /// Open site http://store.demoqa.com/
         /// </summary>
         [SetUp]
@@ -47,6 +47,9 @@ namespace Store.Demoqa
             Assert.AreEqual("Howdy, Qa29", header.HomePageUserName.Text);
         }
 
+        /// <summary>
+        /// Selects Product Category and verifying of content view
+        /// </summary>
         [Test]
         public void SelectCategoryTest()
         {
@@ -54,9 +57,12 @@ namespace Store.Demoqa
             Header header = new Header(this.driver);
             ContentContainer content = header.SelectProductCategory(productCategory);
             Assert.AreEqual(productCategory, content.PageHeader.Text);
-            Assert.That(content.defaultListView.Enabled);
+            Assert.That(content.DefaultListView.Enabled);
         }
 
+        /// <summary>
+        /// Selects product by index and adding it to the cart 
+        /// </summary>
         [Test]
         public void AddProductToCart()
         {
@@ -65,12 +71,12 @@ namespace Store.Demoqa
             Header header = new Header(this.driver);
             header.SelectProductCategory(productCategory);
             ContentContainer content = new ContentContainer(this.driver);
-            String prodTitle = content.GetProductTitle(productIndex);
+            string prodTitle = content.GetProductTitle(productIndex);
             AddToCartPopUp popUp = content.AddProductToTheCart(productIndex);
-            popUp.continueShoppingButton.Click();
-            driver.Navigate().Refresh();
+            popUp.ContinueShoppingButton.Click();
+            this.driver.Navigate().Refresh();
             Cart cart = header.GoToCart();
-            Assert.AreEqual(prodTitle, cart.firstProductInCart.Text);
+            Assert.AreEqual(prodTitle, cart.FirstProductInCart.Text);
         }
 
         /// <summary>

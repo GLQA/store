@@ -9,32 +9,33 @@ using OpenQA.Selenium.Support.PageObjects;
 
 namespace Store.Demoqa
 {
-    class LoginPage
+    /// <summary>
+    /// Login Page class
+    /// </summary>
+   public class LoginPage
     {
+        [FindsBy(How = How.Id, Using = "login")]
+        public IWebElement LoginButton;
+
         [FindsBy(How = How.Id, Using = "log")]
         private IWebElement userNameField;
 
         [FindsBy(How = How.Id, Using = "pwd")]
         private IWebElement passwordField;
 
-        [FindsBy(How = How.Id, Using = "login")]
-        public IWebElement loginButton;
-
-
         public LoginPage(IWebDriver driver)
         {
             PageFactory.InitElements(driver, this);
         }
 
-        public void SetUserName(String userName)
+        public void SetUserName(string userName)
         {
-            userNameField.SendKeys(userName);
+            this.userNameField.SendKeys(userName);
         }
 
-        public void SetPassword(String password)
+        public void SetPassword(string password)
         {
-            passwordField.SendKeys(password);
+            this.passwordField.SendKeys(password);
         }
-
     }
 }

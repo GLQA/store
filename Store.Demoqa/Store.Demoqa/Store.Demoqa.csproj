@@ -66,8 +66,10 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Pages\ContentContainer.cs" />
+    <Compile Include="Pages\Footer.cs" />
     <Compile Include="Pages\Header.cs" />
     <Compile Include="Pages\LoginPage.cs" />
+    <Compile Include="Pages\ProductDescriptionPage.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

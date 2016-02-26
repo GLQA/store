@@ -1,7 +1,8 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Support.PageObjects;
+using System;
 
 namespace Store.Demoqa
 {
@@ -9,12 +10,13 @@ namespace Store.Demoqa
     /// Store.Demoqa Tests
     /// </summary>
     [TestFixture]
-    public class Test
+    public class TestSuite
     {
+        private const string SITEURL = "http://store.demoqa.com/";
         /// <summary>
         /// driver declaration
         /// </summary>
-       private IWebDriver driver;
+        public static IWebDriver driver;
 
         /// <summary>
         /// Start Firefox browser
@@ -22,25 +24,48 @@ namespace Store.Demoqa
         [SetUp]
         public void Init()
         {
-            this.driver = new FirefoxDriver(); 
+            driver = new FirefoxDriver();
+            driver.Navigate().GoToUrl(SITEURL);
         }
 
-        /// <summary>
-        /// Open site http://store.demoqa.com/
-        /// </summary>
+
         [Test]
-        public void OpenSiteTest()
+        public void ProductContentVerification()
         {
-           this.driver.Navigate().GoToUrl("http://store.demoqa.com/");
+            Footer footer = new Footer(driver);
+            string firstProductTitle = footer.GetTitleText().TrimEnd('-', '.');
+            ProductDescriptionPage prodPage = footer.GoToRandomProduct();
+            StringAssert.StartsWith(firstProductTitle, prodPage.GetTitleText());
+            Assert.IsNotEmpty(prodPage.GetDescriptionText());
+            Assert.IsNotEmpty(prodPage.GetTextOfPeopleWhoBoughtSection());
         }
 
+        [Test]
+        public void SearchFunctionalityVerification()
+        {
+
+        }
+
+        [Test]
+        public void PictureEnlargementVerification()
+        {
+
+        }
+
+        [Test]
+        public void VerificationOfLikeFunctionality()
+        {
+
+        }
         /// <summary>
         /// Close current opened tab in browser
         /// </summary>
         [TearDown]
         public void Close()
         {
-            this.driver.Close();
+            driver.Quit();
         }
+
+        
     }
 }

@@ -9,32 +9,54 @@ using OpenQA.Selenium.Support.PageObjects;
 
 namespace Store.Demoqa
 {
-    class LoginPage
+    /// <summary>
+    /// Describes controls and methods on Login Page
+    /// </summary>
+    public class LoginPage
     {
+        /// <summary>
+        /// The login button
+        /// </summary>
+        [FindsBy(How = How.Id, Using = "login")]
+        public IWebElement LoginButton;
+
+        /// <summary>
+        /// The user name field
+        /// </summary>
         [FindsBy(How = How.Id, Using = "log")]
         private IWebElement userNameField;
 
+        /// <summary>
+        /// The password field
+        /// </summary>
         [FindsBy(How = How.Id, Using = "pwd")]
         private IWebElement passwordField;
 
-        [FindsBy(How = How.Id, Using = "login")]
-        public IWebElement loginButton;
-
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LoginPage"/> class.
+        /// </summary>
+        /// <param name="driver">The driver.</param>
         public LoginPage(IWebDriver driver)
         {
             PageFactory.InitElements(driver, this);
         }
 
-        public void SetUserName(String userName)
+        /// <summary>
+        /// Sets the name of the user.
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        public void SetUserName(string userName)
         {
-            userNameField.SendKeys(userName);
+            this.userNameField.SendKeys(userName);
         }
 
-        public void SetPassword(String password)
+        /// <summary>
+        /// Sets the password.
+        /// </summary>
+        /// <param name="password">The password.</param>
+        public void SetPassword(string password)
         {
-            passwordField.SendKeys(password);
+            this.passwordField.SendKeys(password);
         }
-
     }
 }

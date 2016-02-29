@@ -11,13 +11,13 @@ namespace Store.Demoqa
     /// Store.Demoqa Tests
     /// </summary>
     [TestFixture]
-    public class Test
+    public class TestSuite
     {
         /// <summary>
         /// driver declaration
         /// </summary>
         private IWebDriver driver;
-
+        private const string SITEURL = "http://store.demoqa.com/";
         /// <summary>
         /// Starts Firefox browser, opens site "http://store.demoqa.com/" and maximizes window
         /// Open site http://store.demoqa.com/
@@ -27,10 +27,38 @@ namespace Store.Demoqa
         {
             this.driver = new FirefoxDriver();
             this.driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
-            this.driver.Navigate().GoToUrl("http://store.demoqa.com/");
+            this.driver.Navigate().GoToUrl(SITEURL);
             this.driver.Manage().Window.Maximize();
         }
 
+        [Test]
+        public void ProductContentVerification()
+        {
+            Footer footer = new Footer(driver);
+            string firstProductTitle = footer.GetTitleText().TrimEnd('-', '.');
+            ProductDescriptionPage prodPage = footer.GoToRandomProduct();
+            StringAssert.StartsWith(firstProductTitle, prodPage.GetTitleText());
+            Assert.IsNotEmpty(prodPage.GetDescriptionText());
+            Assert.IsNotEmpty(prodPage.GetTextOfPeopleWhoBoughtSection());
+        }
+
+        [Test]
+        public void SearchFunctionalityVerification()
+        {
+
+        }
+
+        [Test]
+        public void PictureEnlargementVerification()
+        {
+
+        }
+
+        [Test]
+        public void VerificationOfLikeFunctionality()
+        {
+
+        }
         /// <summary>
         /// Valid login 
         /// </summary>
@@ -85,7 +113,7 @@ namespace Store.Demoqa
         [TearDown]
         public void Close()
         {
-            this.driver.Close();
+            this.driver.Quit();
         }
     }
 }

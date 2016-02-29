@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
+using System.Collections.Generic;
 
 namespace Store.Demoqa
 {
@@ -14,13 +15,31 @@ namespace Store.Demoqa
         }
 
         [FindsBy(How = How.CssSelector, Using = ".prodtitle")]
-        private IWebElement ProductTitle;
+        public IWebElement ProductTitle;
 
         [FindsBy(How = How.CssSelector, Using = ".product_description")]
-        private IWebElement ProductDescription;
+        public IWebElement ProductDescription;
+
+        [FindsBy(How = How.CssSelector, Using = ".product_image")]
+        public IList <IWebElement> ProdClosedImage;
 
         [FindsBy(How = How.CssSelector, Using = ".wpsc_also_bought.group")]
-        private IWebElement PeopleWhoBoughtThisItemSection;
+        public IWebElement PeopleWhoBoughtThisItemSection;
+
+        [FindsBy(How = How.CssSelector, Using = "#pp_full_res")]
+        public IWebElement ProdOpenedImage;
+
+        [FindsBy(How = How.CssSelector, Using = ".pp_next")]
+        public IWebElement NextImageArrow;
+
+        [FindsBy(How = How.CssSelector, Using = ".pp_expand")]
+        public IWebElement ExpandImageButton;
+
+        [FindsBy(How = How.CssSelector, Using = ".pluginCountTextDisconnected")]
+        public IWebElement FBLikesCounter;
+
+        [FindsBy(How = How.CssSelector, Using = ".pluginButtonLabel")]
+        public IWebElement FBLikeButton;
 
         public string GetTitleText()
         {
@@ -36,5 +55,12 @@ namespace Store.Demoqa
         {
             return PeopleWhoBoughtThisItemSection.Text;
         }
+
+        public void EnlargeImage()
+        {
+            ExpandImageButton.Click();
+        }
+
+
     }
 }

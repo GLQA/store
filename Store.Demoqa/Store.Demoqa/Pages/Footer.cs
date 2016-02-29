@@ -13,8 +13,8 @@ namespace Store.Demoqa
         private int randNumerOfProduct;
 
         [FindsBy(How = How.CssSelector, Using = ".group>li>a[title]:first-of-type")]
-        public IList <IWebElement> productsInFooter;
-        
+        public IList<IWebElement> productsInFooter;
+
         public Footer(IWebDriver driver)
         {
             PageFactory.InitElements(driver, this);
@@ -27,7 +27,7 @@ namespace Store.Demoqa
         public ProductDescriptionPage GoToRandomProduct()
         {
             productsInFooter[randNumerOfProduct].Click();
-            return new ProductDescriptionPage(driver);           
+            return new ProductDescriptionPage(driver);
         }
 
         public string GetTitleText()

@@ -1,6 +1,8 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
 using Store.Demoqa.Pages;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Store.Demoqa
 {
@@ -38,6 +40,17 @@ namespace Store.Demoqa
         /// </summary>
         [FindsBy(How = How.XPath, Using = ".//*[@id='default_products_page_container']")]
         public IWebElement Content;
+
+        [FindsBy(How = How.CssSelector, Using = ".prodtitle")]
+        public IList <IWebElement> FoundProducts;
+
+        [FindsBy(How = How.CssSelector, Using = ".featured_image>a[href]")]
+        public IWebElement HomeProdReference;
+
+        [FindsBy(How = How.CssSelector, Using = ".product_description>h2")]
+        public IWebElement HomeProdTitle;
+        
+
 
         /// <summary>
         /// The driver
@@ -86,5 +99,13 @@ namespace Store.Demoqa
         {
            return this.Content.FindElements(By.ClassName("productcol")).ElementAt(index);
         }
+
+        public ProductDescriptionPage GoToProdFromHomePage()
+        {
+            HomeProdReference.Click();
+            return new ProductDescriptionPage(driver);
+        }
+
+        
     }
 }

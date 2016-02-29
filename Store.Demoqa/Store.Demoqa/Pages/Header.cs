@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.PageObjects;
-using Store.Demoqa.Pages;
 
 namespace Store.Demoqa
 {
     /// <summary>
     /// The upper part of the site
     /// </summary>
-   public class Header
+    public class Header
     {
         /// <summary>
         /// My account button
@@ -69,10 +64,13 @@ namespace Store.Demoqa
         [FindsBy(How = How.XPath, Using = "//*[@id='menu-item-37']/a")]
         public IWebElement IPhonesMenuItem;
 
+        [FindsBy(How = How.CssSelector, Using = "#menu-item-15>a")]
+        public IWebElement HomeButton;
+
         /// <summary>
         /// The search field
         /// </summary>
-        [FindsBy(How = How.XPath, Using = ".//*[@id='main-nav']/form")]
+        [FindsBy(How = How.Name, Using = "s")]
         public IWebElement SearchField;
 
         /// <summary>
@@ -116,12 +114,14 @@ namespace Store.Demoqa
         /// Goes to cart.
         /// </summary>
         /// <returns></returns>
+        /// 
+        /*
         public Cart GoToCart()
         {
             this.CheckoutButton.Click();
             return new Cart(this.driver);
         }
-
+        */
         /// <summary>
         /// Gets the product.
         /// </summary>
@@ -142,6 +142,19 @@ namespace Store.Demoqa
                 default:
                     return null;
             }
+        }
+
+        public ContentContainer SetSearchValueAndSubmit(string searchValue)
+        {
+            SearchField.SendKeys(searchValue);
+            SearchField.SendKeys(Keys.Enter);
+            return new ContentContainer(driver);
+        }
+
+        public ContentContainer GoToHomePage()
+        {
+            HomeButton.Click();
+            return new ContentContainer(driver);
         }
     }
 }

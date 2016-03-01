@@ -3,7 +3,6 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using Store.Demoqa.Pages;
-using OpenQA.Selenium.Support.UI;
 using System.Drawing;
 
 namespace Store.Demoqa

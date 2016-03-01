@@ -73,7 +73,7 @@
     <Compile Include="Pages\LoginPage.cs" />
     <Compile Include="Pages\ProductDescriptionPage.cs" />
     <Compile Include="Pages\Products.cs" />
-    <Compile Include="Test.cs" />
+    <Compile Include="StoreTestSuite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

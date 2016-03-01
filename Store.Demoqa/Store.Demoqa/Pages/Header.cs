@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.PageObjects;
+using Store.Demoqa.Pages;
 
 namespace Store.Demoqa
 {
@@ -13,7 +14,7 @@ namespace Store.Demoqa
         /// <summary>
         /// My account button
         /// </summary>
-        [FindsBy(How = How.XPath, Using = ".//*[@id='account']/a")]
+        [FindsBy(How = How.CssSelector, Using = "#account>a")]
         public IWebElement MyAccountButton;
 
         /// <summary>
@@ -25,13 +26,13 @@ namespace Store.Demoqa
         /// <summary>
         /// The items button
         /// </summary>
-        [FindsBy(How = How.XPath, Using = ".//*[@class='count']")]
+        [FindsBy(How = How.CssSelector, Using = ".count")]
         public IWebElement ItemsButton;
 
         /// <summary>
         /// The logout button
         /// </summary>
-        [FindsBy(How = How.XPath, Using = ".//*[@id='account_logout'")]
+        [FindsBy(How = How.CssSelector, Using = "#account_logout")]
         public IWebElement LogoutButton;
 
         /// <summary>
@@ -43,7 +44,7 @@ namespace Store.Demoqa
         /// <summary>
         /// The product category tab
         /// </summary>
-        [FindsBy(How = How.XPath, Using = "//*[@id='menu-item-33']/a")]
+        [FindsBy(How = How.CssSelector, Using = "#menu-item-33>a")]
         public IWebElement ProductCategoryTab;
 
         /// <summary>
@@ -73,6 +74,9 @@ namespace Store.Demoqa
         [FindsBy(How = How.CssSelector, Using = "#menu-item-15>a")]
         public IWebElement HomeButton;
 
+        [FindsBy(How = How.Id, Using = "account_logout")]
+        private IWebElement logoutButton;
+
         /// <summary>
         /// The search field
         /// </summary>
@@ -91,7 +95,7 @@ namespace Store.Demoqa
         public Header(IWebDriver driver)
         {
             this.driver = driver;
-            PageFactory.InitElements(driver, this);   
+            PageFactory.InitElements(driver, this);
         }
 
         /// <summary>
@@ -120,14 +124,12 @@ namespace Store.Demoqa
         /// Goes to cart.
         /// </summary>
         /// <returns></returns>
-        /// 
-        /*
         public Cart GoToCart()
         {
             this.CheckoutButton.Click();
             return new Cart(this.driver);
         }
-        */
+
         /// <summary>
         /// Gets the product.
         /// </summary>

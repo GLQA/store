@@ -38,7 +38,7 @@ namespace Store.Demoqa
         /// <summary>
         /// The content
         /// </summary>
-        [FindsBy(How = How.XPath, Using = ".//*[@id='default_products_page_container']")]
+        [FindsBy(How = How.CssSelector, Using = "#default_products_page_container")]
         public IWebElement Content;
 
         [FindsBy(How = How.CssSelector, Using = ".prodtitle")]
@@ -50,8 +50,6 @@ namespace Store.Demoqa
         [FindsBy(How = How.CssSelector, Using = ".product_description>h2")]
         public IWebElement HomeProdTitle;
         
-
-
         /// <summary>
         /// The driver
         /// </summary>
@@ -96,16 +94,13 @@ namespace Store.Demoqa
         /// <returns></returns>
         public IWebElement GetProduct(int index)
         {
-             return this.Content.FindElements(By.ClassName("productcol")).ElementAt(index);
-           
+             return this.Content.FindElements(By.ClassName("productcol")).ElementAt(index);    
         }
 
         public ProductDescriptionPage GoToProdFromHomePage()
         {
             HomeProdReference.Click();
             return new ProductDescriptionPage(driver);
-        }
-
-        
+        }    
     }
 }

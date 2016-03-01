@@ -41,13 +41,13 @@ namespace Store.Demoqa
             PageFactory.InitElements(driver, this);
         }
 
-        //todo: clear and type
         /// <summary>
         /// Sets the name of the user.
         /// </summary>
         /// <param name="userName">Name of the user.</param>
         public void SetUserName(string userName)
         {
+            this.userNameField.Clear();
             this.userNameField.SendKeys(userName);
         }
 
@@ -57,6 +57,7 @@ namespace Store.Demoqa
         /// <param name="password">The password.</param>
         public void SetPassword(string password)
         {
+            this.passwordField.Clear();
             this.passwordField.SendKeys(password);
         }
     }

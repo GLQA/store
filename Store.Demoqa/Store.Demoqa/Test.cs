@@ -16,6 +16,12 @@ namespace Store.Demoqa
     {
         public string oneProduct = "magic mouse";
         public string multipleProducts = "iphone";
+        private string userNAme = "qa29";
+        private string password = "W0fucGsTDnVS";
+        private string expectedUserGreeting = "Howdy, Qa29";
+        private string productCategory = "iPhones";
+        private int productIndex = 0;
+
         private const string SITEURL = "http://store.demoqa.com/";
         /// <summary>
         /// driver declaration
@@ -86,28 +92,28 @@ namespace Store.Demoqa
             Assert.LessOrEqual(driver.WindowHandles.Count, 1);
         }
         /// <summary>
-        /// Valid login 
+        /// Login with valid data 
         /// </summary>
         [Test]
-        public void ValidLoginTest()
+        public void LoginVerification()
         {
             Login login = new Login(this.driver);
             Header header = new Header(this.driver);
             header.MyAccountButton.Click();
-            login.SetUserName("qa29");
-            login.SetPassword("W0fucGsTDnVS");
+            login.SetUserName(userNAme);
+            login.SetPassword(password);
             login.LoginButton.Click();
             this.driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
-            Assert.AreEqual("Howdy, Qa29", header.HomePageUserName.Text);
+            Assert.AreEqual(expectedUserGreeting, header.HomePageUserName.Text);
+            header.LogoutButton.Click();
         }
 
         /// <summary>
         /// Selects Product Category and verifying of content view
         /// </summary>
         [Test]
-        public void SelectCategoryTest()
+        public void SelectCategoryVerification()
         {
-            string productCategory = "iMacs";
             Header header = new Header(this.driver);
             ContentContainer content = header.SelectProductCategory(productCategory);
             Assert.AreEqual(productCategory, content.PageHeader.Text);
@@ -119,20 +125,17 @@ namespace Store.Demoqa
         /// </summary>
         
         [Test]
-        public void AddProductToCart()
+        public void AddProductToCartVerification()
         {
-            string productCategory = "iPhones";
-            int productIndex = 0;
             Header header = new Header(this.driver);
             ContentContainer content = header.SelectProductCategory(productCategory);
             string prodTitle = content.GetProductTitle(productIndex);
             AddToCartPopUp popUp = content.AddProductToTheCart(productIndex);
             popUp.ContinueShoppingButton.Click();
             this.driver.Navigate().Refresh();
-            string numberOfItemsAfterAdding = header.ItemsButton.Text;
-            Assert.AreEqual("1", numberOfItemsAfterAdding);
+            Assert.AreEqual("1", header.ItemsButton.Text);
             Cart cart = header.GoToCart();
-            Assert.AreEqual(prodTitle, cart.FirstProductInCart.Text);
+            Assert.AreEqual(prodTitle, cart.GetProductInCart(prodTitle));
         }
 
         /// <summary>

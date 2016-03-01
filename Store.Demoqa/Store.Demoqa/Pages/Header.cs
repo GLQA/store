@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.PageObjects;
+using Store.Demoqa.Pages;
 
 namespace Store.Demoqa
 {
@@ -121,13 +122,13 @@ namespace Store.Demoqa
         /// </summary>
         /// <returns></returns>
         /// 
-        /*
+        
         public Cart GoToCart()
         {
             this.CheckoutButton.Click();
             return new Cart(this.driver);
         }
-        */
+        
         /// <summary>
         /// Gets the product.
         /// </summary>

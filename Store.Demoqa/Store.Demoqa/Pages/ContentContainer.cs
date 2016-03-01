@@ -36,7 +36,7 @@ namespace Store.Demoqa
         /// The first product title
         /// </summary>
         [FindsBy(How = How.XPath, Using = ".//*[@class='prodtitle']/a")]
-        public IWebElement ProductTitle;
+        public IList <IWebElement> ProductTitle;
 
         /// <summary>
         /// The content
@@ -78,8 +78,7 @@ namespace Store.Demoqa
         /// <returns></returns>
         public string GetProductTitle(int index)
         {
-            var product = this.GetProduct(index);
-            return product.FindElement(By.XPath(".//*[@class='prodtitle']/a")).Text;
+            return ProductTitle[index].Text;
         }
 
         /// <summary>
@@ -89,7 +88,8 @@ namespace Store.Demoqa
         /// <returns></returns>
         public IWebElement GetProduct(int index)
         {
-           return this.Content.FindElements(By.ClassName("productcol")).ElementAt(index);
+             return this.Content.FindElements(By.ClassName("productcol")).ElementAt(index);
+           
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Store.Demoqa
     /// <summary>
     /// Describes controls and methods on Login Page
     /// </summary>
-    public class LoginPage
+    public class Login
     {
         /// <summary>
         /// The login button
@@ -33,14 +33,15 @@ namespace Store.Demoqa
         private IWebElement passwordField;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LoginPage"/> class.
+        /// Initializes a new instance of the <see cref="Login"/> class.
         /// </summary>
         /// <param name="driver">The driver.</param>
-        public LoginPage(IWebDriver driver)
+        public Login(IWebDriver driver)
         {
             PageFactory.InitElements(driver, this);
         }
 
+        //todo: clear and type
         /// <summary>
         /// Sets the name of the user.
         /// </summary>

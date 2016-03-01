@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.PageObjects;
@@ -26,6 +22,12 @@ namespace Store.Demoqa
         /// </summary>
         [FindsBy(How = How.XPath, Using = ".//*[@id='header_cart']/a/span[1]")]
         public IWebElement CheckoutButton;
+
+        /// <summary>
+        /// The items button
+        /// </summary>
+        [FindsBy(How = How.XPath, Using = ".//*[@class='count']")]
+        public IWebElement ItemsButton;
 
         /// <summary>
         /// The logout button

@@ -14,6 +14,9 @@ namespace Store.Demoqa
         /// <summary>
         /// Available product categories
         /// </summary>
-        Accessories, iMacs, iPads, iPhones
+        Accessories,
+        iMacs,
+        iPads,
+        iPhones
     }
 }

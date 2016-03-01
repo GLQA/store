@@ -37,7 +37,7 @@ namespace Store.Demoqa
         [Test]
         public void ValidLoginTest()
         {
-            LoginPage login = new LoginPage(this.driver);
+            Login login = new Login(this.driver);
             Header header = new Header(this.driver);
             header.MyAccountButton.Click();
             login.SetUserName("qa29");
@@ -66,15 +66,16 @@ namespace Store.Demoqa
         [Test]
         public void AddProductToCart()
         {
-            string productCategory = "iPads";
-            int productIndex = 1;
+            string productCategory = "iPhones";
+            int productIndex = 0;
             Header header = new Header(this.driver);
-            header.SelectProductCategory(productCategory);
-            ContentContainer content = new ContentContainer(this.driver);
+            ContentContainer content = header.SelectProductCategory(productCategory);
             string prodTitle = content.GetProductTitle(productIndex);
             AddToCartPopUp popUp = content.AddProductToTheCart(productIndex);
             popUp.ContinueShoppingButton.Click();
             this.driver.Navigate().Refresh();
+            string numberOfItemsAfterAdding = header.ItemsButton.Text;
+            Assert.AreEqual("1", numberOfItemsAfterAdding);
             Cart cart = header.GoToCart();
             Assert.AreEqual(prodTitle, cart.FirstProductInCart.Text);
         }

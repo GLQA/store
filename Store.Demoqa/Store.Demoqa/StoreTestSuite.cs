@@ -12,7 +12,7 @@ namespace Store.Demoqa
     /// Store.Demoqa Tests
     /// </summary>
     [TestFixture]
-    public class TestSuite
+    public class StoreTestSuite
     {
         public string oneProduct = "magic mouse";
         public string multipleProducts = "iphone";
@@ -51,6 +51,7 @@ namespace Store.Demoqa
             Header header = new Header(driver);
             ContentContainer searchResultsForOneProd = header.SetSearchValueAndSubmit(oneProduct);
             StringAssert.AreEqualIgnoringCase(searchResultsForOneProd.FoundProducts[0].Text, oneProduct);
+            //can't check this for multiple products, because search results contain product that does not correspond to request
             Assert.AreEqual(searchResultsForOneProd.FoundProducts.Count, 1);
             ContentContainer searchResultsForMultipleProd = header.SetSearchValueAndSubmit(multipleProducts);
             Assert.Greater(searchResultsForMultipleProd.FoundProducts.Count, 1);
@@ -59,16 +60,18 @@ namespace Store.Demoqa
         [Test]
         public void PictureEnlargementVerification()
         {
+            //how should I varify "image itself"?
+            //there is no product name on each image(prod must be hardcoded)
             Header header = new Header(driver);
             ContentContainer homeContainer = header.GoToHomePage();
             string firstHomeProdTitle = homeContainer.HomeProdTitle.Text;
             ProductDescriptionPage product = homeContainer.GoToProdFromHomePage();
             StringAssert.AreEqualIgnoringCase(product.GetTitleText(), firstHomeProdTitle);
-            product.ProdClosedImage[0].Click();
-            Assert.IsNotNull(product.ProdOpenedImage);
+            product.ProdRegularImage.Click();
+            Assert.IsTrue(product.ProdOpenedImage.Displayed);
             Size regularSize = product.ProdOpenedImage.Size;
             product.NextImageArrow.Click();
-            Assert.IsNotNull(product.ProdOpenedImage);
+            Assert.IsTrue(product.ProdOpenedImage.Displayed);
             //product.EnlargeImage();
             Size enlargedSize = product.ProdOpenedImage.Size;
             Assert.Greater(enlargedSize.Height, regularSize.Height);

@@ -21,12 +21,12 @@ namespace Store.Demoqa
         public IWebElement ProductDescription;
 
         [FindsBy(How = How.CssSelector, Using = ".product_image")]
-        public IList <IWebElement> ProdClosedImage;
+        public IList <IWebElement> ProdPageImages;
 
         [FindsBy(How = How.CssSelector, Using = ".wpsc_also_bought.group")]
         public IWebElement PeopleWhoBoughtThisItemSection;
 
-        [FindsBy(How = How.CssSelector, Using = "#pp_full_res")]
+        [FindsBy(How = How.CssSelector, Using = "#fullResImage")]
         public IWebElement ProdOpenedImage;
 
         [FindsBy(How = How.CssSelector, Using = ".pp_next")]
@@ -40,6 +40,11 @@ namespace Store.Demoqa
 
         [FindsBy(How = How.CssSelector, Using = ".pluginButtonLabel")]
         public IWebElement FBLikeButton;
+
+        public IWebElement ProdRegularImage
+        {
+            get { return ProdPageImages[0]; }
+        }
 
         public string GetTitleText()
         {

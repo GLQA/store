@@ -65,6 +65,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Pages\Cart.cs" />
     <Compile Include="Pages\Footer.cs" />
     <Compile Include="Pages\AddToCartPopUp.cs" />
     <Compile Include="Pages\ContentContainer.cs" />

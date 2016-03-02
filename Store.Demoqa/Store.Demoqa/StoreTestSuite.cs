@@ -4,6 +4,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using Store.Demoqa.Pages;
 using System.Drawing;
+using System.Collections.Generic;
 
 namespace Store.Demoqa
 {
@@ -22,6 +23,35 @@ namespace Store.Demoqa
         private string productToCheckImageEnlargement = "Skullcandy";
         private int productIndex = 0;
         private HomePage homePage;
+        public class DataSetForSearchFunctionalityVerification
+        {
+            public string ValueToSearch { get; set; }
+            public int ExpectedNumberOfFoundProducts { get; set; }
+        }
+        public static IEnumerable<object[]> ProductsForSearch()
+        {
+            return new[]
+            {
+                new object[]
+                {
+                    "Verification of ability to find one product as search result",
+                    new DataSetForSearchFunctionalityVerification()
+                    {
+                        ValueToSearch = "magic mouse",
+                        ExpectedNumberOfFoundProducts = 1
+                    }
+                },
+                new object[]
+                {
+                    "Verification of ability to find more than one product as search result",
+                    new DataSetForSearchFunctionalityVerification()
+                    {
+                        ValueToSearch = "iphone 4",
+                        ExpectedNumberOfFoundProducts = 2
+                    }
+                }
+            };
+        }
 
         private const string SITEURL = "http://store.demoqa.com/";
         /// <summary>
@@ -74,31 +104,26 @@ namespace Store.Demoqa
         /// Verification of Search results: search of 'magic mouse' must return 1 product and search of 'iphone 4' nust return two items 
         /// </summary>
         //TODO: maintain data-driven - Maryna
-        [Test]
-        public void SearchResultsVerification()
+        [Test, TestCaseSource("ProductsForSearch")]
+        public void SearchResultsVerification(string iterationName, DataSetForSearchFunctionalityVerification dataSet )
         {
-            SearchResultsPage searchResults = homePage.header.TypeSearchValueAndSubmit(productTitleThatGivesOneSearchResult);
-            CheckThatOnlyRequiredProductWasFound(searchResults.FirstFoundProductTitle, productTitleThatGivesOneSearchResult);
-            CheckThatOneProductWasFound(searchResults.FoundProducts.Count);
-
-            //TODO: hardcode products(magic mouse and iphone 4)
-            //TODO: for multiple: StringAssert.AreEqualIgnoringCase(contentContainer.FoundProducts[0].Text, productTitleThatGivesOneSearchResult); - Maryna
-            searchResults = homePage.header.TypeSearchValueAndSubmit(prodNameThatGivesSeveralSearchResult);
+            SearchResultsPage searchResults = homePage.header.TypeSearchValueAndSubmit(dataSet.ValueToSearch);
+            CheckThatOnlyRequiredProductsWereFound(searchResults.FirstFoundProductTitle, dataSet.ValueToSearch);
+            CheckThatExpectedProductsNumberWasFound(dataSet.ExpectedNumberOfFoundProducts);
+            List<string> listOfFoundProductsTitles = searchResults.GetFoundProductsTitles();
+            foreach (string prodTitle in listOfFoundProductsTitles)
+                StringAssert.Contains(dataSet.ValueToSearch, prodTitle);
         }
 
-        private static void CheckThatOneProductWasFound(int foundProductsNumber)
+        private static void CheckThatExpectedProductsNumberWasFound(int foundProductsNumber)
         {
             Assert.AreEqual(foundProductsNumber, 1);
         }
 
-        private void CheckThatOnlyRequiredProductWasFound(string foundProductTitle, string requiredProductTitle)
+        private void CheckThatOnlyRequiredProductsWereFound(string foundProductTitle, string requiredProductTitle)
         {
+            
             StringAssert.AreEqualIgnoringCase(foundProductTitle, requiredProductTitle);
-        }
-
-        private void CheckSeveralRequiredProductsWereFound(List foundProducts, string requiredProductTitle)
-        {
-            //StringAssert.AreEqualIgnoringCase(foundProductTitle, requiredProductTitle);
         }
 
         /// <summary>
@@ -108,8 +133,6 @@ namespace Store.Demoqa
         public void PictureEnlargementVerification()
         {
             //TODO: check image md5 - Maryna
-
-            //TODO: there is no product name on each image(prod must be hardcoded) - Maryna
             ProductDescriptionPage product = homePage.header.FindProductAndGoToTheFirst(productToCheckImageEnlargement);
             StringAssert.AreEqualIgnoringCase(product.ProductTitleText, productToCheckImageEnlargement); 
             product.ProductRegularImage.Click();

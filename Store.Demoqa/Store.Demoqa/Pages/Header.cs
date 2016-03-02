@@ -152,7 +152,7 @@ namespace Store.Demoqa
             }
         }
 
-        public ContentContainer SetSearchValueAndSubmit(string searchValue)
+        public ContentContainer TypeSearchValueAndSubmit(string searchValue)
         {
             SearchField.SendKeys(searchValue);
             SearchField.SendKeys(Keys.Enter);

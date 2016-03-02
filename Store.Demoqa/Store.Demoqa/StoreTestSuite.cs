@@ -13,8 +13,8 @@ namespace Store.Demoqa
     [TestFixture]
     public class StoreTestSuite
     {
-        public string oneProduct = "magic mouse";
-        public string multipleProducts = "iphone";
+        private string prodNameThatGivesOneSearchResult = "magic mouse";
+        private string prodNameThatGivesSeveralSearchResult = "iphone 4";
         private string userNAme = "qa29";
         private string password = "W0fucGsTDnVS";
         private string expectedUserGreeting = "Howdy, Qa29";
@@ -39,34 +39,69 @@ namespace Store.Demoqa
             this.driver.Manage().Window.Maximize();
         }
 
+
         [Test]
         public void ProductContentVerification()
         {
+            //TODO: remove 'driver' parameter from constructors
+            //TODO: create page structure(reorganize 'Pages' folder)
             Footer footer = new Footer(driver);
-            string firstProductTitle = footer.GetTitleText().TrimEnd('-', '.');
+            //TODO: I want to understand, after several month, what I am doing here...why? 
+            string randomProductTitle = footer.GetRandomProdTitleText().TrimEnd('-', '.');
             ProductDescriptionPage prodPage = footer.GoToRandomProduct();
-            StringAssert.StartsWith(firstProductTitle, prodPage.GetTitleText());
+
+
+
+
+            // Check that product title equals to opened
+            StringAssert.StartsWith(randomProductTitle, prodPage.GetTitleText());
+            // Check that descriptiona section is not empty
             Assert.IsNotEmpty(prodPage.GetDescriptionText());
+            // Check that PeopleWhoBought section is not empty
+            Assert.IsNotEmpty(prodPage.GetTextOfPeopleWhoBoughtSection());
+
+            
+
+            CheckProductTitleEqualsToOpened(randomProductTitle, prodPage);
+            CheckDescriptionSectionIsNotEmpty(prodPage);
+            CheckPeopleWhoBoughtSectionIsNotEmpty(prodPage);
+        }
+        //TODO:make methods from assertions and put them after each test
+        private static void CheckProductTitleEqualsToOpened(string randomProductTitle, ProductDescriptionPage prodPage)
+        {
+            StringAssert.StartsWith(randomProductTitle, prodPage.GetTitleText());
+        }
+
+        private static void CheckDescriptionSectionIsNotEmpty(ProductDescriptionPage prodPage)
+        {
+            Assert.IsNotEmpty(prodPage.GetDescriptionText());
+        }
+
+        private static void CheckPeopleWhoBoughtSectionIsNotEmpty(ProductDescriptionPage prodPage)
+        {
             Assert.IsNotEmpty(prodPage.GetTextOfPeopleWhoBoughtSection());
         }
 
+        //TODO: maintain data-driven
         [Test]
-        public void SearchFunctionalityVerification()
+        public void SearchResultsVerification()
         {
             Header header = new Header(driver);
-            ContentContainer searchResultsForOneProd = header.SetSearchValueAndSubmit(oneProduct);
-            StringAssert.AreEqualIgnoringCase(searchResultsForOneProd.FoundProducts[0].Text, oneProduct);
+            ContentContainer contentContainer = header.TypeSearchValueAndSubmit(prodNameThatGivesOneSearchResult);
+            //TODO: extract method from contentContainer.FoundProducts[0].Text
+            StringAssert.AreEqualIgnoringCase(contentContainer.FoundProducts[0].Text, prodNameThatGivesOneSearchResult);
             //can't check this for multiple products, because search results contain product that does not correspond to request
-            Assert.AreEqual(searchResultsForOneProd.FoundProducts.Count, 1);
-            ContentContainer searchResultsForMultipleProd = header.SetSearchValueAndSubmit(multipleProducts);
-            Assert.Greater(searchResultsForMultipleProd.FoundProducts.Count, 1);
+            Assert.AreEqual(contentContainer.FoundProducts.Count, 1);
+            //TODO: for multiple: StringAssert.AreEqualIgnoringCase(contentContainer.FoundProducts[0].Text, prodNameThatGivesOneSearchResult);
+            contentContainer = header.TypeSearchValueAndSubmit(prodNameThatGivesSeveralSearchResult);
         }
 
         [Test]
         public void PictureEnlargementVerification()
         {
             //how should I varify "image itself"?
-            //there is no product name on each image(prod must be hardcoded)
+            //TODO: check image md5 
+            //TODO: there is no product name on each image(prod must be hardcoded)
             Header header = new Header(driver);
             ContentContainer homeContainer = header.GoToHomePage();
             string firstHomeProdTitle = homeContainer.HomeProdTitle.Text;

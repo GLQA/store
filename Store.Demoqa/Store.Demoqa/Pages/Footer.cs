@@ -10,7 +10,7 @@ namespace Store.Demoqa
     {
         private IWebDriver driver;
         private int numberOfProducts;
-        private int randNumerOfProduct;
+        private int randNumberOfProduct;
 
         [FindsBy(How = How.CssSelector, Using = ".group>li>a[title]:first-of-type")]
         public IList<IWebElement> productsInFooter;
@@ -21,18 +21,19 @@ namespace Store.Demoqa
             this.driver = driver;
             //productsInFooter = driver.FindElements(products);
             int numberOfProducts = productsInFooter.Count;
-            randNumerOfProduct = (new Random()).Next(0, numberOfProducts);
+            //TODO: move to property(return in get)
+            randNumberOfProduct = (new Random()).Next(0, numberOfProducts);
         }
 
         public ProductDescriptionPage GoToRandomProduct()
         {
-            productsInFooter[randNumerOfProduct].Click();
+            productsInFooter[randNumberOfProduct].Click();
             return new ProductDescriptionPage(driver);
         }
 
-        public string GetTitleText()
+        public string GetRandomProdTitleText()
         {
-            return productsInFooter[randNumerOfProduct].Text;
+            return productsInFooter[randNumberOfProduct].Text;
         }
     }
 }

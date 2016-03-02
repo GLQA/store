@@ -21,7 +21,7 @@ namespace Store.Demoqa
             this.driver = driver;
             //productsInFooter = driver.FindElements(products);
             int numberOfProducts = productsInFooter.Count;
-            //TODO: move to property(return in get)
+            //TODO: move to property(return in get) - Maryna
             randNumberOfProduct = (new Random()).Next(0, numberOfProducts);
         }
 

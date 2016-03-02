@@ -44,10 +44,10 @@ namespace Store.Demoqa
         [Test]
         public void ProductContentVerification()
         {
-            //TODO: remove 'driver' parameter from constructors
-            //TODO: create page structure(reorganize 'Pages' folder)
+            //TODO: 1. remove 'driver' parameter from constructors - make it as singleton - Yuliia
+            //TODO: 1. create page structure(reorganize 'Pages' folder): BasePage contains Header and Footer , all other pages are inherited from BasePage - Maryna
             Footer footer = new Footer(driver);
-            //TODO: I want to understand, after several month, what I am doing here...why? 
+            //TODO: I want to understand, after several month, what I am doing here...why? - Maryna
             string randomProductTitle = footer.GetRandomProdTitleText().TrimEnd('-', '.');
             ProductDescriptionPage prodPage = footer.GoToRandomProduct();
 
@@ -67,7 +67,7 @@ namespace Store.Demoqa
             CheckDescriptionSectionIsNotEmpty(prodPage);
             CheckPeopleWhoBoughtSectionIsNotEmpty(prodPage);
         }
-        //TODO:make methods from assertions and put them after each test
+        //TODO: 2. make methods from assertions and put them after each test - Maryna and Yuliia
         private static void CheckProductTitleEqualsToOpened(string randomProductTitle, ProductDescriptionPage prodPage)
         {
             StringAssert.StartsWith(randomProductTitle, prodPage.GetTitleText());
@@ -83,26 +83,25 @@ namespace Store.Demoqa
             Assert.IsNotEmpty(prodPage.GetTextOfPeopleWhoBoughtSection());
         }
 
-        //TODO: maintain data-driven
+        //TODO: maintain data-driven - Maryna
         [Test]
         public void SearchResultsVerification()
         {
             Header header = new Header(driver);
             ContentContainer contentContainer = header.TypeSearchValueAndSubmit(prodNameThatGivesOneSearchResult);
-            //TODO: extract method from contentContainer.FoundProducts[0].Text
+            //TODO: extract method from contentContainer.FoundProducts[0].Text - Maryna
             StringAssert.AreEqualIgnoringCase(contentContainer.FoundProducts[0].Text, prodNameThatGivesOneSearchResult);
             //can't check this for multiple products, because search results contain product that does not correspond to request
             Assert.AreEqual(contentContainer.FoundProducts.Count, 1);
-            //TODO: for multiple: StringAssert.AreEqualIgnoringCase(contentContainer.FoundProducts[0].Text, prodNameThatGivesOneSearchResult);
+            //TODO: for multiple: StringAssert.AreEqualIgnoringCase(contentContainer.FoundProducts[0].Text, prodNameThatGivesOneSearchResult); - Maryna
             contentContainer = header.TypeSearchValueAndSubmit(prodNameThatGivesSeveralSearchResult);
         }
 
         [Test]
         public void PictureEnlargementVerification()
         {
-            //how should I varify "image itself"?
-            //TODO: check image md5 
-            //TODO: there is no product name on each image(prod must be hardcoded)
+            //TODO: check image md5 - Maryna
+            //TODO: there is no product name on each image(prod must be hardcoded) - Maryna
             Header header = new Header(driver);
             ContentContainer homeContainer = header.GoToHomePage();
             string firstHomeProdTitle = homeContainer.HomeProdTitle.Text;

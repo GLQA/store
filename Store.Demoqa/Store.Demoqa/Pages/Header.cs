@@ -38,7 +38,7 @@ namespace Store.Demoqa
         /// <summary>
         /// The home page user name
         /// </summary>
-        [FindsBy(How = How.XPath, Using = ".//*[@id='wp-admin-bar-my-account']/a")]
+        [FindsBy(How = How.CssSelector, Using = "#wp-admin-bar-my-account>a")]
         public IWebElement HomePageUserName;
 
         /// <summary>

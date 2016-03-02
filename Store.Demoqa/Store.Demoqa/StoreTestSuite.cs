@@ -41,7 +41,6 @@ namespace Store.Demoqa
             this.driver.Manage().Window.Maximize();
         }
 
-
         [Test]
         public void ProductContentVerification()
         {
@@ -174,6 +173,12 @@ namespace Store.Demoqa
             this.driver.Navigate().Refresh();
             Assert.AreEqual("1", header.ItemsButton.Text);
             Cart cart = header.GoToCart();
+            StoreTestSuite.CheckProductTileIContainerEqualsTitleInCart(cart, prodTitle);
+            ///Assert.AreEqual(prodTitle, cart.GetProductFromCart(prodTitle));
+        }
+
+        public static void CheckProductTileIContainerEqualsTitleInCart(Cart cart,string prodTitle)
+        {
             Assert.AreEqual(prodTitle, cart.GetProductFromCart(prodTitle));
         }
 

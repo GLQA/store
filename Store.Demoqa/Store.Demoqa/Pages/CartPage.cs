@@ -12,7 +12,7 @@ namespace Store.Demoqa.Pages
     /// controls and methods on Cart page 
     /// </summary>
 
-     public class Cart
+     public class CartPage : PageFrame
     {
             /// <summary>
             /// The first product in cart
@@ -32,10 +32,10 @@ namespace Store.Demoqa.Pages
            // private IWebDriver driver;
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="Cart"/> class.
+            /// Initializes a new instance of the <see cref="CartPage"/> class.
             /// </summary>
             /// <param name="driver">The driver.</param>
-            public Cart(IWebDriver driver)
+            public CartPage(IWebDriver driver) : base(driver)
             {
             Driver.Instance.InitPageElements();
         }

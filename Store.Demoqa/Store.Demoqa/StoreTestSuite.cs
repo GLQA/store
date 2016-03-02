@@ -4,8 +4,6 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using Store.Demoqa.Pages;
 using System.Drawing;
-using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support.PageObjects;
 
 namespace Store.Demoqa
 {
@@ -15,22 +13,21 @@ namespace Store.Demoqa
     [TestFixture]
     public class StoreTestSuite
     {
-        private string prodNameThatGivesOneSearchResult = "magic mouse";
+        private string productTitleThatGivesOneSearchResult = "magic mouse";
         private string prodNameThatGivesSeveralSearchResult = "iphone 4";
         private string userNAme = "qa29";
         private string password = "W0fucGsTDnVS";
         private string expectedUserGreeting = "Howdy, Qa29";
         private string productCategory = "iPhones";
+        private string productToCheckImageEnlargement = "Skullcandy";
         private int productIndex = 0;
+        private HomePage homePage;
 
-       private const string SITEURL = "http://store.demoqa.com/";
-
+        private const string SITEURL = "http://store.demoqa.com/";
         /// <summary>
         /// driver declaration
         /// </summary>
         private IWebDriver driver;
-
-
         /// <summary>
         /// Starts Firefox browser, opens site "http://store.demoqa.com/" and maximizes window
         /// Open site http://store.demoqa.com/
@@ -38,114 +35,125 @@ namespace Store.Demoqa
         [SetUp]
         public void Init()
         {
-
-          Driver.Instance.Start();
-           
+            this.driver = new FirefoxDriver();
+            this.driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
+            this.driver.Navigate().GoToUrl(SITEURL);
+            this.driver.Manage().Window.Maximize();
+            HomePage homePage = new HomePage(driver);
         }
 
+        /// <summary>
+        /// Verification of availability of 'People who bought this item' section and product description 
+        /// </summary>
         [Test]
         public void ProductContentVerification()
         {
             //TODO: 1. remove 'driver' parameter from constructors - make it as singleton - Yuliia
-            //TODO: 1. create page structure(reorganize 'Pages' folder): BasePage contains Header and Footer , all other pages are inherited from BasePage - Maryna
-            Footer footer = new Footer();
-            //TODO: I want to understand, after several month, what I am doing here...why? - Maryna
-            string randomProductTitle = footer.GetRandomProdTitleText().TrimEnd('-', '.');
-            ProductDescriptionPage prodPage = footer.GoToRandomProduct();
-
-
-
-
-            // Check that product title equals to opened
-            StringAssert.StartsWith(randomProductTitle, prodPage.GetTitleText());
-            // Check that descriptiona section is not empty
-            Assert.IsNotEmpty(prodPage.GetDescriptionText());
-            // Check that PeopleWhoBought section is not empty
-            Assert.IsNotEmpty(prodPage.GetTextOfPeopleWhoBoughtSection());
-
-            
-
-            CheckProductTitleEqualsToOpened(randomProductTitle, prodPage);
-            CheckDescriptionSectionIsNotEmpty(prodPage);
-            CheckPeopleWhoBoughtSectionIsNotEmpty(prodPage);
+            ProductDescriptionPage prodPage = homePage.footer.GoToRandomProduct();
+            CheckProductTitleEqualsToOpened(homePage.footer.TrimmedRandProductTitle, prodPage.ProductTitleText);
+            CheckDescriptionSectionIsNotEmpty(prodPage.ProductDescriptionText);
+            CheckPeopleBoughtSectionIsNotEmpty(prodPage.PeopleBoughtSectionText);
         }
         //TODO: 2. make methods from assertions and put them after each test - Maryna and Yuliia
-        private static void CheckProductTitleEqualsToOpened(string randomProductTitle, ProductDescriptionPage prodPage)
+        private static void CheckProductTitleEqualsToOpened(string randomProductTitle, string pageProductTitle)
         {
-            StringAssert.StartsWith(randomProductTitle, prodPage.GetTitleText());
+            StringAssert.StartsWith(randomProductTitle, pageProductTitle);
         }
 
-        private static void CheckDescriptionSectionIsNotEmpty(ProductDescriptionPage prodPage)
+        private static void CheckDescriptionSectionIsNotEmpty(string productDescription)
         {
-            Assert.IsNotEmpty(prodPage.GetDescriptionText());
+            Assert.IsNotEmpty(productDescription);
         }
 
-        private static void CheckPeopleWhoBoughtSectionIsNotEmpty(ProductDescriptionPage prodPage)
+        private static void CheckPeopleBoughtSectionIsNotEmpty(string sectionText)
         {
-            Assert.IsNotEmpty(prodPage.GetTextOfPeopleWhoBoughtSection());
+            Assert.IsNotEmpty(sectionText);
         }
 
+        /// <summary>
+        /// Verification of Search results: search of 'magic mouse' must return 1 product and search of 'iphone 4' nust return two items 
+        /// </summary>
         //TODO: maintain data-driven - Maryna
         [Test]
         public void SearchResultsVerification()
         {
-            Header header = new Header();
-            ContentContainer contentContainer = header.TypeSearchValueAndSubmit(prodNameThatGivesOneSearchResult);
-            //TODO: extract method from contentContainer.FoundProducts[0].Text - Maryna
-            StringAssert.AreEqualIgnoringCase(contentContainer.FoundProducts[0].Text, prodNameThatGivesOneSearchResult);
-            //can't check this for multiple products, because search results contain product that does not correspond to request
-            Assert.AreEqual(contentContainer.FoundProducts.Count, 1);
-            //TODO: for multiple: StringAssert.AreEqualIgnoringCase(contentContainer.FoundProducts[0].Text, prodNameThatGivesOneSearchResult); - Maryna
-            contentContainer = header.TypeSearchValueAndSubmit(prodNameThatGivesSeveralSearchResult);
+            SearchResultsPage searchResults = homePage.header.TypeSearchValueAndSubmit(productTitleThatGivesOneSearchResult);
+            CheckThatOnlyRequiredProductWasFound(searchResults.FirstFoundProductTitle, productTitleThatGivesOneSearchResult);
+            CheckThatOneProductWasFound(searchResults.FoundProducts.Count);
+
+            //TODO: hardcode products(magic mouse and iphone 4)
+            //TODO: for multiple: StringAssert.AreEqualIgnoringCase(contentContainer.FoundProducts[0].Text, productTitleThatGivesOneSearchResult); - Maryna
+            searchResults = homePage.header.TypeSearchValueAndSubmit(prodNameThatGivesSeveralSearchResult);
         }
 
+        private static void CheckThatOneProductWasFound(int foundProductsNumber)
+        {
+            Assert.AreEqual(foundProductsNumber, 1);
+        }
+
+        private void CheckThatOnlyRequiredProductWasFound(string foundProductTitle, string requiredProductTitle)
+        {
+            StringAssert.AreEqualIgnoringCase(foundProductTitle, requiredProductTitle);
+        }
+
+        private void CheckSeveralRequiredProductsWereFound(List foundProducts, string requiredProductTitle)
+        {
+            //StringAssert.AreEqualIgnoringCase(foundProductTitle, requiredProductTitle);
+        }
+
+        /// <summary>
+        /// Verification of the picture availability and functionality on the product's description page
+        /// </summary>
         [Test]
         public void PictureEnlargementVerification()
         {
             //TODO: check image md5 - Maryna
+
             //TODO: there is no product name on each image(prod must be hardcoded) - Maryna
-            Header header = new Header();
-            ContentContainer homeContainer = header.GoToHomePage();
-            string firstHomeProdTitle = homeContainer.HomeProdTitle.Text;
-            ProductDescriptionPage product = homeContainer.GoToProdFromHomePage();
-            StringAssert.AreEqualIgnoringCase(product.GetTitleText(), firstHomeProdTitle);
-            product.ProdRegularImage.Click();
-            Assert.IsTrue(product.ProdOpenedImage.Displayed);
-            Size regularSize = product.ProdOpenedImage.Size;
-            product.NextImageArrow.Click();
-            Assert.IsTrue(product.ProdOpenedImage.Displayed);
-            //product.EnlargeImage();
-            Size enlargedSize = product.ProdOpenedImage.Size;
+            ProductDescriptionPage product = homePage.header.FindProductAndGoToTheFirst(productToCheckImageEnlargement);
+            StringAssert.AreEqualIgnoringCase(product.ProductTitleText, productToCheckImageEnlargement); 
+            product.ProductRegularImage.Click();
+            Assert.IsTrue(product.ProductOpenedImage.Displayed);
+            //check md5
+            Size regularSize = product.ProductOpenedImage.Size;
+            product.EnlargeImage();
+            Size enlargedSize = product.ProductOpenedImage.Size;
             Assert.Greater(enlargedSize.Height, regularSize.Height);
             Assert.Greater(enlargedSize.Width, regularSize.Width);
+            product.NextImageArrow.Click();
+            Assert.IsTrue(product.ProductOpenedImage.Displayed);
+            //check md5
         }
 
+        //TODO: add summaries everywhere! - Maryna
+
+        /// <summary>
+        /// Verification of the Facebook 'Like' button
+        /// </summary>
         [Test]
-        public void VerificationOfLikeFunctionality()
+        public void LikeFunctionalityVerification()
         {
-            Header header = new Header();
-            ContentContainer homeContainer = header.GoToHomePage();
-            ProductDescriptionPage product = homeContainer.GoToProdFromHomePage();
-            //product.FBLikeButton.Click();
-            driver.SwitchTo().Window(driver.WindowHandles[1]).Close();
+            ProductDescriptionPage product = homePage.GoToProductFromCarousel();
+            product.FBLikeButton.Click();
+            product.CloseSecondaryWindow();
             Assert.LessOrEqual(driver.WindowHandles.Count, 1);
         }
+
         /// <summary>
         /// Login with valid data 
         /// </summary>
         [Test]
         public void LoginVerification()
         {
-            Login login = new Login();
-            Header header = new Header();
+            LoginPage login = new LoginPage(this.driver);
+            Header header = new Header(this.driver);
             header.MyAccountButton.Click();
-            login.ClearAndTypeUserName(userNAme);
-            login.ClearAndTypePassword(password);
+            login.SetUserName(userNAme);
+            login.SetPassword(password);
             login.LoginButton.Click();
-           Driver.Instance.driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
+            this.driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
             Assert.AreEqual(expectedUserGreeting, header.HomePageUserName.Text);
             header.LogoutButton.Click();
-            
         }
 
         /// <summary>
@@ -154,43 +162,28 @@ namespace Store.Demoqa
         [Test]
         public void SelectCategoryVerification()
         {
-            Header header = new Header();
-            ContentContainer content = header.SelectProductCategory(productCategory);
-            StoreTestSuite.CheckProductCategoryNameEqualsProductCategoryPageTitle(productCategory, content);
-            StoreTestSuite.CheckThatListViewEnabled(content);
-        }
-
-        public static void CheckProductCategoryNameEqualsProductCategoryPageTitle(string productCategory, ContentContainer content)
-        {
-            Assert.AreEqual(productCategory, content.PageHeader.Text);
-        }
-        public static void CheckThatListViewEnabled(ContentContainer content)
-        {
+            Header header = new Header(this.driver);
+            CategoryProductPage content = header.SelectProductCategory(productCategory);
+            Assert.AreEqual(productCategory, content.CategoryTitle.Text);
             Assert.That(content.DefaultListView.Enabled);
         }
 
         /// <summary>
         /// Selects product by index and adding it to the cart 
         /// </summary>
-        //todo: "count items" verify how many were added and displayed
+        
         [Test]
         public void AddProductToCartVerification()
         {
-
-            Header header = new Header();
-            ContentContainer content = header.SelectProductCategory(productCategory);
+            Header header = new Header(this.driver);
+            CategoryProductPage content = header.SelectProductCategory(productCategory);
             string prodTitle = content.GetProductTitle(productIndex);
             AddToCartPopUp popUp = content.AddProductToTheCart(productIndex);
             popUp.ContinueShoppingButton.Click();
             this.driver.Navigate().Refresh();
             Assert.AreEqual("1", header.ItemsButton.Text);
-            Cart cart = header.GoToCart();
-            StoreTestSuite.CheckProductTileIContainerEqualsTitleInCart(cart, prodTitle);
-        }
-
-        public static void CheckProductTileIContainerEqualsTitleInCart(Cart cart,string prodTitle)
-        {
-            Assert.AreEqual(prodTitle, cart.GetProductFromCart(prodTitle));
+            CartPage cart = header.GoToCart();
+            Assert.AreEqual(prodTitle, cart.GetProductInCart(prodTitle));
         }
 
         /// <summary>
@@ -199,7 +192,7 @@ namespace Store.Demoqa
         [TearDown]
         public void Close()
         {
-            Driver.Instance.Close();
+            this.driver.Quit();
         }
     }
 }

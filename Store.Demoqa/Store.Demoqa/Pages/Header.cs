@@ -1,20 +1,16 @@
-﻿using System;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.PageObjects;
-using Store.Demoqa.Pages;
+using System;
 
-namespace Store.Demoqa
+namespace Store.Demoqa.Pages
 {
-    /// <summary>
-    /// The upper part of the site
-    /// </summary>
     public class Header
     {
         /// <summary>
         /// My account button
         /// </summary>
-        [FindsBy(How = How.XPath, Using = ".//*[@id='account']/a/span[1]")]
+        [FindsBy(How = How.CssSelector, Using = "#account>a")]
         public IWebElement MyAccountButton;
 
         /// <summary>
@@ -38,7 +34,7 @@ namespace Store.Demoqa
         /// <summary>
         /// The home page user name
         /// </summary>
-        [FindsBy(How = How.CssSelector, Using = "#wp-admin-bar-my-account>a")]
+        [FindsBy(How = How.XPath, Using = ".//*[@id='wp-admin-bar-my-account']/a")]
         public IWebElement HomePageUserName;
 
         /// <summary>
@@ -71,14 +67,20 @@ namespace Store.Demoqa
         [FindsBy(How = How.XPath, Using = "//*[@id='menu-item-37']/a")]
         public IWebElement IPhonesMenuItem;
 
+        /// <summary>
+        /// Button 'Home' in the header
+        /// </summary>
         [FindsBy(How = How.CssSelector, Using = "#menu-item-15>a")]
         public IWebElement HomeButton;
 
+        /// <summary>
+        /// Button 'Log out' in the header
+        /// </summary>
         [FindsBy(How = How.Id, Using = "account_logout")]
         private IWebElement logoutButton;
 
         /// <summary>
-        /// The search field
+        /// The search field in the header
         /// </summary>
         [FindsBy(How = How.Name, Using = "s")]
         public IWebElement SearchField;
@@ -86,27 +88,28 @@ namespace Store.Demoqa
         /// <summary>
         /// The driver
         /// </summary>
-        //private IWebDriver driver;
+        private IWebDriver driver;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Header"/> class.
         /// </summary>
         /// <param name="driver">The driver.</param>
-        public Header()
+        public Header(IWebDriver driver)
         {
-            Driver.Instance.InitPageElements();
+            this.driver = driver;
+            PageFactory.InitElements(driver, this);
         }
 
         /// <summary>
         /// Selecting of product category using Product Category tab
         /// </summary>
         /// <param name="product"></param>
-        public ContentContainer SelectProductCategory(string product)
+        public CategoryProductPage SelectProductCategory(string product)
         {
-            Actions action = new Actions(Driver.Instance.driver);
-            action.MoveToElement(Driver.Instance.driver.FindElement(By.CssSelector("#menu-item-33>a"))).Perform();
+            Actions action = new Actions(this.driver);
+            action.MoveToElement(this.ProductCategoryTab).Perform();
             this.GetProduct(product).Click();
-            return new ContentContainer();
+            return new CategoryProductPage(this.driver);
         }
 
         /// <summary>
@@ -123,10 +126,10 @@ namespace Store.Demoqa
         /// Goes to cart.
         /// </summary>
         /// <returns></returns>
-        public Cart GoToCart()
+        public CartPage GoToCart()
         {
             this.CheckoutButton.Click();
-            return new Cart(Driver.Instance.driver);
+            return new CartPage(this.driver);
         }
 
         /// <summary>
@@ -151,17 +154,32 @@ namespace Store.Demoqa
             }
         }
 
-        public ContentContainer TypeSearchValueAndSubmit(string searchValue)
+        /// <summary>
+        /// Types name of product that need to be searched in the search field and pushes 'Enter'
+        /// </summary>
+        public SearchResultsPage TypeSearchValueAndSubmit(string searchValue)
         {
             SearchField.SendKeys(searchValue);
             SearchField.SendKeys(Keys.Enter);
-            return new ContentContainer();
+            return new SearchResultsPage(driver);
         }
 
-        public ContentContainer GoToHomePage()
+        public ProductDescriptionPage FindProductAndGoToTheFirst(string title)
+        {
+            SearchResultsPage searchResults =  TypeSearchValueAndSubmit(title);
+            if (searchResults.FoundProducts.Count == 0)
+                throw new InvalidInputValueForSearchException("Search value {0} can't be found, there is no such product", title);
+            else
+                searchResults.FoundProducts[0].Click();
+                return new ProductDescriptionPage(driver);
+        }
+        /// <summary>
+        /// Clicks 'Home' button in the header in order to go to home page
+        /// </summary>
+        public HomePage GoToHomePage()
         {
             HomeButton.Click();
-            return new ContentContainer();
+            return new HomePage(driver);
         }
     }
 }

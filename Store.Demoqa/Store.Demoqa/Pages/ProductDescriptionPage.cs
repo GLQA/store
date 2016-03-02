@@ -2,15 +2,16 @@
 using OpenQA.Selenium.Support.PageObjects;
 using System.Collections.Generic;
 
-namespace Store.Demoqa
+namespace Store.Demoqa.Pages
 {
-    public class ProductDescriptionPage
+    public class ProductDescriptionPage : PageFrame
     {
         private IWebDriver driver;
 
-        public ProductDescriptionPage()
+        public ProductDescriptionPage(IWebDriver driver) : base(driver)
         {
-            Driver.Instance.InitPageElements();
+            this.driver = driver;
+            PageFactory.InitElements(driver, this);
         }
 
         [FindsBy(How = How.CssSelector, Using = ".prodtitle")]
@@ -23,10 +24,10 @@ namespace Store.Demoqa
         public IList <IWebElement> ProdPageImages;
 
         [FindsBy(How = How.CssSelector, Using = ".wpsc_also_bought.group")]
-        public IWebElement PeopleWhoBoughtThisItemSection;
+        public IWebElement PeopleWhoBoughtSection;
 
         [FindsBy(How = How.CssSelector, Using = "#fullResImage")]
-        public IWebElement ProdOpenedImage;
+        public IWebElement ProductOpenedImage;
 
         [FindsBy(How = How.CssSelector, Using = ".pp_next")]
         public IWebElement NextImageArrow;
@@ -40,24 +41,24 @@ namespace Store.Demoqa
         [FindsBy(How = How.CssSelector, Using = ".pluginButtonLabel")]
         public IWebElement FBLikeButton;
 
-        public IWebElement ProdRegularImage
+        public IWebElement ProductRegularImage
         {
             get { return ProdPageImages[0]; }
         }
 
-        public string GetTitleText()
+        public string ProductTitleText
         {
-            return ProductTitle.Text;
+            get { return ProductTitle.Text; }
         }
 
-        public string GetDescriptionText()
+        public string ProductDescriptionText
         {
-            return ProductDescription.Text;
+            get { return ProductDescription.Text; }
         }
 
-        public string GetTextOfPeopleWhoBoughtSection()
+        public string PeopleBoughtSectionText
         {
-            return PeopleWhoBoughtThisItemSection.Text;
+            get { return PeopleWhoBoughtSection.Text; }
         }
 
         public void EnlargeImage()
@@ -65,6 +66,10 @@ namespace Store.Demoqa
             ExpandImageButton.Click();
         }
 
+        public void CloseSecondaryWindow()
+        {
+            driver.SwitchTo().Window(driver.WindowHandles[1]).Close();
+        }
 
     }
 }

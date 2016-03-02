@@ -1,39 +1,71 @@
-﻿using OpenQA.Selenium.Support.PageObjects;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.PageObjects;
 using System;
 using System.Collections.Generic;
-using System.Collections;
 
-namespace Store.Demoqa
+namespace Store.Demoqa.Pages
 {
     public class Footer
     {
+        /// <summary>
+        /// WebDriver
+        /// </summary>
         private IWebDriver driver;
-        private int numberOfProducts;
-        private int randNumberOfProduct;
 
-        [FindsBy(How = How.CssSelector, Using = ".group>li>a[title]:first-of-type")]
-        public IList<IWebElement> productsInFooter;
-
-        public Footer()
+        /// <summary>
+        /// Number of products in footer
+        /// </summary>
+        private int NumberOfProducts
         {
-            Driver.Instance.InitPageElements();
-            this.driver = driver;
-            //productsInFooter = driver.FindElements(products);
-            int numberOfProducts = productsInFooter.Count;
-            //TODO: move to property(return in get) - Maryna
-            randNumberOfProduct = (new Random()).Next(0, numberOfProducts);
+            get
+            {
+                return ProductsInFooter.Count;
+            }
         }
 
+        /// <summary>
+        /// Random product from footer that will be used it tests
+        /// </summary>
+        private int RandNumberOfProduct
+        {
+            get
+            {
+                return (new Random()).Next(0, NumberOfProducts);
+            }
+        }
+
+        /// <summary>
+        /// Returns a title of random product from footer
+        /// </summary>
+        public string TrimmedRandProductTitle
+        {
+            get
+            {
+                return ProductsInFooter[RandNumberOfProduct].Text.TrimEnd('-', '.');
+            }
+        }
+        /// <summary>
+        /// All products in footer
+        /// </summary>
+        [FindsBy(How = How.CssSelector, Using = ".group>li>a[title]:first-of-type")]
+        public IList<IWebElement> ProductsInFooter;
+
+        /// <summary>
+        /// Creates new instance of footer
+        /// </summary>
+        public Footer(IWebDriver driver)
+        {
+            PageFactory.InitElements(driver, this);
+            this.driver = driver;
+        }
+
+        /// <summary>
+        /// Goes to random product in footer
+        /// </summary>
         public ProductDescriptionPage GoToRandomProduct()
         {
-            productsInFooter[randNumberOfProduct].Click();
-            return new ProductDescriptionPage();
-        }
-
-        public string GetRandomProdTitleText()
-        {
-            return productsInFooter[randNumberOfProduct].Text;
+            ProductsInFooter[RandNumberOfProduct].Click();
+            return new ProductDescriptionPage(driver);
         }
     }
 }

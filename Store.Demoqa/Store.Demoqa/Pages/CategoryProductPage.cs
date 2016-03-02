@@ -1,21 +1,20 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
-using Store.Demoqa.Pages;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Store.Demoqa
+namespace Store.Demoqa.Pages
 {
     /// <summary>
     /// Class describes controls and methods from the central part of the site called Container
     /// </summary>
-    public class ContentContainer
+    public class CategoryProductPage : PageFrame
     {
         /// <summary>
-        /// The page header
+        /// The category title
         /// </summary>
         [FindsBy(How = How.XPath, Using = ".//*[@id='content']//header/h1")]
-        public IWebElement PageHeader;
+        public IWebElement CategoryTitle;
 
         /// <summary>
         /// The add to cart button
@@ -41,27 +40,19 @@ namespace Store.Demoqa
         [FindsBy(How = How.CssSelector, Using = "#default_products_page_container")]
         public IWebElement Content;
 
-        [FindsBy(How = How.CssSelector, Using = ".prodtitle")]
-        public IList <IWebElement> FoundProducts;
-
-        [FindsBy(How = How.CssSelector, Using = ".featured_image>a[href]")]
-        public IWebElement HomeProdReference;
-
-        [FindsBy(How = How.CssSelector, Using = ".product_description>h2")]
-        public IWebElement HomeProdTitle;
-        
         /// <summary>
         /// The driver
         /// </summary>
-       // private IWebDriver driver;
+        private IWebDriver driver;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ContentContainer"/> class.
+        /// Initializes a new instance of the <see cref="CategoryProductPage"/> class.
         /// </summary>
         /// <param name="driver">The driver.</param>
-        public ContentContainer()
+        public CategoryProductPage(IWebDriver driver) : base(driver)
         {
-            Driver.Instance.InitPageElements();
+            this.driver = driver;
+            PageFactory.InitElements(driver, this);
         }
 
         /// <summary>
@@ -73,7 +64,7 @@ namespace Store.Demoqa
         {
             var product = this.GetProduct(index);
             product.FindElement(By.ClassName("wpsc_buy_button")).Click();
-            return new AddToCartPopUp();
+            return new AddToCartPopUp(this.driver);
         }
 
         /// <summary>
@@ -94,12 +85,6 @@ namespace Store.Demoqa
         public IWebElement GetProduct(int index)
         {
              return this.Content.FindElements(By.ClassName("productcol")).ElementAt(index);    
-        }
-
-        public ProductDescriptionPage GoToProdFromHomePage()
-        {
-            HomeProdReference.Click();
-            return new ProductDescriptionPage();
-        }    
+        }  
     }
 }

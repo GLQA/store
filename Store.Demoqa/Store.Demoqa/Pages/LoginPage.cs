@@ -1,12 +1,13 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
+using Store.Demoqa.Pages;
 
-namespace Store.Demoqa
+namespace Store.Demoqa.Pages
 {
     /// <summary>
     /// Describes controls and methods on Login Page
     /// </summary>
-    public class Login
+    public class LoginPage : PageFrame
     {
         /// <summary>
         /// The login button
@@ -26,21 +27,20 @@ namespace Store.Demoqa
         [FindsBy(How = How.Id, Using = "pwd")]
         private IWebElement passwordField;
 
-        private IWebDriver driver;
         /// <summary>
-        /// Initializes a new instance of the <see cref="Login"/> class.
+        /// Initializes a new instance of the <see cref="LoginPage"/> class.
         /// </summary>
         /// <param name="driver">The driver.</param>
-        public Login()
+        public LoginPage(IWebDriver driver) : base(driver)
         {
-            Driver.Instance.InitPageElements();
+            PageFactory.InitElements(driver, this);
         }
 
         /// <summary>
         /// Sets the name of the user.
         /// </summary>
         /// <param name="userName">Name of the user.</param>
-        public void ClearAndTypeUserName(string userName)
+        public void SetUserName(string userName)
         {
             this.userNameField.Clear();
             this.userNameField.SendKeys(userName);
@@ -50,7 +50,7 @@ namespace Store.Demoqa
         /// Sets the password.
         /// </summary>
         /// <param name="password">The password.</param>
-        public void ClearAndTypePassword(string password)
+        public void SetPassword(string password)
         {
             this.passwordField.Clear();
             this.passwordField.SendKeys(password);

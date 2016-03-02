@@ -65,14 +65,18 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Pages\Cart.cs" />
-    <Compile Include="Pages\Footer.cs" />
+    <Compile Include="InvalidInputValueForSearchException.cs" />
+    <Compile Include="Pages\PageFrame.cs" />
+    <Compile Include="Pages\CartPage.cs" />
     <Compile Include="Pages\AddToCartPopUp.cs" />
-    <Compile Include="Pages\ContentContainer.cs" />
+    <Compile Include="Pages\CategoryProductPage.cs" />
+    <Compile Include="Pages\Footer.cs" />
     <Compile Include="Pages\Header.cs" />
+    <Compile Include="Pages\HomePage.cs" />
     <Compile Include="Pages\LoginPage.cs" />
     <Compile Include="Pages\ProductDescriptionPage.cs" />
     <Compile Include="Pages\Products.cs" />
+    <Compile Include="Pages\SearchResultsPage.cs" />
     <Compile Include="StoreTestSuite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -22,10 +22,12 @@ namespace Store.Demoqa
         private int productIndex = 0;
 
         private const string SITEURL = "http://store.demoqa.com/";
+
         /// <summary>
         /// driver declaration
         /// </summary>
         private IWebDriver driver;
+
         /// <summary>
         /// Starts Firefox browser, opens site "http://store.demoqa.com/" and maximizes window
         /// Open site http://store.demoqa.com/
@@ -102,8 +104,8 @@ namespace Store.Demoqa
             Login login = new Login(this.driver);
             Header header = new Header(this.driver);
             header.MyAccountButton.Click();
-            login.SetUserName(userNAme);
-            login.SetPassword(password);
+            login.ClearAndTypeUserName(userNAme);
+            login.ClearAndTypePassword(password);
             login.LoginButton.Click();
             this.driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
             Assert.AreEqual(expectedUserGreeting, header.HomePageUserName.Text);
@@ -125,7 +127,7 @@ namespace Store.Demoqa
         /// <summary>
         /// Selects product by index and adding it to the cart 
         /// </summary>
-        
+        //todo: "count items" verify how many were added and displayed
         [Test]
         public void AddProductToCartVerification()
         {
@@ -137,7 +139,7 @@ namespace Store.Demoqa
             this.driver.Navigate().Refresh();
             Assert.AreEqual("1", header.ItemsButton.Text);
             Cart cart = header.GoToCart();
-            Assert.AreEqual(prodTitle, cart.GetProductInCart(prodTitle));
+            Assert.AreEqual(prodTitle, cart.GetProductFromCart(prodTitle));
         }
 
         /// <summary>

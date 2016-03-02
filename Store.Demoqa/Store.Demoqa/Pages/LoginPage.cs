@@ -39,7 +39,7 @@ namespace Store.Demoqa
         /// Sets the name of the user.
         /// </summary>
         /// <param name="userName">Name of the user.</param>
-        public void SetUserName(string userName)
+        public void ClearAndTypeUserName(string userName)
         {
             this.userNameField.Clear();
             this.userNameField.SendKeys(userName);
@@ -49,7 +49,7 @@ namespace Store.Demoqa
         /// Sets the password.
         /// </summary>
         /// <param name="password">The password.</param>
-        public void SetPassword(string password)
+        public void ClearAndTypePassword(string password)
         {
             this.passwordField.Clear();
             this.passwordField.SendKeys(password);

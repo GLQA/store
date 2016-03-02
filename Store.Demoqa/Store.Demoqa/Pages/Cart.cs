@@ -46,7 +46,7 @@ namespace Store.Demoqa.Pages
             /// </summary>
             /// <param name="prodTitle"></param>
             /// <returns></returns>
-            public string GetProductInCart(string prodTitle)
+            public string GetProductFromCart(string prodTitle)
             {
                 var listOfProductsInCart = driver.FindElements(By.XPath(".//table/tbody//td[2]/a"));
                 foreach (IWebElement element in listOfProductsInCart)

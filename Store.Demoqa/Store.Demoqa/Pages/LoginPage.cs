@@ -26,13 +26,14 @@ namespace Store.Demoqa
         [FindsBy(How = How.Id, Using = "pwd")]
         private IWebElement passwordField;
 
+        private IWebDriver driver;
         /// <summary>
         /// Initializes a new instance of the <see cref="Login"/> class.
         /// </summary>
         /// <param name="driver">The driver.</param>
-        public Login(IWebDriver driver)
+        public Login()
         {
-            PageFactory.InitElements(driver, this);
+            Driver.Instance.InitPageElements();
         }
 
         /// <summary>

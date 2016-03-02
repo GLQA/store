@@ -53,16 +53,15 @@ namespace Store.Demoqa
         /// <summary>
         /// The driver
         /// </summary>
-        private IWebDriver driver;
+       // private IWebDriver driver;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContentContainer"/> class.
         /// </summary>
         /// <param name="driver">The driver.</param>
-        public ContentContainer(IWebDriver driver)
+        public ContentContainer()
         {
-            this.driver = driver;
-            PageFactory.InitElements(driver, this);
+            Driver.Instance.InitPageElements();
         }
 
         /// <summary>
@@ -74,7 +73,7 @@ namespace Store.Demoqa
         {
             var product = this.GetProduct(index);
             product.FindElement(By.ClassName("wpsc_buy_button")).Click();
-            return new AddToCartPopUp(this.driver);
+            return new AddToCartPopUp();
         }
 
         /// <summary>
@@ -100,7 +99,7 @@ namespace Store.Demoqa
         public ProductDescriptionPage GoToProdFromHomePage()
         {
             HomeProdReference.Click();
-            return new ProductDescriptionPage(driver);
+            return new ProductDescriptionPage();
         }    
     }
 }

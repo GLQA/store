@@ -36,9 +36,9 @@ namespace Store.Demoqa.Pages
         /// Initializes a new instance of the <see cref="AddToCartPopUp"/> class.
         /// </summary>
         /// <param name="driver">The driver.</param>
-        public AddToCartPopUp(IWebDriver driver)
+        public AddToCartPopUp()
         {
-            PageFactory.InitElements(driver, this);
+            Driver.Instance.InitPageElements();
         }
     }
 }

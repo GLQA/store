@@ -14,7 +14,7 @@ namespace Store.Demoqa
         /// <summary>
         /// My account button
         /// </summary>
-        [FindsBy(How = How.CssSelector, Using = "#account>a")]
+        [FindsBy(How = How.XPath, Using = ".//*[@id='account']/a/span[1]")]
         public IWebElement MyAccountButton;
 
         /// <summary>
@@ -86,16 +86,15 @@ namespace Store.Demoqa
         /// <summary>
         /// The driver
         /// </summary>
-        private IWebDriver driver;
+        //private IWebDriver driver;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Header"/> class.
         /// </summary>
         /// <param name="driver">The driver.</param>
-        public Header(IWebDriver driver)
+        public Header()
         {
-            this.driver = driver;
-            PageFactory.InitElements(driver, this);
+            Driver.Instance.InitPageElements();
         }
 
         /// <summary>
@@ -104,10 +103,10 @@ namespace Store.Demoqa
         /// <param name="product"></param>
         public ContentContainer SelectProductCategory(string product)
         {
-            Actions action = new Actions(this.driver);
-            action.MoveToElement(this.ProductCategoryTab).Perform();
+            Actions action = new Actions(Driver.Instance.driver);
+            action.MoveToElement(Driver.Instance.driver.FindElement(By.CssSelector("#menu-item-33>a"))).Perform();
             this.GetProduct(product).Click();
-            return new ContentContainer(this.driver);
+            return new ContentContainer();
         }
 
         /// <summary>
@@ -127,7 +126,7 @@ namespace Store.Demoqa
         public Cart GoToCart()
         {
             this.CheckoutButton.Click();
-            return new Cart(this.driver);
+            return new Cart(Driver.Instance.driver);
         }
 
         /// <summary>
@@ -156,13 +155,13 @@ namespace Store.Demoqa
         {
             SearchField.SendKeys(searchValue);
             SearchField.SendKeys(Keys.Enter);
-            return new ContentContainer(driver);
+            return new ContentContainer();
         }
 
         public ContentContainer GoToHomePage()
         {
             HomeButton.Click();
-            return new ContentContainer(driver);
+            return new ContentContainer();
         }
     }
 }

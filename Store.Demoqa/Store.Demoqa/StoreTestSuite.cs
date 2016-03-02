@@ -4,6 +4,8 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using Store.Demoqa.Pages;
 using System.Drawing;
+using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.PageObjects;
 
 namespace Store.Demoqa
 {
@@ -21,12 +23,13 @@ namespace Store.Demoqa
         private string productCategory = "iPhones";
         private int productIndex = 0;
 
-        private const string SITEURL = "http://store.demoqa.com/";
+       private const string SITEURL = "http://store.demoqa.com/";
 
         /// <summary>
         /// driver declaration
         /// </summary>
         private IWebDriver driver;
+
 
         /// <summary>
         /// Starts Firefox browser, opens site "http://store.demoqa.com/" and maximizes window
@@ -35,10 +38,9 @@ namespace Store.Demoqa
         [SetUp]
         public void Init()
         {
-            this.driver = new FirefoxDriver();
-            this.driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
-            this.driver.Navigate().GoToUrl(SITEURL);
-            this.driver.Manage().Window.Maximize();
+
+          Driver.Instance.Start();
+           
         }
 
         [Test]
@@ -46,7 +48,7 @@ namespace Store.Demoqa
         {
             //TODO: 1. remove 'driver' parameter from constructors - make it as singleton - Yuliia
             //TODO: 1. create page structure(reorganize 'Pages' folder): BasePage contains Header and Footer , all other pages are inherited from BasePage - Maryna
-            Footer footer = new Footer(driver);
+            Footer footer = new Footer();
             //TODO: I want to understand, after several month, what I am doing here...why? - Maryna
             string randomProductTitle = footer.GetRandomProdTitleText().TrimEnd('-', '.');
             ProductDescriptionPage prodPage = footer.GoToRandomProduct();
@@ -87,7 +89,7 @@ namespace Store.Demoqa
         [Test]
         public void SearchResultsVerification()
         {
-            Header header = new Header(driver);
+            Header header = new Header();
             ContentContainer contentContainer = header.TypeSearchValueAndSubmit(prodNameThatGivesOneSearchResult);
             //TODO: extract method from contentContainer.FoundProducts[0].Text - Maryna
             StringAssert.AreEqualIgnoringCase(contentContainer.FoundProducts[0].Text, prodNameThatGivesOneSearchResult);
@@ -102,7 +104,7 @@ namespace Store.Demoqa
         {
             //TODO: check image md5 - Maryna
             //TODO: there is no product name on each image(prod must be hardcoded) - Maryna
-            Header header = new Header(driver);
+            Header header = new Header();
             ContentContainer homeContainer = header.GoToHomePage();
             string firstHomeProdTitle = homeContainer.HomeProdTitle.Text;
             ProductDescriptionPage product = homeContainer.GoToProdFromHomePage();
@@ -121,7 +123,7 @@ namespace Store.Demoqa
         [Test]
         public void VerificationOfLikeFunctionality()
         {
-            Header header = new Header(driver);
+            Header header = new Header();
             ContentContainer homeContainer = header.GoToHomePage();
             ProductDescriptionPage product = homeContainer.GoToProdFromHomePage();
             //product.FBLikeButton.Click();
@@ -134,15 +136,16 @@ namespace Store.Demoqa
         [Test]
         public void LoginVerification()
         {
-            Login login = new Login(this.driver);
-            Header header = new Header(this.driver);
+            Login login = new Login();
+            Header header = new Header();
             header.MyAccountButton.Click();
             login.ClearAndTypeUserName(userNAme);
             login.ClearAndTypePassword(password);
             login.LoginButton.Click();
-            this.driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
+           Driver.Instance.driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
             Assert.AreEqual(expectedUserGreeting, header.HomePageUserName.Text);
             header.LogoutButton.Click();
+            
         }
 
         /// <summary>
@@ -151,9 +154,18 @@ namespace Store.Demoqa
         [Test]
         public void SelectCategoryVerification()
         {
-            Header header = new Header(this.driver);
+            Header header = new Header();
             ContentContainer content = header.SelectProductCategory(productCategory);
+            StoreTestSuite.CheckProductCategoryNameEqualsProductCategoryPageTitle(productCategory, content);
+            StoreTestSuite.CheckThatListViewEnabled(content);
+        }
+
+        public static void CheckProductCategoryNameEqualsProductCategoryPageTitle(string productCategory, ContentContainer content)
+        {
             Assert.AreEqual(productCategory, content.PageHeader.Text);
+        }
+        public static void CheckThatListViewEnabled(ContentContainer content)
+        {
             Assert.That(content.DefaultListView.Enabled);
         }
 
@@ -164,7 +176,8 @@ namespace Store.Demoqa
         [Test]
         public void AddProductToCartVerification()
         {
-            Header header = new Header(this.driver);
+
+            Header header = new Header();
             ContentContainer content = header.SelectProductCategory(productCategory);
             string prodTitle = content.GetProductTitle(productIndex);
             AddToCartPopUp popUp = content.AddProductToTheCart(productIndex);
@@ -173,7 +186,6 @@ namespace Store.Demoqa
             Assert.AreEqual("1", header.ItemsButton.Text);
             Cart cart = header.GoToCart();
             StoreTestSuite.CheckProductTileIContainerEqualsTitleInCart(cart, prodTitle);
-            ///Assert.AreEqual(prodTitle, cart.GetProductFromCart(prodTitle));
         }
 
         public static void CheckProductTileIContainerEqualsTitleInCart(Cart cart,string prodTitle)
@@ -187,7 +199,7 @@ namespace Store.Demoqa
         [TearDown]
         public void Close()
         {
-            this.driver.Quit();
+            Driver.Instance.Close();
         }
     }
 }

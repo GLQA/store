@@ -8,10 +8,9 @@ namespace Store.Demoqa
     {
         private IWebDriver driver;
 
-        public ProductDescriptionPage(IWebDriver driver)
+        public ProductDescriptionPage()
         {
-            this.driver = driver;
-            PageFactory.InitElements(driver, this);
+            Driver.Instance.InitPageElements();
         }
 
         [FindsBy(How = How.CssSelector, Using = ".prodtitle")]

@@ -29,7 +29,7 @@ namespace Store.Demoqa.Pages
             /// <summary>
             /// The driver
             /// </summary>
-            private IWebDriver driver;
+           // private IWebDriver driver;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Cart"/> class.
@@ -37,9 +37,8 @@ namespace Store.Demoqa.Pages
             /// <param name="driver">The driver.</param>
             public Cart(IWebDriver driver)
             {
-                this.driver = driver;
-                PageFactory.InitElements(driver, this);
-            }
+            Driver.Instance.InitPageElements();
+        }
 
             /// <summary>
             /// Gets product in Cart
@@ -48,7 +47,7 @@ namespace Store.Demoqa.Pages
             /// <returns></returns>
             public string GetProductFromCart(string prodTitle)
             {
-                var listOfProductsInCart = driver.FindElements(By.XPath(".//table/tbody//td[2]/a"));
+                var listOfProductsInCart = Driver.Instance.driver.FindElements(By.XPath(".//table/tbody//td[2]/a"));
                 foreach (IWebElement element in listOfProductsInCart)
             {
                 if (element.Text == prodTitle)

@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,17 +11,19 @@ namespace Store.Demoqa
     /// </summary>
     public class CategoryProductPage : PageFrame
     {
+        int index;
+
         /// <summary>
         /// The category title
         /// </summary>
-        [FindsBy(How = How.XPath, Using = ".//*[@id='content']//header/h1")]
+        [FindsBy(How = How.CssSelector, Using = "#content header>h1")]
         public IWebElement CategoryTitle { get; set; }
 
         /// <summary>
-        /// The add to cart button
+        /// List of Products in specific category
         /// </summary>
-        [FindsBy(How = How.XPath, Using = ".//*[@class='input-button-buy']/span/input")]
-        public IWebElement AddToCartButton { get; set; }
+        [FindsBy(How = How.CssSelector, Using = ".productcol")]
+        public IList<IWebElement> Products { get; set; }
 
         /// <summary>
         /// The default ListView
@@ -31,7 +34,7 @@ namespace Store.Demoqa
         /// <summary>
         /// The first product title
         /// </summary>
-        [FindsBy(How = How.XPath, Using = ".//*[@class='prodtitle']/a")]
+        [FindsBy(How = How.CssSelector, Using = ".prodtitle>a")]
         public IList<IWebElement> ProductTitle { get; set; }
 
         /// <summary>
@@ -46,7 +49,7 @@ namespace Store.Demoqa
         /// <param name="driver">The driver.</param>
         public CategoryProductPage() : base()
         {
-            PageFactory.InitElements(Driver.Instance.driver, this);
+            PageFactory.InitElements(DriverSingleton.Instance.Driver, this);
         }
 
         /// <summary>
@@ -54,11 +57,32 @@ namespace Store.Demoqa
         /// </summary>
         /// <param name="index">The index.</param>
         /// <returns></returns>
-        public AddToCartPopUp AddProductToTheCart(int index)
+        /// 
+         public AddToCartPopUp AddProductToTheCart()
         {
-            var product = this.GetProduct(index);
+            var product = this.GetProduct();
             product.FindElement(By.ClassName("wpsc_buy_button")).Click();
             return new AddToCartPopUp();
+        }
+        /// Number of products in footer
+        /// </summary>
+        private int NumberOfProductsInCategory
+        {
+            get
+            {
+                return Products.Count;
+            }
+        }
+
+        /// <summary>
+        /// Random product from footer that will be used it tests
+        /// </summary>
+        private int RandNumberOfProductInCategory
+        {
+            get
+            {
+                return (new Random()).Next(0, NumberOfProductsInCategory);
+            }
         }
 
         /// <summary>
@@ -66,9 +90,10 @@ namespace Store.Demoqa
         /// </summary>
         /// <param name="index">The index.</param>
         /// <returns></returns>
-        public string GetProductTitle(int index)
+        public string GetProductTitle()
         {
-            return ProductTitle[index].Text;
+            index = RandNumberOfProductInCategory;
+            return ProductTitle[index].Text.TrimEnd('-', '.'); ;
         }
 
         /// <summary>
@@ -76,9 +101,9 @@ namespace Store.Demoqa
         /// </summary>
         /// <param name="index">The index.</param>
         /// <returns></returns>
-        public IWebElement GetProduct(int index)
+        public IWebElement GetProduct()
         {
-            return this.Content.FindElements(By.ClassName("productcol")).ElementAt(index);
+            return Products[index];
         }
     }
 }

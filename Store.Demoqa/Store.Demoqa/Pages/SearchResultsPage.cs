@@ -38,7 +38,7 @@ namespace Store.Demoqa
         /// </summary>
         public SearchResultsPage() : base()
         {
-            PageFactory.InitElements(Driver.Instance.driver, this);
+            PageFactory.InitElements(DriverSingleton.Instance.Driver, this);
         }
     }
 }

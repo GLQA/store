@@ -39,7 +39,7 @@ namespace Store.Demoqa
         /// </summary>
         public Footer()
         {
-            PageFactory.InitElements(Driver.Instance.driver, this);
+            PageFactory.InitElements(DriverSingleton.Instance.Driver, this);
         }
 
         /// <summary>

@@ -94,7 +94,7 @@ namespace Store.Demoqa
         /// <param name="driver">The driver.</param>
         public Header()
         {
-            PageFactory.InitElements(Driver.Instance.driver, this);
+            PageFactory.InitElements(DriverSingleton.Instance.Driver, this);
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Store.Demoqa
         /// <param name="product"></param>
         public CategoryProductPage SelectProductCategory(string product)
         {
-            Actions action = new Actions(Driver.Instance.driver);
+            Actions action = new Actions(DriverSingleton.Instance.Driver);
             action.MoveToElement(this.ProductCategoryTab).Perform();
             this.GetProduct(product).Click();
             return new CategoryProductPage();

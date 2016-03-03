@@ -3,101 +3,98 @@ using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.PageObjects;
 using System;
 
-namespace Store.Demoqa.Pages
+namespace Store.Demoqa
 {
+    /// <summary>
+    /// Class describes 
+    /// </summary>
     public class Header
     {
         /// <summary>
         /// My account button
         /// </summary>
         [FindsBy(How = How.CssSelector, Using = "#account>a")]
-        public IWebElement MyAccountButton;
+        public IWebElement MyAccountButton { get; set; }
 
         /// <summary>
         /// The checkout button
         /// </summary>
         [FindsBy(How = How.XPath, Using = ".//*[@id='header_cart']/a/span[1]")]
-        public IWebElement CheckoutButton;
+        public IWebElement CheckoutButton { get; set; }
 
         /// <summary>
         /// The items button
         /// </summary>
         [FindsBy(How = How.CssSelector, Using = ".count")]
-        public IWebElement ItemsButton;
+        public IWebElement ItemsButton { get; set; }
 
         /// <summary>
         /// The logout button
         /// </summary>
         [FindsBy(How = How.CssSelector, Using = "#account_logout")]
-        public IWebElement LogoutButton;
+        public IWebElement LogoutButton { get; set; }
 
         /// <summary>
         /// The home page user name
         /// </summary>
-        [FindsBy(How = How.XPath, Using = ".//*[@id='wp-admin-bar-my-account']/a")]
-        public IWebElement HomePageUserName;
+        [FindsBy(How = How.CssSelector, Using = "#wp-admin-bar-my-account>a")]
+        public IWebElement HomePageUserName { get; set; }
 
         /// <summary>
         /// The product category tab
         /// </summary>
         [FindsBy(How = How.CssSelector, Using = "#menu-item-33>a")]
-        public IWebElement ProductCategoryTab;
+        public IWebElement ProductCategoryTab { get; set; }
 
         /// <summary>
         /// The accessories menu item
         /// </summary>
-        [FindsBy(How = How.XPath, Using = "//*[@id='menu-item-34']/a")]
-        public IWebElement AccessoriesMenuItem;
+        [FindsBy(How = How.CssSelector, Using = "#menu-item-34>a")]
+        public IWebElement AccessoriesMenuItem { get; set; }
 
         /// <summary>
         /// The imac menu item
         /// </summary>
-        [FindsBy(How = How.XPath, Using = "//*[@id='menu-item-35']/a")]
-        public IWebElement IMacMenuItem;
+        [FindsBy(How = How.CssSelector, Using = "#menu-item-35>a")]
+        public IWebElement IMacMenuItem { get; set; }
 
         /// <summary>
         /// The ipad menu item
         /// </summary>
-        [FindsBy(How = How.XPath, Using = "//*[@id='menu-item-36']/a")]
-        public IWebElement IPadMenuItem;
+        [FindsBy(How = How.CssSelector, Using = "#menu-item-36>a")]
+        public IWebElement IPadMenuItem { get; set; }
 
         /// <summary>
         /// The iphones menu item
         /// </summary>
-        [FindsBy(How = How.XPath, Using = "//*[@id='menu-item-37']/a")]
-        public IWebElement IPhonesMenuItem;
+        [FindsBy(How = How.CssSelector, Using = "#menu-item-37>a")]
+        public IWebElement IPhonesMenuItem { get; set; }
 
         /// <summary>
         /// Button 'Home' in the header
         /// </summary>
         [FindsBy(How = How.CssSelector, Using = "#menu-item-15>a")]
-        public IWebElement HomeButton;
+        public IWebElement HomeButton { get; set; }
 
         /// <summary>
         /// Button 'Log out' in the header
         /// </summary>
         [FindsBy(How = How.Id, Using = "account_logout")]
-        private IWebElement logoutButton;
+        private IWebElement logoutButton { get; set; }
 
         /// <summary>
         /// The search field in the header
         /// </summary>
         [FindsBy(How = How.Name, Using = "s")]
-        public IWebElement SearchField;
-
-        /// <summary>
-        /// The driver
-        /// </summary>
-        private IWebDriver driver;
+        public IWebElement SearchField { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Header"/> class.
         /// </summary>
         /// <param name="driver">The driver.</param>
-        public Header(IWebDriver driver)
+        public Header()
         {
-            this.driver = driver;
-            PageFactory.InitElements(driver, this);
+            PageFactory.InitElements(Driver.Instance.driver, this);
         }
 
         /// <summary>
@@ -106,10 +103,10 @@ namespace Store.Demoqa.Pages
         /// <param name="product"></param>
         public CategoryProductPage SelectProductCategory(string product)
         {
-            Actions action = new Actions(this.driver);
+            Actions action = new Actions(Driver.Instance.driver);
             action.MoveToElement(this.ProductCategoryTab).Perform();
             this.GetProduct(product).Click();
-            return new CategoryProductPage(this.driver);
+            return new CategoryProductPage();
         }
 
         /// <summary>
@@ -129,7 +126,7 @@ namespace Store.Demoqa.Pages
         public CartPage GoToCart()
         {
             this.CheckoutButton.Click();
-            return new CartPage(this.driver);
+            return new CartPage();
         }
 
         /// <summary>
@@ -161,25 +158,32 @@ namespace Store.Demoqa.Pages
         {
             SearchField.SendKeys(searchValue);
             SearchField.SendKeys(Keys.Enter);
-            return new SearchResultsPage(driver);
+            return new SearchResultsPage();
         }
 
+        /// <summary>
+        /// Finds the product and go to the first.
+        /// </summary>
+        /// <param name="title">The title.</param>
+        /// <returns></returns>
+        /// <exception cref="InvalidInputValueForSearchException">Search value {0} can't be found, there is no such product</exception>
         public ProductDescriptionPage FindProductAndGoToTheFirst(string title)
         {
-            SearchResultsPage searchResults =  TypeSearchValueAndSubmit(title);
+            SearchResultsPage searchResults = TypeSearchValueAndSubmit(title);
             if (searchResults.FoundProducts.Count == 0)
                 throw new InvalidInputValueForSearchException("Search value {0} can't be found, there is no such product", title);
             else
                 searchResults.FoundProducts[0].Click();
-                return new ProductDescriptionPage(driver);
+            return new ProductDescriptionPage();
         }
+
         /// <summary>
         /// Clicks 'Home' button in the header in order to go to home page
         /// </summary>
         public HomePage GoToHomePage()
         {
             HomeButton.Click();
-            return new HomePage(driver);
+            return new HomePage();
         }
     }
 }

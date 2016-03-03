@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
 
-namespace Store.Demoqa.Pages
+namespace Store.Demoqa
 {
     /// <summary>
     /// Class describes work with Add to Cart pop-up
@@ -11,26 +11,26 @@ namespace Store.Demoqa.Pages
         /// <summary>
         /// The add to cart popup
         /// </summary>
-        [FindsBy(How = How.XPath, Using = ".//*[@id='fancy_notification_content']")]
-        public IWebElement AddToCartPopup;
+        [FindsBy(How = How.CssSelector, Using = "#fancy_notification_content")]
+        public IWebElement AddToCartPopup { get; set; }
 
         /// <summary>
         /// The pop up text field
         /// </summary>
-        [FindsBy(How = How.XPath, Using = ".//*[@id='fancy_notification_content']/span")]
-        public IWebElement PopUpTextField;
+        [FindsBy(How = How.CssSelector, Using = "#fancy_notification_content>span")]
+        public IWebElement PopUpTextField { get; set; }
 
         /// <summary>
         /// The check out button
         /// </summary>
         [FindsBy(How = How.XPath, Using = ".//*[@id='fancy_notification_content']/a[1]")]
-        public IWebElement CheckOutButton;
+        public IWebElement CheckOutButton { get; set; }
 
         /// <summary>
         /// The continue shopping button
         /// </summary>
         [FindsBy(How = How.XPath, Using = ".//*[@id='fancy_notification_content']/a[2]")]
-        public IWebElement ContinueShoppingButton;
+        public IWebElement ContinueShoppingButton { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AddToCartPopUp"/> class.
@@ -38,7 +38,7 @@ namespace Store.Demoqa.Pages
         /// <param name="driver">The driver.</param>
         public AddToCartPopUp()
         {
-            Driver.Instance.InitPageElements();
+            PageFactory.InitElements(Driver.Instance.driver, this);
         }
     }
 }

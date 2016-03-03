@@ -3,15 +3,10 @@ using OpenQA.Selenium.Support.PageObjects;
 using System;
 using System.Collections.Generic;
 
-namespace Store.Demoqa.Pages
+namespace Store.Demoqa
 {
     public class Footer
     {
-        /// <summary>
-        /// WebDriver
-        /// </summary>
-        private IWebDriver driver;
-
         /// <summary>
         /// Number of products in footer
         /// </summary>
@@ -48,15 +43,14 @@ namespace Store.Demoqa.Pages
         /// All products in footer
         /// </summary>
         [FindsBy(How = How.CssSelector, Using = ".group>li>a[title]:first-of-type")]
-        public IList<IWebElement> ProductsInFooter;
+        public IList<IWebElement> ProductsInFooter { get; set; }
 
         /// <summary>
         /// Creates new instance of footer
         /// </summary>
-        public Footer(IWebDriver driver)
+        public Footer()
         {
-            PageFactory.InitElements(driver, this);
-            this.driver = driver;
+            PageFactory.InitElements(Driver.Instance.driver, this);
         }
 
         /// <summary>
@@ -65,7 +59,7 @@ namespace Store.Demoqa.Pages
         public ProductDescriptionPage GoToRandomProduct()
         {
             ProductsInFooter[RandNumberOfProduct].Click();
-            return new ProductDescriptionPage(driver);
+            return new ProductDescriptionPage();
         }
     }
 }

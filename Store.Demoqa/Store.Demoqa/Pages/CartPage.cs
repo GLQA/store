@@ -6,49 +6,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Store.Demoqa.Pages
+namespace Store.Demoqa
 {
     /// <summary>
-    /// controls and methods on Cart page 
+    /// Class describes controls and methods on Cart page 
     /// </summary>
-
-     public class CartPage : PageFrame
+    public class CartPage : PageFrame
     {
-            /// <summary>
-            /// The first product in cart
-            /// </summary>
-            [FindsBy(How = How.XPath, Using = ".//table/tbody/tr[2]/td[2]")]
-            public IWebElement FirstProductInCart;
+        /// <summary>
+        /// The cart page header
+        /// </summary>
+        [FindsBy(How = How.XPath, Using = ".//*[@id='post-29']/header/h1")]
+        public IWebElement CartPageHeader { get; set; }
 
-            /// <summary>
-            /// The cart page header
-            /// </summary>
-            [FindsBy(How = How.XPath, Using = ".//*[@id='post-29']/header/h1")]
-            public IWebElement CartPageHeader;
-
-            /// <summary>
-            /// The driver
-            /// </summary>
-           // private IWebDriver driver;
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="CartPage"/> class.
-            /// </summary>
-            /// <param name="driver">The driver.</param>
-            public CartPage(IWebDriver driver) : base(driver)
-            {
-            Driver.Instance.InitPageElements();
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CartPage"/> class.
+        /// </summary>
+        /// <param name="driver">The driver.</param>
+        public CartPage() : base()
+        {
+            PageFactory.InitElements(Driver.Instance.driver, this);
         }
 
-            /// <summary>
-            /// Gets product in Cart
-            /// </summary>
-            /// <param name="prodTitle"></param>
-            /// <returns></returns>
-            public string GetProductFromCart(string prodTitle)
-            {
-                var listOfProductsInCart = Driver.Instance.driver.FindElements(By.XPath(".//table/tbody//td[2]/a"));
-                foreach (IWebElement element in listOfProductsInCart)
+        /// <summary>
+        /// Gets product from Cart
+        /// </summary>
+        /// <param name="prodTitle"></param>
+        /// <returns></returns>
+        public string GetProductFromCart(string prodTitle)
+        {
+            var listOfProductsInCart = Driver.Instance.driver.FindElements(By.XPath(".//table/tbody//td[2]/a"));
+            foreach (IWebElement element in listOfProductsInCart)
             {
                 if (element.Text == prodTitle)
                 {
@@ -56,8 +44,7 @@ namespace Store.Demoqa.Pages
                 }
             }
             return null;
-
-        }
         }
     }
+}
 

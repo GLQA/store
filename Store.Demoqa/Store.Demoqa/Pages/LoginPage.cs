@@ -1,8 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
-using Store.Demoqa.Pages;
 
-namespace Store.Demoqa.Pages
+namespace Store.Demoqa
 {
     /// <summary>
     /// Describes controls and methods on Login Page
@@ -13,34 +12,34 @@ namespace Store.Demoqa.Pages
         /// The login button
         /// </summary>
         [FindsBy(How = How.Id, Using = "login")]
-        public IWebElement LoginButton;
+        public IWebElement LoginButton { get; set; }
 
         /// <summary>
         /// The user name field
         /// </summary>
         [FindsBy(How = How.Id, Using = "log")]
-        private IWebElement userNameField;
+        private IWebElement userNameField { get; set; }
 
         /// <summary>
         /// The password field
         /// </summary>
         [FindsBy(How = How.Id, Using = "pwd")]
-        private IWebElement passwordField;
+        private IWebElement passwordField { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LoginPage"/> class.
         /// </summary>
         /// <param name="driver">The driver.</param>
-        public LoginPage(IWebDriver driver) : base(driver)
+        public LoginPage() : base()
         {
-            PageFactory.InitElements(driver, this);
+            PageFactory.InitElements(Driver.Instance.driver, this);
         }
 
         /// <summary>
         /// Sets the name of the user.
         /// </summary>
         /// <param name="userName">Name of the user.</param>
-        public void SetUserName(string userName)
+        public void ClearAndTypeUserName(string userName)
         {
             this.userNameField.Clear();
             this.userNameField.SendKeys(userName);
@@ -50,7 +49,7 @@ namespace Store.Demoqa.Pages
         /// Sets the password.
         /// </summary>
         /// <param name="password">The password.</param>
-        public void SetPassword(string password)
+        public void ClearAndTypePassword(string password)
         {
             this.passwordField.Clear();
             this.passwordField.SendKeys(password);

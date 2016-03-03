@@ -8,26 +8,20 @@ namespace Store.Demoqa
     public class Footer
     {
         /// <summary>
-        /// Number of products in footer
+        /// All products in footer
         /// </summary>
-        private int NumberOfProducts
-        {
-            get
-            {
-                return ProductsInFooter.Count;
-            }
-        }
+        [FindsBy(How = How.CssSelector, Using = ".group>li>a[title]:first-of-type")]
+        public static IList<IWebElement> ProductsInFooter { get; set; }
 
         /// <summary>
-        /// Random product from footer that will be used it tests
+        /// Random index number of product from footer that will be used it tests
         /// </summary>
-        private int RandNumberOfProduct
-        {
-            get
-            {
-                return (new Random()).Next(0, NumberOfProducts);
-            }
-        }
+        public int randNumberOfProduct = new Random().Next(0, productsQuantityInFooter);
+
+        /// <summary>
+        /// Number of products in footer
+        /// </summary>
+        public static int productsQuantityInFooter = ProductsInFooter.Count; 
 
         /// <summary>
         /// Returns a title of random product from footer
@@ -36,14 +30,9 @@ namespace Store.Demoqa
         {
             get
             {
-                return ProductsInFooter[RandNumberOfProduct].Text.TrimEnd('-', '.');
+                return ProductsInFooter[randNumberOfProduct].Text.TrimEnd('-', '.');
             }
         }
-        /// <summary>
-        /// All products in footer
-        /// </summary>
-        [FindsBy(How = How.CssSelector, Using = ".group>li>a[title]:first-of-type")]
-        public IList<IWebElement> ProductsInFooter { get; set; }
 
         /// <summary>
         /// Creates new instance of footer
@@ -58,7 +47,7 @@ namespace Store.Demoqa
         /// </summary>
         public ProductDescriptionPage GoToRandomProduct()
         {
-            ProductsInFooter[RandNumberOfProduct].Click();
+            ProductsInFooter[randNumberOfProduct].Click();
             return new ProductDescriptionPage();
         }
     }

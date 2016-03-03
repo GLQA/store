@@ -14,17 +14,33 @@ namespace Store.Demoqa
     public class StoreTestSuite
     {
         private string userNAme = "qa29";
+
         private string password = "W0fucGsTDnVS";
+
         private string expectedUserGreeting = "Howdy, Qa29";
+
         private string productCategory = "iPhones";
-        private string productToCheckImageEnlargement = "Skullcandy";
+
+        private string productTitleToCheckImageEnlargement = "Skullcandy";
+
         private int productIndex = 0;
+
         private HomePage homePage;
-        public class DataSetForSearchFunctionalityVerification
+
+        /// <summary>
+        /// Class describing dataset used for 'Search Functionality Verification' data-driven test
+        /// </summary>
+        //TODO: rename this piece of shit
+        public class SearchDataSet
         {
             public string ValueToSearch { get; set; }
             public int ExpectedNumberOfFoundProducts { get; set; }
         }
+
+        /// <summary>
+        /// Set of data for 'Search Functionality Verification' data-driven test
+        /// </summary>
+        /// <returns></returns>
         public static IEnumerable<object[]> ProductsForSearch()
         {
             return new[]
@@ -32,7 +48,7 @@ namespace Store.Demoqa
                 new object[]
                 {
                     "Verification of ability to find one product as search result",
-                    new DataSetForSearchFunctionalityVerification()
+                    new SearchDataSet()
                     {
                         ValueToSearch = "magic mouse",
                         ExpectedNumberOfFoundProducts = 1
@@ -41,7 +57,7 @@ namespace Store.Demoqa
                 new object[]
                 {
                     "Verification of ability to find more than one product as search result",
-                    new DataSetForSearchFunctionalityVerification()
+                    new SearchDataSet()
                     {
                         ValueToSearch = "iphone 4",
                         ExpectedNumberOfFoundProducts = 2
@@ -50,6 +66,9 @@ namespace Store.Demoqa
             };
         }
 
+        /// <summary>
+        /// Initialization of new homepage in each test
+        /// </summary>
         [SetUp]
         public void Init()
         {
@@ -62,14 +81,14 @@ namespace Store.Demoqa
         [Test]
         public void ProductContentVerification()
         {
-            //TODO: 1. remove 'driver' parameter from constructors - make it as singleton - Yuliia
+            string TrimmedRandProductTitle = homePage.footer.TrimmedRandProductTitle;
             ProductDescriptionPage prodPage = homePage.footer.GoToRandomProduct();
-            CheckProductTitleEqualsToOpened(homePage.footer.TrimmedRandProductTitle, prodPage.ProductTitleText);
+            CheckOpenedProdTitleContainsRequired(TrimmedRandProductTitle, prodPage.ProductTitleText);
             CheckDescriptionSectionIsNotEmpty(prodPage.ProductDescriptionText);
             CheckPeopleBoughtSectionIsNotEmpty(prodPage.PeopleBoughtSectionText);
         }
         //TODO: 2. make methods from assertions and put them after each test - Maryna and Yuliia
-        private static void CheckProductTitleEqualsToOpened(string randomProductTitle, string pageProductTitle)
+        private static void CheckOpenedProdTitleContainsRequired(string randomProductTitle, string pageProductTitle)
         {
             StringAssert.StartsWith(randomProductTitle, pageProductTitle);
         }
@@ -87,27 +106,23 @@ namespace Store.Demoqa
         /// <summary>
         /// Verification of Search results: search of 'magic mouse' must return 1 product and search of 'iphone 4' nust return two items 
         /// </summary>
-        //TODO: maintain data-driven - Maryna
         [Test, TestCaseSource("ProductsForSearch")]
-        public void SearchResultsVerification(string iterationName, DataSetForSearchFunctionalityVerification dataSet )
+        public void FoundProductsNumberVerification(string iterationName, SearchDataSet dataSet )
         {
             SearchResultsPage searchResults = homePage.header.TypeSearchValueAndSubmit(dataSet.ValueToSearch);
-            CheckThatOnlyRequiredProductsWereFound(searchResults.FirstFoundProductTitle, dataSet.ValueToSearch);
-            CheckThatExpectedProductsNumberWasFound(dataSet.ExpectedNumberOfFoundProducts);
-            List<string> listOfFoundProductsTitles = searchResults.GetFoundProductsTitles();
-            foreach (string prodTitle in listOfFoundProductsTitles)
-                StringAssert.Contains(dataSet.ValueToSearch, prodTitle);
+            CheckThatExpectedProductsNumberWasFound(dataSet.ExpectedNumberOfFoundProducts, searchResults.FoundProducts.Count);
+            CheckThatOnlyRequiredProductsWereFound(searchResults.GetFoundProductsTitles(), dataSet.ValueToSearch);
         }
 
-        private static void CheckThatExpectedProductsNumberWasFound(int foundProductsNumber)
+        private static void CheckThatExpectedProductsNumberWasFound(int expectedQuantity, int actualQuantity)
         {
-            Assert.AreEqual(foundProductsNumber, 1);
+            Assert.AreEqual(expectedQuantity, actualQuantity);
         }
 
-        private void CheckThatOnlyRequiredProductsWereFound(string foundProductTitle, string requiredProductTitle)
+        private static void CheckThatOnlyRequiredProductsWereFound(List<string> listOfFoundProducts, string expectedTitle)
         {
-            
-            StringAssert.AreEqualIgnoringCase(foundProductTitle, requiredProductTitle);
+            foreach (string actualTitle in listOfFoundProducts)
+                Assert.That(actualTitle, Contains.Substring(expectedTitle).IgnoreCase);
         }
 
         /// <summary>
@@ -117,22 +132,32 @@ namespace Store.Demoqa
         public void PictureEnlargementVerification()
         {
             //TODO: check image md5 - Maryna
-            ProductDescriptionPage product = homePage.header.FindProductAndGoToTheFirst(productToCheckImageEnlargement);
-            StringAssert.AreEqualIgnoringCase(product.ProductTitleText, productToCheckImageEnlargement); 
-            product.ProductRegularImage.Click();
-            Assert.IsTrue(product.ProductOpenedImage.Displayed);
-            //check md5
-            Size regularSize = product.ProductOpenedImage.Size;
+            ProductDescriptionPage product = homePage.header.FindProductAndGoToTheFirst(productTitleToCheckImageEnlargement);
+            CheckRequiredProductWasOpened(product.ProductTitleText, productTitleToCheckImageEnlargement);
+            int closedImageHashCode = product.ClosedImage.GetHashCode();
+            product.OpenImage();
+            CheckImageIsDisplayed(product.OpenedImage);
+            int openedImageHashCode = product.OpenedImage.GetHashCode();
+            Assert.AreEqual(closedImageHashCode, openedImageHashCode);
+            Size regularSize = product.OpenedImage.Size;
             product.EnlargeImage();
-            Size enlargedSize = product.ProductOpenedImage.Size;
+            Size enlargedSize = product.OpenedImage.Size;
             Assert.Greater(enlargedSize.Height, regularSize.Height);
             Assert.Greater(enlargedSize.Width, regularSize.Width);
             product.NextImageArrow.Click();
-            Assert.IsTrue(product.ProductOpenedImage.Displayed);
-            //check md5
+            Assert.IsTrue(product.OpenedImage.Displayed);
         }
 
-        //TODO: add summaries everywhere! - Maryna
+        private static void CheckImageIsDisplayed(IWebElement productImage)
+        {
+            Assert.IsTrue(productImage.Displayed);
+        }
+
+        private void CheckRequiredProductWasOpened(string actualTitle, string expectedTitle)
+        {
+            Assert.That(actualTitle, Contains.Substring(expectedTitle).IgnoreCase);
+        }
+
 
         /// <summary>
         /// Verification of the Facebook 'Like' button
@@ -141,6 +166,7 @@ namespace Store.Demoqa
         public void LikeFunctionalityVerification()
         {
             ProductDescriptionPage product = homePage.GoToProductFromCarousel();
+            //TODO: find LIKE btn - Maryna
             product.FBLikeButton.Click();
             product.CloseSecondaryWindow();
             Assert.LessOrEqual(Driver.Instance.driver.WindowHandles.Count, 1);

@@ -5,6 +5,7 @@ using OpenQA.Selenium.Firefox;
 using System.Drawing;
 using System.Collections.Generic;
 using Store.Demoqa.Pages;
+using Store.Demoqa.PopUps;
 
 namespace Store.Demoqa
 {

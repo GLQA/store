@@ -1,27 +1,40 @@
 ﻿using OpenQA.Selenium;
 
-namespace Store.Demoqa.Pages
+namespace Store.Demoqa
 {
     public class PageFrame
     {
-        private IWebDriver driver;
+        /// <summary>
+        /// Gets the footer.
+        /// </summary>
+        /// <value>
+        /// The footer.
+        /// </value>
         public Footer footer
         {
             get
             {
-                return new Footer(driver);
+                return new Footer();
             }
         }
 
+        /// <summary>
+        /// Gets the header.
+        /// </summary>
+        /// <value>
+        /// The header.
+        /// </value>
         public Header header
         {
             get
             {
-                return new Header(driver);
+                return new Header();
             }
         }
-
-        public PageFrame(IWebDriver driver)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PageFrame"/> class.
+        /// </summary>
+        public PageFrame()
         {
 
         }

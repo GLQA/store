@@ -2,12 +2,16 @@
 using OpenQA.Selenium.Support.PageObjects;
 using System.Collections.Generic;
 
-namespace Store.Demoqa.Pages
+namespace Store.Demoqa
 {
     public class SearchResultsPage : PageFrame
     {
-        private IWebDriver driver;
-
+        /// <summary>
+        /// Gets the first found product title.
+        /// </summary>
+        /// <value>
+        /// The first found product title.
+        /// </value>
         public string FirstFoundProductTitle
         {
             get
@@ -15,9 +19,16 @@ namespace Store.Demoqa.Pages
                 return FoundProducts[0].Text;
             }
         }
+        /// <summary>
+        /// The found products
+        /// </summary>
         [FindsBy(How = How.CssSelector, Using = ".prodtitle")]
-        public IList<IWebElement> FoundProducts;
+        public IList<IWebElement> FoundProducts { get; set; }
 
+        /// <summary>
+        /// Gets the found products titles.
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetFoundProductsTitles()
         {
             List<string> listOfFoundProductsTitles = new List<string>();
@@ -26,10 +37,12 @@ namespace Store.Demoqa.Pages
             return listOfFoundProductsTitles;
         }
 
-        public SearchResultsPage(IWebDriver driver) : base(driver)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchResultsPage"/> class.
+        /// </summary>
+        public SearchResultsPage() : base()
         {
-            this.driver = driver;
-            PageFactory.InitElements(driver, this);
+            PageFactory.InitElements(Driver.Instance.driver, this);
         }
     }
 }

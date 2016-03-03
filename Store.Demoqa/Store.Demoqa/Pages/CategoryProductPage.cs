@@ -3,7 +3,7 @@ using OpenQA.Selenium.Support.PageObjects;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Store.Demoqa.Pages
+namespace Store.Demoqa
 {
     /// <summary>
     /// Class describes controls and methods from the central part of the site called Container
@@ -14,45 +14,39 @@ namespace Store.Demoqa.Pages
         /// The category title
         /// </summary>
         [FindsBy(How = How.XPath, Using = ".//*[@id='content']//header/h1")]
-        public IWebElement CategoryTitle;
+        public IWebElement CategoryTitle { get; set; }
 
         /// <summary>
         /// The add to cart button
         /// </summary>
         [FindsBy(How = How.XPath, Using = ".//*[@class='input-button-buy']/span/input")]
-        public IWebElement AddToCartButton;
+        public IWebElement AddToCartButton { get; set; }
 
         /// <summary>
         /// The default ListView
         /// </summary>
         [FindsBy(How = How.XPath, Using = ".//*[@class='product_views group']/div/a[2]")]
-        public IWebElement DefaultListView;
+        public IWebElement DefaultListView { get; set; }
 
         /// <summary>
         /// The first product title
         /// </summary>
         [FindsBy(How = How.XPath, Using = ".//*[@class='prodtitle']/a")]
-        public IList <IWebElement> ProductTitle;
+        public IList<IWebElement> ProductTitle { get; set; }
 
         /// <summary>
         /// The content
         /// </summary>
         [FindsBy(How = How.CssSelector, Using = "#default_products_page_container")]
-        public IWebElement Content;
-
-        /// <summary>
-        /// The driver
-        /// </summary>
-        private IWebDriver driver;
+        public IWebElement Content { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CategoryProductPage"/> class.
         /// </summary>
         /// <param name="driver">The driver.</param>
-        public CategoryProductPage(IWebDriver driver) : base(driver)
+        public CategoryProductPage() : base()
         {
-            this.driver = driver;
-            PageFactory.InitElements(driver, this);
+            PageFactory.InitElements(Driver.Instance.driver, this);
         }
 
         /// <summary>
@@ -64,7 +58,7 @@ namespace Store.Demoqa.Pages
         {
             var product = this.GetProduct(index);
             product.FindElement(By.ClassName("wpsc_buy_button")).Click();
-            return new AddToCartPopUp(this.driver);
+            return new AddToCartPopUp();
         }
 
         /// <summary>
@@ -84,7 +78,7 @@ namespace Store.Demoqa.Pages
         /// <returns></returns>
         public IWebElement GetProduct(int index)
         {
-             return this.Content.FindElements(By.ClassName("productcol")).ElementAt(index);    
-        }  
+            return this.Content.FindElements(By.ClassName("productcol")).ElementAt(index);
+        }
     }
 }

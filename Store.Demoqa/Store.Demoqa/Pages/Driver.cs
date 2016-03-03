@@ -14,7 +14,7 @@ namespace Store.Demoqa
     /// </summary>
     public class DriverSingleton
     {
-        //TODO: move to config file
+        
         /// <summary>
         /// The siteurl
         /// </summary>
@@ -50,8 +50,8 @@ namespace Store.Demoqa
                 return driverInstance;
             }
         }
-        //TODO: init driver with specific options (file directory)
-        //TODO: support of two browsers(+Chrome); move to config; add chrome driver to the project
+        //TODO: init driver with specific options (file directory) and move SITEURL to config - Yuliia
+        //TODO: support of two browsers(+Chrome); move to config; add chrome driver to the project - Yuliia
         /// <summary>
         /// Prevents a default instance of the <see cref="DriverSingleton"/> class from being created.
         /// </summary>

@@ -38,7 +38,7 @@ namespace Store.Demoqa
             var listOfProductsInCart = DriverSingleton.Instance.Driver.FindElements(By.XPath(".//table/tbody//td[2]/a"));
             foreach (IWebElement element in listOfProductsInCart)
             {
-                if (element.Text == prodTitle)
+                if (element.Text.TrimEnd('-', '.') == prodTitle)
                 {
                     return element.Text;
                 }

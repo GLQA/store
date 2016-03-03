@@ -93,7 +93,7 @@ namespace Store.Demoqa
         public string GetProductTitle()
         {
             index = RandNumberOfProductInCategory;
-            return ProductTitle[index].Text.TrimEnd('-', '.'); ;
+            return ProductTitle[index].Text.TrimEnd('-', '.');
         }
 
         /// <summary>

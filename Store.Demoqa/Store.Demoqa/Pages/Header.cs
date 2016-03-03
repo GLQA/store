@@ -173,7 +173,7 @@ namespace Store.Demoqa
             if (searchResults.FoundProducts.Count == 0)
                 throw new InvalidInputValueForSearchException("Search value {0} can't be found, there is no such product", title);
             else
-                searchResults.FoundProducts[0].Click();
+                searchResults.GoToTheFirstFoundProduct();
             return new ProductDescriptionPage();
         }
 

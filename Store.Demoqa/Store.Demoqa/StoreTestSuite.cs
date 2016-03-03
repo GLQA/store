@@ -70,7 +70,7 @@ namespace Store.Demoqa
             CheckDescriptionSectionIsNotEmpty(prodPage.ProductDescriptionText);
             CheckPeopleBoughtSectionIsNotEmpty(prodPage.PeopleBoughtSectionText);
         }
-        //TODO: remove static from assertions
+        //TODO: remove static from assertions - Maryna and Yuliia
         /// <summary>
         /// Checks the product title equals to opened.
         /// </summary>
@@ -268,7 +268,7 @@ namespace Store.Demoqa
             Assert.AreEqual(prodTitle, cart.GetProductFromCart(prodTitle));
         }
 
-        //TODO: create base test, base tear down
+        //TODO: create base test, base tear down - Maryna
         /// <summary>
         /// Closes the browser
         /// </summary>
@@ -277,10 +277,10 @@ namespace Store.Demoqa
         {
             DriverSingleton.Instance.Close();
         }
-        //TODO: HTMLElements
-        //ToDO: install selenium grid; two processes(two singletons) similar parts(two solutions: thread local, delete singleton)
-        //TODO: create screen repository
-        //TODO: reorganize tests according to functionality
-        //TODO: reorganize classes 
+        //TODO: HTMLElements - Yuliia
+        //ToDO: install selenium grid; two processes(two singletons) similar parts(two solutions: thread local, delete singleton) - Maryna
+        //TODO: create screen repository - Maryna
+        //TODO: reorganize tests according to functionality - Yuliia
+        //TODO: reorganize pages - Maryna 
     }
 }

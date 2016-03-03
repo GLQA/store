@@ -7,23 +7,13 @@ namespace Store.Demoqa
     public class SearchResultsPage : PageFrame
     {
         /// <summary>
-        /// Gets the first found product title.
-        /// </summary>
-        /// <value>
-        /// The first found product title.
-        /// </value>
-        public string FirstFoundProductTitle
-        {
-            get
-            {
-                return FoundProducts[0].Text;
-            }
-        }
-        /// <summary>
         /// The found products
         /// </summary>
         [FindsBy(How = How.CssSelector, Using = ".prodtitle")]
         public IList<IWebElement> FoundProducts { get; set; }
+
+        [FindsBy(How = How.CssSelector, Using = ".prodtitle>a[href]:first-of-type")]
+        public IWebElement FirstFoundProductReference { get; set; }
 
         /// <summary>
         /// Gets the found products titles.
@@ -35,6 +25,12 @@ namespace Store.Demoqa
             foreach (IWebElement product in FoundProducts)
                 listOfFoundProductsTitles.Add(product.Text);
             return listOfFoundProductsTitles;
+        }
+
+        public ProductDescriptionPage GoToTheFirstFoundProduct()
+        {
+            FirstFoundProductReference.Click();
+            return new ProductDescriptionPage();
         }
 
         /// <summary>

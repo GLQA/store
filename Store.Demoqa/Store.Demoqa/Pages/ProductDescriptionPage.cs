@@ -42,7 +42,7 @@ namespace Store.Demoqa
         /// The product opened image
         /// </summary>
         [FindsBy(How = How.CssSelector, Using = "#fullResImage")]
-        public IWebElement ProductOpenedImage { get; set; }
+        public IWebElement OpenedImage { get; set; }
 
         /// <summary>
         /// The next image arrow
@@ -77,7 +77,7 @@ namespace Store.Demoqa
         /// <value>
         /// The product regular image.
         /// </value>
-        public IWebElement ProductRegularImage
+        public IWebElement ClosedImage
         {
             get { return ProdPageImages[0]; }
         }
@@ -123,6 +123,10 @@ namespace Store.Demoqa
             ExpandImageButton.Click();
         }
 
+        public void OpenImage()
+        {
+            ClosedImage.Click();
+        }
         /// <summary>
         /// Closes the secondary window.
         /// </summary>

@@ -13,8 +13,6 @@ namespace Store.Demoqa
     [TestFixture]
     public class StoreTestSuite
     {
-        private string productTitleThatGivesOneSearchResult = "magic mouse";
-        private string prodNameThatGivesSeveralSearchResult = "iphone 4";
         private string userNAme = "qa29";
         private string password = "W0fucGsTDnVS";
         private string expectedUserGreeting = "Howdy, Qa29";

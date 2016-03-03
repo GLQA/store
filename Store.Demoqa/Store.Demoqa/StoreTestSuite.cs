@@ -15,19 +15,29 @@ namespace Store.Demoqa
     public class StoreTestSuite
     {
         private string productTitleThatGivesOneSearchResult = "magic mouse";
+
         private string prodNameThatGivesSeveralSearchResult = "iphone 4";
+
         private string userNAme = "qa29";
+
         private string password = "W0fucGsTDnVS";
+
         private string expectedUserGreeting = "Howdy, Qa29";
+
         private string productCategory = "iPhones";
+
         private string productToCheckImageEnlargement = "Skullcandy";
+
         private int productIndex = 0;
+
         private HomePage homePage;
+
         public class DataSetForSearchFunctionalityVerification
         {
             public string ValueToSearch { get; set; }
             public int ExpectedNumberOfFoundProducts { get; set; }
         }
+
         public static IEnumerable<object[]> ProductsForSearch()
         {
             return new[]
@@ -54,10 +64,12 @@ namespace Store.Demoqa
         }
 
         private const string SITEURL = "http://store.demoqa.com/";
+
         /// <summary>
         /// driver declaration
         /// </summary>
         private IWebDriver driver;
+
         /// <summary>
         /// Starts Firefox browser, opens site "http://store.demoqa.com/" and maximizes window
         /// Open site http://store.demoqa.com/
@@ -101,9 +113,8 @@ namespace Store.Demoqa
         }
 
         /// <summary>
-        /// Verification of Search results: search of 'magic mouse' must return 1 product and search of 'iphone 4' nust return two items 
+        /// Verification of Search results: search of 'magic mouse' must return 1 product and search of 'iphone 4' must return two items 
         /// </summary>
-        //TODO: maintain data-driven - Maryna
         [Test, TestCaseSource("ProductsForSearch")]
         public void SearchResultsVerification(string iterationName, DataSetForSearchFunctionalityVerification dataSet )
         {
@@ -147,8 +158,6 @@ namespace Store.Demoqa
             Assert.IsTrue(product.ProductOpenedImage.Displayed);
             //check md5
         }
-
-        //TODO: add summaries everywhere! - Maryna
 
         /// <summary>
         /// Verification of the Facebook 'Like' button

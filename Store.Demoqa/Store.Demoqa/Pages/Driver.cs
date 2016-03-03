@@ -12,8 +12,9 @@ namespace Store.Demoqa
     /// <summary>
     /// WebDriver Singleton
     /// </summary>
-    public class Driver
+    public class DriverSingleton
     {
+        //TODO: move to config file
         /// <summary>
         /// The siteurl
         /// </summary>
@@ -25,12 +26,12 @@ namespace Store.Demoqa
         /// <value>
         /// The driver.
         /// </value>
-        public IWebDriver driver { get; }
+        public IWebDriver Driver { get; }
 
         /// <summary>
         /// The driver instance
         /// </summary>
-        private static Driver driverInstance;
+        private static DriverSingleton driverInstance;
 
         /// <summary>
         /// Gets the instance.
@@ -38,25 +39,26 @@ namespace Store.Demoqa
         /// <value>
         /// The instance.
         /// </value>
-        public static Driver Instance
+        public static DriverSingleton Instance
         {
             get
             {
                 if (driverInstance == null)
                 {
-                    driverInstance = new Driver();
+                    driverInstance = new DriverSingleton();
                 }
                 return driverInstance;
             }
         }
-
+        //TODO: init driver with specific options (file directory)
+        //TODO: support of two browsers(+Chrome); move to config; add chrome driver to the project
         /// <summary>
-        /// Prevents a default instance of the <see cref="Driver"/> class from being created.
+        /// Prevents a default instance of the <see cref="DriverSingleton"/> class from being created.
         /// </summary>
-        private Driver() {
-            driver = new FirefoxDriver();
-            driver.Navigate().GoToUrl(SITEURL);
-            driver.Manage().Window.Maximize();
+        private DriverSingleton() {
+            Driver = new FirefoxDriver();
+            Driver.Navigate().GoToUrl(SITEURL);
+            Driver.Manage().Window.Maximize();
         }
 
         /// <summary>
@@ -64,7 +66,7 @@ namespace Store.Demoqa
         /// </summary>
         public void Close()
         {
-            this.driver.Quit();
+            this.Driver.Quit();
             driverInstance = null;
         }
     }

@@ -38,7 +38,7 @@ namespace Store.Demoqa
         /// <param name="driver">The driver.</param>
         public AddToCartPopUp()
         {
-            PageFactory.InitElements(Driver.Instance.driver, this);
+            PageFactory.InitElements(DriverSingleton.Instance.Driver, this);
         }
     }
 }

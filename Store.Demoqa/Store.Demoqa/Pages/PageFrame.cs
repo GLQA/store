@@ -10,7 +10,7 @@ namespace Store.Demoqa
         /// <value>
         /// The footer.
         /// </value>
-        public Footer footer
+        public Footer Footer
         {
             get
             {
@@ -24,20 +24,18 @@ namespace Store.Demoqa
         /// <value>
         /// The header.
         /// </value>
-        public Header header
+        public Header Header
         {
             get
             {
                 return new Header();
             }
         }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PageFrame"/> class.
         /// </summary>
-        public PageFrame()
-        {
-
-        }
+        public PageFrame(){}
     }
 }
       

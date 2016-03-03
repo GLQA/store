@@ -11,7 +11,7 @@ namespace Store.Demoqa
         /// </summary>
         public ProductDescriptionPage() : base()
         {
-           PageFactory.InitElements(Driver.Instance.driver, this);
+           PageFactory.InitElements(DriverSingleton.Instance.Driver, this);
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Store.Demoqa
         /// </summary>
         public void CloseSecondaryWindow()
         {
-            Driver.Instance.driver.SwitchTo().Window(Driver.Instance.driver.WindowHandles[1]).Close();
+            DriverSingleton.Instance.Driver.SwitchTo().Window(DriverSingleton.Instance.Driver.WindowHandles[1]).Close();
         }
     }
 }

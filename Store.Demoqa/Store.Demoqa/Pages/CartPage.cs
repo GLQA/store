@@ -16,7 +16,7 @@ namespace Store.Demoqa
         /// <summary>
         /// The cart page header
         /// </summary>
-        [FindsBy(How = How.XPath, Using = ".//*[@id='post-29']/header/h1")]
+        [FindsBy(How = How.CssSelector, Using = "#post-29>header>h1")]
         public IWebElement CartPageHeader { get; set; }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Store.Demoqa
         /// <param name="driver">The driver.</param>
         public CartPage() : base()
         {
-            PageFactory.InitElements(Driver.Instance.driver, this);
+            PageFactory.InitElements(DriverSingleton.Instance.Driver, this);
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Store.Demoqa
         /// <returns></returns>
         public string GetProductFromCart(string prodTitle)
         {
-            var listOfProductsInCart = Driver.Instance.driver.FindElements(By.XPath(".//table/tbody//td[2]/a"));
+            var listOfProductsInCart = DriverSingleton.Instance.Driver.FindElements(By.XPath(".//table/tbody//td[2]/a"));
             foreach (IWebElement element in listOfProductsInCart)
             {
                 if (element.Text == prodTitle)

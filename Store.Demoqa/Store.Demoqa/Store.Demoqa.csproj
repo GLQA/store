@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="InvalidInputValueForSearchException.cs" />
     <Compile Include="Pages\Driver.cs" />
+    <Compile Include="Pages\Meta.cs" />
     <Compile Include="Pages\PageFrame.cs" />
     <Compile Include="Pages\CartPage.cs" />
     <Compile Include="Pages\AddToCartPopUp.cs" />

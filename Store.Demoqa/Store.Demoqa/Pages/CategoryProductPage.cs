@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
+using Store.Demoqa.PopUps;
 using System;
 using System.Collections.Generic;
 using System.Linq;

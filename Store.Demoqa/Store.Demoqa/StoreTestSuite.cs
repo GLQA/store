@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Collections.Generic;
 using Store.Demoqa.Pages;
 using Store.Demoqa.PopUps;
+using OpenQA.Selenium.Support.UI;
+using System.Linq;
 
 namespace Store.Demoqa
 {
@@ -31,8 +33,10 @@ namespace Store.Demoqa
 
         private string productTitleToCheckImageEnlargement = "Skullcandy";
 
+        private string expectedFacebookPageTitle = "Facebook";
+
         private HomePage homePage;
-        
+
         /// <summary>
         /// Class describing dataset used for 'Search Functionality Verification' data-driven test
         /// </summary>
@@ -77,7 +81,7 @@ namespace Store.Demoqa
         [SetUp]
         public void Init()
         {
-             homePage = new HomePage();
+            homePage = new HomePage();
         }
 
         /// <summary>
@@ -86,6 +90,8 @@ namespace Store.Demoqa
         [Test]
         public void ProductContentVerification()
         {
+            //!!!!!
+            Footer footer = homePage.Footer;
             string TrimmedRandProductTitle = homePage.Footer.TrimmedRandProductTitle;
             ProductDescriptionPage prodPage = homePage.Footer.GoToRandomProduct();
             CheckOpenedProdTitleContainsRequired(TrimmedRandProductTitle, prodPage.ProductTitleText);
@@ -93,7 +99,7 @@ namespace Store.Demoqa
             CheckPeopleBoughtSectionIsNotEmpty(prodPage.PeopleBoughtSectionText);
         }
 
-        //TODO: remove static from assertions - Maryna and Yuliia
+        //TODO: remove static from assertions - Yuliia
 
         /// <summary>
         /// Checks the product title equals to opened.
@@ -132,9 +138,6 @@ namespace Store.Demoqa
             SearchResultsPage searchResults = homePage.Header.TypeSearchValueAndSubmit(dataSet.ValueToSearch);
             CheckThatOnlyRequiredProductsWereFound(searchResults.GetFoundProductsTitles(), dataSet.ValueToSearch);
             CheckThatExpectedProductsNumberWasFound(dataSet.ExpectedNumberOfFoundProducts, searchResults.FoundProducts.Count);
-            List<string> listOfFoundProductsTitles = searchResults.GetFoundProductsTitles();
-            foreach (string prodTitle in listOfFoundProductsTitles)
-            StringAssert.Contains(dataSet.ValueToSearch, prodTitle);
         }
 
         /// <summary>
@@ -207,9 +210,30 @@ namespace Store.Demoqa
         public void LikeFunctionalityVerification()
         {
             ProductDescriptionPage product = homePage.GoToProductFromCarousel();
-            product.FBLikeButton.Click();
-            product.CloseSecondaryWindow();
+            product.ClickFaceBookLikeButton();
+            FaceBookLoginPage faceBookLoginPage = product.SwitchToFaceBookWindow();
+            CheckOpenedPageIsFaceBookLoginPage(faceBookLoginPage.TitleText, expectedFacebookPageTitle);
+            faceBookLoginPage.Close();
+            CheckFaceBookPageIsClosed();
+        }
+
+        /// <summary>
+        /// Checks that opened FaceBook login page is closed now
+        /// </summary>
+        private static void CheckFaceBookPageIsClosed()
+        {
             Assert.LessOrEqual(DriverSingleton.Instance.Driver.WindowHandles.Count, 1);
+        }
+
+        /// <summary>
+        /// Checks that FaceBook login page has been opened
+        /// </summary>
+        /// <param name="actualTitle"></param>
+        /// <param name="expectedTitle"></param>
+        private void CheckOpenedPageIsFaceBookLoginPage(string actualTitle, string expectedTitle)
+        {
+            StringAssert.AreEqualIgnoringCase(actualTitle, expectedTitle);
+            Assert.That(DriverSingleton.Instance.Driver.Url, Contains.Substring(expectedTitle).IgnoreCase);
         }
 
         /// <summary>
@@ -329,6 +353,5 @@ namespace Store.Demoqa
         //ToDO: install selenium grid; two processes(two singletons) similar parts(two solutions: thread local, delete singleton) - Maryna
         //TODO: create screen repository - Maryna
         //TODO: reorganize tests according to functionality - Yuliia
-        //TODO: reorganize pages - Maryna 
     }
 }

@@ -72,6 +72,7 @@
     <Compile Include="PageBaseComponents\Header.cs" />
     <Compile Include="PageBaseComponents\PageFrame.cs" />
     <Compile Include="Driver.cs" />
+    <Compile Include="Pages\FaceBookPage.cs" />
     <Compile Include="Pages\Meta.cs" />
     <Compile Include="Pages\CartPage.cs" />
     <Compile Include="Pages\CategoryProductPage.cs" />

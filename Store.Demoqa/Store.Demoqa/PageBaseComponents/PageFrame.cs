@@ -32,6 +32,11 @@ namespace Store.Demoqa
             }
         }
 
+        public void RefreshPage()
+        {
+            DriverSingleton.Instance.Driver.Navigate().Refresh();
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PageFrame"/> class.
         /// </summary>

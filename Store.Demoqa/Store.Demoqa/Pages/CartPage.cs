@@ -19,6 +19,9 @@ namespace Store.Demoqa
         [FindsBy(How = How.CssSelector, Using = "#post-29>header>h1")]
         public IWebElement CartPageHeader { get; set; }
 
+        [FindsBy(How = How.XPath, Using = ".//table/tbody//td[2]/a")]
+        public IList<IWebElement> listOfProductsInCart;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CartPage"/> class.
         /// </summary>
@@ -33,17 +36,16 @@ namespace Store.Demoqa
         /// </summary>
         /// <param name="prodTitle"></param>
         /// <returns></returns>
-        public string GetProductFromCart(string prodTitle)
+        public bool GetProductFromCart(string prodTitle)
         {
-            var listOfProductsInCart = DriverSingleton.Instance.Driver.FindElements(By.XPath(".//table/tbody//td[2]/a"));
-            foreach (IWebElement element in listOfProductsInCart)
+           foreach (IWebElement element in listOfProductsInCart)
             {
-                if (element.Text.TrimEnd('-', '.') == prodTitle)
+                if (element.Text == prodTitle)
                 {
-                    return element.Text;
+                    return true;
                 }
             }
-            return null;
+            return false;
         }
     }
 }

@@ -11,8 +11,6 @@ namespace Store.Demoqa
     /// </summary>
     public class CategoryProductPage : PageFrame
     {
-        int index;
-
         /// <summary>
         /// The category title
         /// </summary>
@@ -58,31 +56,20 @@ namespace Store.Demoqa
         /// <param name="index">The index.</param>
         /// <returns></returns>
         /// 
-         public AddToCartPopUp AddProductToTheCart()
+        public AddToCartPopUp AddProductToTheCart(int index)
         {
-            var product = this.GetProduct();
+            var product = this.GetProductByIndex(index);
             product.FindElement(By.ClassName("wpsc_buy_button")).Click();
             return new AddToCartPopUp();
-        }
-        /// Number of products in footer
-        /// </summary>
-        private int NumberOfProductsInCategory
-        {
-            get
-            {
-                return Products.Count;
-            }
         }
 
         /// <summary>
         /// Random product from footer that will be used it tests
         /// </summary>
-        private int RandNumberOfProductInCategory
+        public int RandNumberOfProductInCategory()
         {
-            get
-            {
-                return (new Random()).Next(0, NumberOfProductsInCategory);
-            }
+            var productsCount = Products.Count;
+            return (new Random()).Next(0, productsCount);
         }
 
         /// <summary>
@@ -90,10 +77,9 @@ namespace Store.Demoqa
         /// </summary>
         /// <param name="index">The index.</param>
         /// <returns></returns>
-        public string GetProductTitle()
+        public string GetProductTitleByIndex(int index)
         {
-            index = RandNumberOfProductInCategory;
-            return ProductTitle[index].Text.TrimEnd('-', '.');
+            return ProductTitle[index].Text;
         }
 
         /// <summary>
@@ -101,7 +87,7 @@ namespace Store.Demoqa
         /// </summary>
         /// <param name="index">The index.</param>
         /// <returns></returns>
-        public IWebElement GetProduct()
+        public IWebElement GetProductByIndex(int index)
         {
             return Products[index];
         }

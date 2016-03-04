@@ -19,7 +19,6 @@ namespace Store.Demoqa
         private string expectedUserGreeting = "Howdy, Qa29";
         private string productCategory = "iPhones";
         private string productToCheckImageEnlargement = "Skullcandy";
-        private int productIndex = 0;
         private string expectedLogInLogOutLinkName = "Log in";
         private HomePage homePage;
         
@@ -105,7 +104,7 @@ namespace Store.Demoqa
         public void SearchResultsVerification(string iterationName, DataSetForSearchFunctionalityVerification dataSet )
         {
             SearchResultsPage searchResults = homePage.Header.TypeSearchValueAndSubmit(dataSet.ValueToSearch);
-            CheckThatOnlyRequiredProductsWereFound(searchResults.FirstFoundProductTitle, dataSet.ValueToSearch);
+           // CheckThatOnlyRequiredProductsWereFound(searchResults.FirstFoundProductTitle, dataSet.ValueToSearch);
             CheckThatExpectedProductsNumberWasFound(dataSet.ExpectedNumberOfFoundProducts);
             List<string> listOfFoundProductsTitles = searchResults.GetFoundProductsTitles();
             foreach (string prodTitle in listOfFoundProductsTitles)
@@ -139,11 +138,11 @@ namespace Store.Demoqa
         {
             //TODO: check image md5 - Maryna
             ProductDescriptionPage product = homePage.Header.FindProductAndGoToTheFirst(productToCheckImageEnlargement);
-            StringAssert.AreEqualIgnoringCase(product.ProductTitleText, productToCheckImageEnlargement); 
+            StringAssert.AreEqualIgnoringCase(product.ProductTitleText, productToCheckImageEnlargement);
             product.ProductRegularImage.Click();
             Assert.IsTrue(product.ProductOpenedImage.Displayed);
             //check md5
-            Size regularSize = product.ProductOpenedImage.Size;
+             Size regularSize = product.ProductOpenedImage.Size;
             product.EnlargeImage();
             Size enlargedSize = product.ProductOpenedImage.Size;
             Assert.Greater(enlargedSize.Height, regularSize.Height);
@@ -188,7 +187,7 @@ namespace Store.Demoqa
         /// Checks the that user logged out.
         /// </summary>
         /// <param name="meta">The meta.</param>
-        private static void CheckThatUserLoggedOut(string expectedLogInLogOutLinkName, Meta meta)
+        private void CheckThatUserLoggedOut(string expectedLogInLogOutLinkName, Meta meta)
         {
             Assert.AreEqual(expectedLogInLogOutLinkName, meta.LogInLogOutLink.Text);
         }
@@ -197,7 +196,7 @@ namespace Store.Demoqa
         /// </summary>
         /// <param name="expectedUserGreeting">The expected user greeting.</param>
         /// <param name="homePage">The home page.</param>
-        private static void CheckThatUserIsLoggedIn( string expectedUserGreeting, HomePage homePage)
+        private void CheckThatUserIsLoggedIn( string expectedUserGreeting, HomePage homePage)
         {
             Assert.AreEqual(expectedUserGreeting, homePage.Header.HomePageUserName.Text);
         }
@@ -218,7 +217,7 @@ namespace Store.Demoqa
         /// </summary>
         /// <param name="productCategory">The product category.</param>
         /// <param name="content">The content.</param>
-        private static void CheckProductCategoryNameEqualsToCategoryTitle(string productCategory, CategoryProductPage content)
+        private void CheckProductCategoryNameEqualsToCategoryTitle(string productCategory, CategoryProductPage content)
         {
             Assert.AreEqual(productCategory, content.CategoryTitle.Text);
         }
@@ -227,7 +226,7 @@ namespace Store.Demoqa
         /// Checks the ListView is enabled.
         /// </summary>
         /// <param name="content">The content.</param>
-        private static void CheckListViewIsEnabled(CategoryProductPage content)
+        private void CheckListViewIsEnabled(CategoryProductPage content)
         {
             Assert.That(content.DefaultListView.Enabled);
         }
@@ -236,11 +235,12 @@ namespace Store.Demoqa
         /// Selects product by index and adding it to the cart 
         /// </summary>  
         [Test]
-        public void AddProductToCartVerification()
+        public void AddRandomProductToCartVerification()
         {
             CategoryProductPage content = homePage.Header.SelectProductCategory(productCategory);
-            string prodTitle = content.GetProductTitle();
-            AddToCartPopUp popUp = content.AddProductToTheCart();
+            int productIndex = content.RandNumberOfProductInCategory();
+            string prodTitle = content.GetProductTitleByIndex(productIndex);
+            AddToCartPopUp popUp = content.AddProductToTheCart(productIndex);
             DriverSingleton.Instance.Driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
             popUp.ContinueShoppingButton.Click();
             DriverSingleton.Instance.Driver.Navigate().Refresh();
@@ -253,7 +253,7 @@ namespace Store.Demoqa
         /// Checks the number of added products equals to number of items in cart.
         /// </summary>
         /// <param name="homePage">The home page.</param>
-        private static void CheckNumberOfAddedProductsEqualsToNumberOfItemsInCart(HomePage homePage)
+        private void CheckNumberOfAddedProductsEqualsToNumberOfItemsInCart(HomePage homePage)
         {
             Assert.AreEqual("1", homePage.Header.ItemsButton.Text);
         }
@@ -263,9 +263,9 @@ namespace Store.Demoqa
         /// </summary>
         /// <param name="prodTitle">The product title.</param>
         /// <param name="cart">The cart.</param>
-        private static void CheckProductTitleEqualsToProductTitleInCart(string prodTitle, CartPage cart)
+        private void CheckProductTitleEqualsToProductTitleInCart(string prodTitle, CartPage cart)
         {
-            Assert.AreEqual(prodTitle, cart.GetProductFromCart(prodTitle));
+            Assert.IsTrue(cart.GetProductFromCart(prodTitle));
         }
 
         //TODO: create base test, base tear down - Maryna

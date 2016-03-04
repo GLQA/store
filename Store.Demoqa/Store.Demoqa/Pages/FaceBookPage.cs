@@ -28,7 +28,7 @@ namespace Store.Demoqa
 
         public void Close()
         {
-            DriverSingleton.Instance.Driver.SwitchTo().Window(DriverSingleton.Instance.Driver.WindowHandles[1]).Close();
+            DriverSingleton.Instance.Driver.Close();
         }
     }
 }

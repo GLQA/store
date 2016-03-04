@@ -1,13 +1,10 @@
 ﻿using System;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
 using System.Drawing;
 using System.Collections.Generic;
 using Store.Demoqa.Pages;
 using Store.Demoqa.PopUps;
-using OpenQA.Selenium.Support.UI;
-using System.Linq;
 
 namespace Store.Demoqa
 {
@@ -90,8 +87,6 @@ namespace Store.Demoqa
         [Test]
         public void ProductContentVerification()
         {
-            //!!!!!
-            Footer footer = homePage.Footer;
             string TrimmedRandProductTitle = homePage.Footer.TrimmedRandProductTitle;
             ProductDescriptionPage prodPage = homePage.Footer.GoToRandomProduct();
             CheckOpenedProdTitleContainsRequired(TrimmedRandProductTitle, prodPage.ProductTitleText);
@@ -169,11 +164,12 @@ namespace Store.Demoqa
             //TODO: check image md5 - Maryna
             ProductDescriptionPage product = homePage.Header.FindProductAndGoToTheFirst(productTitleToCheckImageEnlargement);
             CheckRequiredProductWasOpened(product.ProductTitleText, productTitleToCheckImageEnlargement);
-            int closedImageHashCode = product.ClosedImage.GetHashCode();
+            
             product.OpenImage();
             CheckImageIsDisplayed(product.OpenedImage);
-            int openedImageHashCode = product.OpenedImage.GetHashCode();
-            Assert.AreEqual(closedImageHashCode, openedImageHashCode);
+            
+            
+            
             Size regularSize = product.OpenedImage.Size;
             product.EnlargeImage();
             Size enlargedSize = product.OpenedImage.Size;
@@ -181,7 +177,6 @@ namespace Store.Demoqa
             Assert.Greater(enlargedSize.Width, regularSize.Width);
             product.NextImageArrow.Click();
             Assert.IsTrue(product.OpenedImage.Displayed);
-            //check md5
         }
 
         /// <summary>
@@ -220,7 +215,7 @@ namespace Store.Demoqa
         /// <summary>
         /// Checks that opened FaceBook login page is closed now
         /// </summary>
-        private static void CheckFaceBookPageIsClosed()
+        private void CheckFaceBookPageIsClosed()
         {
             Assert.LessOrEqual(DriverSingleton.Instance.Driver.WindowHandles.Count, 1);
         }

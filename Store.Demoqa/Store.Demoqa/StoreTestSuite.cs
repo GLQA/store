@@ -137,19 +137,19 @@ namespace Store.Demoqa
         public void PictureEnlargementVerification()
         {
             //TODO: check image md5 - Maryna
-            ProductDescriptionPage product = homePage.Header.FindProductAndGoToTheFirst(productToCheckImageEnlargement);
-            StringAssert.AreEqualIgnoringCase(product.ProductTitleText, productToCheckImageEnlargement);
-            product.ProductRegularImage.Click();
-            Assert.IsTrue(product.ProductOpenedImage.Displayed);
-            //check md5
-             Size regularSize = product.ProductOpenedImage.Size;
-            product.EnlargeImage();
-            Size enlargedSize = product.ProductOpenedImage.Size;
-            Assert.Greater(enlargedSize.Height, regularSize.Height);
-            Assert.Greater(enlargedSize.Width, regularSize.Width);
-            product.NextImageArrow.Click();
-            Assert.IsTrue(product.ProductOpenedImage.Displayed);
-            //check md5
+            //ProductDescriptionPage product = homePage.Header.FindProductAndGoToTheFirst(productToCheckImageEnlargement);
+            //StringAssert.AreEqualIgnoringCase(product.ProductTitleText, productToCheckImageEnlargement);
+            //product.ProductRegularImage.Click();
+            //Assert.IsTrue(product.ProductOpenedImage.Displayed);
+            ////check md5
+            // Size regularSize = product.ProductOpenedImage.Size;
+            //product.EnlargeImage();
+            //Size enlargedSize = product.ProductOpenedImage.Size;
+            //Assert.Greater(enlargedSize.Height, regularSize.Height);
+            //Assert.Greater(enlargedSize.Width, regularSize.Width);
+            //product.NextImageArrow.Click();
+            //Assert.IsTrue(product.ProductOpenedImage.Displayed);
+            ////check md5
         }
 
         /// <summary>

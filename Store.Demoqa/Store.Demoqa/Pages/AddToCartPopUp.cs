@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using HtmlElements.Elements;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
 
 namespace Store.Demoqa
@@ -6,7 +7,8 @@ namespace Store.Demoqa
     /// <summary>
     /// Class describes work with Add to Cart pop-up
     /// </summary>
-    public class AddToCartPopUp
+    public class AddToCartPopUp 
+
     {
         /// <summary>
         /// The add to cart popup
@@ -14,6 +16,7 @@ namespace Store.Demoqa
         [FindsBy(How = How.CssSelector, Using = "#fancy_notification_content")]
         public IWebElement AddToCartPopup { get; set; }
 
+      // [HtmlElements.ElementGroup("Search request input")]
         /// <summary>
         /// The pop up text field
         /// </summary>

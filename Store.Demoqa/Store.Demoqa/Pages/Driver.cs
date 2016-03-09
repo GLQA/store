@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
+using System.Configuration;
 using OpenQA.Selenium.Support.PageObjects;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,6 @@ namespace Store.Demoqa
     public class DriverSingleton
     {
         
-        /// <summary>
-        /// The siteurl
-        /// </summary>
-        private const string SITEURL = "http://store.demoqa.com/";
-
         /// <summary>
         /// Gets the driver.
         /// </summary>
@@ -50,13 +46,15 @@ namespace Store.Demoqa
                 return driverInstance;
             }
         }
-        //TODO: init driver with specific options (file directory) and move SITEURL to config - Yuliia
+
+        //TODO: init driver with specific options, configurations (file directory) and move SITEURL to config - Yuliia
         //TODO: support of two browsers(+Chrome); move to config; add chrome driver to the project - Yuliia
         /// <summary>
         /// Prevents a default instance of the <see cref="DriverSingleton"/> class from being created.
         /// </summary>
         private DriverSingleton() {
-            Driver = new FirefoxDriver();
+            Driver = Factory.CreateDriverInstance();
+            string SITEURL = Config.GetSite();
             Driver.Navigate().GoToUrl(SITEURL);
             Driver.Manage().Window.Maximize();
         }

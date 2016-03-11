@@ -68,8 +68,14 @@ namespace Store.Demoqa
         /// <value>
         /// The fb like button.
         /// </value>
-        [FindsBy(How = How.CssSelector, Using = ".pluginButtonLabel")]
-        public IWebElement FBLikeButton { get; set; }
+        [FindsBy(How = How.CssSelector, Using = ".pluginButtonImage>button")]
+        public IWebElement FaceBookLikeButton { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [FindsBy(How = How.CssSelector, Using = ".fb-like.fb_iframe_widget>span>iframe")]
+        public IWebElement FaceBookContainer { get; set; }
 
         /// <summary>
         /// Gets the product regular image.
@@ -116,6 +122,26 @@ namespace Store.Demoqa
         }
 
         /// <summary>
+        /// Switches driver from main content to the Facebook iframe
+        /// </summary>
+        public void GoToFaceBookFrame()
+        {
+            DriverSingleton.Instance.Driver.SwitchTo().Frame(FaceBookContainer);
+        }
+
+        /// <summary>
+        /// Switches driver to Facebook iframe and click button 'Like'. Page is refreshing because after first clicking 'Like' button disappears. Returns new instance of Facebook login page 
+        /// </summary>
+        public void ClickFaceBookLikeButton()
+        {
+            //TODO:try fire event
+            GoToFaceBookFrame();
+            FaceBookLikeButton.Click();
+            RefreshPage();
+            GoToFaceBookFrame();
+            FaceBookLikeButton.Click();
+        }
+        /// <summary>
         /// Enlarges the image.
         /// </summary>
         public void EnlargeImage()
@@ -123,16 +149,21 @@ namespace Store.Demoqa
             ExpandImageButton.Click();
         }
 
+        /// <summary>
+        /// Opens image of the product
+        /// </summary>
         public void OpenImage()
         {
             ClosedImage.Click();
         }
+
         /// <summary>
-        /// Closes the secondary window.
+        /// Switches driver to the secondary window with Facebook login page
         /// </summary>
-        public void CloseSecondaryWindow()
+        public FaceBookLoginPage SwitchToFaceBookWindow()
         {
-            DriverSingleton.Instance.Driver.SwitchTo().Window(DriverSingleton.Instance.Driver.WindowHandles[1]).Close();
+            DriverSingleton.Instance.Driver.SwitchTo().Window(DriverSingleton.Instance.Driver.WindowHandles[1]);
+            return new FaceBookLoginPage();
         }
     }
 }

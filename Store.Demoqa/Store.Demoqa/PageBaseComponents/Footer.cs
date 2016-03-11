@@ -11,17 +11,33 @@ namespace Store.Demoqa
         /// All products in footer
         /// </summary>
         [FindsBy(How = How.CssSelector, Using = ".group>li>a[title]:first-of-type")]
-        public static IList<IWebElement> ProductsInFooter { get; set; }
+        public IList<IWebElement> ProductsInFooter { get; set; }
 
+
+        private int randNumberOfProduct;
         /// <summary>
         /// Random index number of product from footer that will be used it tests
         /// </summary>
-        public int randNumberOfProduct = new Random().Next(0, productsQuantityInFooter);
+        /// //make as singleton
+        public int GetRandValue()
+        {
+            if (randNumberOfProduct == null )
+                {
+                    randNumberOfProduct = new Random().Next(0, productsQuantityInFooter);
+                }
+            return randNumberOfProduct;
+        }
 
         /// <summary>
         /// Number of products in footer
         /// </summary>
-        public static int productsQuantityInFooter = ProductsInFooter.Count; 
+        public int productsQuantityInFooter
+        {
+            get
+            {
+                return ProductsInFooter.Count;
+            }
+        }
 
         /// <summary>
         /// Returns a title of random product from footer

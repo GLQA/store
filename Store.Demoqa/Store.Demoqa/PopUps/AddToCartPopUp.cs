@@ -2,7 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
 
-namespace Store.Demoqa
+namespace Store.Demoqa.PopUps
 {
     /// <summary>
     /// Class describes work with Add to Cart pop-up

@@ -1,6 +1,4 @@
-﻿using OpenQA.Selenium;
-
-namespace Store.Demoqa
+﻿namespace Store.Demoqa
 {
     public class PageFrame
     {
@@ -30,6 +28,14 @@ namespace Store.Demoqa
             {
                 return new Header();
             }
+        }
+
+        /// <summary>
+        /// Refreshes current page
+        /// </summary>
+        public void RefreshPage()
+        {
+            DriverSingleton.Instance.Driver.Navigate().Refresh();
         }
 
         /// <summary>

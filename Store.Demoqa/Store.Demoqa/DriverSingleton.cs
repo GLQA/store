@@ -53,7 +53,7 @@ namespace Store.Demoqa
         /// Prevents a default instance of the <see cref="DriverSingleton"/> class from being created.
         /// </summary>
         private DriverSingleton() {
-            Driver = Factory.CreateDriverInstance();
+            Driver = BrowserFactory.CreateDriverInstance();
             string SITEURL = Config.GetSite();
             Driver.Navigate().GoToUrl(SITEURL);
             Driver.Manage().Window.Maximize();

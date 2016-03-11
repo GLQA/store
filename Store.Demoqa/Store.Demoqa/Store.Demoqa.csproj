@@ -39,8 +39,8 @@
     <CodeAnalysisRuleSet>StyleCop.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HtmlElements, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlElements.2.0.0.0\lib\net40\HtmlElements.dll</HintPath>
+    <Reference Include="HtmlElements, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlElements.2.0.1.0\lib\net40\HtmlElements.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="nunit.framework, Version=3.0.5813.39031, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
@@ -73,9 +73,10 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Config.cs" />
-    <Compile Include="Factory.cs" />
+    <Compile Include="BrowserFactory.cs" />
     <Compile Include="InvalidInputValueForSearchException.cs" />
-    <Compile Include="Pages\Driver.cs" />
+    <Compile Include="Pages\CartPageContainer.cs" />
+    <Compile Include="DriverSingleton.cs" />
     <Compile Include="Pages\Meta.cs" />
     <Compile Include="Pages\PageFrame.cs" />
     <Compile Include="Pages\CartPage.cs" />
@@ -86,7 +87,7 @@
     <Compile Include="Pages\HomePage.cs" />
     <Compile Include="Pages\LoginPage.cs" />
     <Compile Include="Pages\ProductDescriptionPage.cs" />
-    <Compile Include="Pages\Products.cs" />
+    <Compile Include="Products.cs" />
     <Compile Include="Pages\SearchResultsPage.cs" />
     <Compile Include="StoreTestSuite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -101,6 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="drivers\chromedriver.exe" />
+    <Content Include="Readme.txt" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

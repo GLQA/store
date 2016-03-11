@@ -30,7 +30,7 @@ namespace Store.Demoqa
         public IWebElement DefaultListView { get; set; }
 
         /// <summary>
-        /// The first product title
+        /// List of product titles
         /// </summary>
         [FindsBy(How = How.CssSelector, Using = ".prodtitle>a")]
         public IList<IWebElement> ProductTitle { get; set; }

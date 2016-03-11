@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Store.Demoqa
 {
-    class Factory
+    class BrowserFactory
     {
         public static IWebDriver CreateDriverInstance()
         {

@@ -19,6 +19,9 @@ namespace Store.Demoqa.Pages
         [FindsBy(How = How.CssSelector, Using = "#meta>ul>li:nth-of-type(2)>a")]
         public IWebElement LogInLogOutLink { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Meta"/> class.
+        /// </summary>
         public Meta() : base()
         {
             PageFactory.InitElements(DriverSingleton.Instance.Driver, this);

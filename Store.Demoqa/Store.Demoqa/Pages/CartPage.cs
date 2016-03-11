@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Store.Demoqa.Pages;
+
 
 namespace Store.Demoqa
 {
@@ -38,7 +40,7 @@ namespace Store.Demoqa
         /// <returns></returns>
         public bool GetProductFromCart(string prodTitle)
         {
-           foreach (IWebElement element in listOfProductsInCart)
+            foreach (IWebElement element in listOfProductsInCart)
             {
                 if (element.Text == prodTitle)
                 {

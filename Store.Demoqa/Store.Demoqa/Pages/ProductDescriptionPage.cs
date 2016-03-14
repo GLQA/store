@@ -134,12 +134,13 @@ namespace Store.Demoqa
         /// </summary>
         public void ClickFaceBookLikeButton()
         {
-            //TODO:try fire event
             GoToFaceBookFrame();
             FaceBookLikeButton.Click();
-            RefreshPage();
-            GoToFaceBookFrame();
-            FaceBookLikeButton.Click();
+            if (DriverSingleton.Instance.Driver.WindowHandles.Count == 1)
+            {
+                RefreshPage();
+                ClickFaceBookLikeButton();
+            }     
         }
         /// <summary>
         /// Enlarges the image.

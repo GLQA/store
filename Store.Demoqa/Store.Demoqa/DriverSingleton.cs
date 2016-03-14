@@ -47,12 +47,11 @@ namespace Store.Demoqa
             }
         }
 
-        //TODO: init driver with specific options, configurations (file directory) and move SITEURL to config - Yuliia
-        //TODO: support of two browsers(+Chrome); move to config; add chrome driver to the project - Yuliia
         /// <summary>
         /// Prevents a default instance of the <see cref="DriverSingleton"/> class from being created.
         /// </summary>
-        private DriverSingleton() {
+        private DriverSingleton()
+        {
             Driver = BrowserFactory.CreateDriverInstance();
             string SITEURL = Config.GetSite();
             Driver.Navigate().GoToUrl(SITEURL);

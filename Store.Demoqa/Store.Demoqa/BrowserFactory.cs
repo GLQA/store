@@ -1,12 +1,8 @@
 ﻿using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Store.Demoqa
 {
@@ -20,7 +16,11 @@ namespace Store.Demoqa
                 case "chrome":
                     return new ChromeDriver(Config.GetBrowserPath());
                 case "firefox":
-                    return new FirefoxDriver();
+                    FirefoxProfile profile = new FirefoxProfile();
+                    profile.SetPreference("browser.download.dir", Environment.GetEnvironmentVariable("TEMP"));
+                    profile.SetPreference("browser.helperApps.alwaysAsk.force", false);
+                    profile.SetPreference("browser.helperApps.neverAsk.saveToDisk", "image/png");
+                    return new FirefoxDriver();  
                 default:
                     return null;
             }

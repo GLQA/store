@@ -26,7 +26,7 @@ namespace Store.Demoqa.Tests
             login.ClearAndTypeUserName(userNAme);
             login.ClearAndTypePassword(password);
             login.LoginButton.Click();
-            DriverSingleton.Instance.Driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
+            
             CheckThatUserIsLoggedIn(expectedUserGreeting, homePage);
             homePage.Header.LogoutButton.Click();
             DriverSingleton.Instance.Driver.Navigate().Refresh();

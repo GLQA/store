@@ -19,7 +19,6 @@ namespace Store.Demoqa.Tests
             int productIndex = content.RandNumberOfProductInCategory();
             string prodTitle = content.GetProductTitleByIndex(productIndex);
             AddToCartPopUp popUp = content.AddProductToTheCart(productIndex);
-            DriverSingleton.Instance.Driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
             popUp.ContinueShoppingButton.Click();
             DriverSingleton.Instance.Driver.Navigate().Refresh();
             CheckNumberOfAddedProductsEqualsToNumberOfItemsInCart(homePage);

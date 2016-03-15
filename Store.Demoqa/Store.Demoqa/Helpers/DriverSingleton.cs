@@ -43,7 +43,7 @@ namespace Store.Demoqa
                 {
                     driverInstance = new DriverSingleton();
                 }
-                return driverInstance;
+                return driverInstance; 
             }
         }
 
@@ -56,6 +56,7 @@ namespace Store.Demoqa
             string SITEURL = Config.GetSite();
             Driver.Navigate().GoToUrl(SITEURL);
             Driver.Manage().Window.Maximize();
+            Driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
         }
 
         /// <summary>

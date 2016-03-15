@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using System.Drawing;
+using Store.Demoqa.Helpers;
 
 namespace Store.Demoqa.Tests
 {
@@ -10,6 +11,10 @@ namespace Store.Demoqa.Tests
         private string productToCheckImageEnlargement = "Skullcandy";
 
         private string expectedFacebookPageTitle = "Facebook";
+
+        private string fileLocationPath = @"D:\\Skullcandy.png";
+
+        private string expectedImageMD5 = "\vòÊa®ü—*Šé\0””\u000f¦w";
 
         /// <summary>
         /// Verification of availability of 'People who bought this item' section and product description 
@@ -58,29 +63,38 @@ namespace Store.Demoqa.Tests
         [Test]
         public void PictureEnlargementVerification()
         {
-            //TODO: check image md5 - Maryna
             ProductDescriptionPage product = homePage.Header.FindProductAndGoToTheFirst(productToCheckImageEnlargement);
             CheckRequiredProductWasOpened(product.ProductTitleText, productToCheckImageEnlargement);
-
-
-            string a = DriverSingleton.Instance.Driver.FindElement(By.CssSelector(".imagecol>a[href]")).GetAttribute("href");
-            DriverSingleton.Instance.Driver.Navigate().GoToUrl(a);
-            //DriverSingleton.Instance.Driver.SwitchTo().Window(DriverSingleton.Instance.Driver.WindowHandles[1]);
-            //save image from page
-            //check md5
+            product.SaveImage(fileLocationPath);
+            MD5Checker checker = new MD5Checker();
+            CheckMD5AreTheSame(expectedImageMD5, checker.CheckMD5(fileLocationPath));
             product.OpenImage();
             CheckImageIsDisplayed(product.OpenedImage);
-            //save image
-            //check md5
             Size regularSize = product.OpenedImage.Size;
             product.EnlargeImage();
-            Size enlargedSize = product.OpenedImage.Size;
-            Assert.Greater(enlargedSize.Height, regularSize.Height);
-            Assert.Greater(enlargedSize.Width, regularSize.Width);
+            ChechEnlargedImageIsGreater(product.OpenedImage.Size, regularSize);
             product.NextImageArrow.Click();
-            Assert.IsTrue(product.OpenedImage.Displayed);
+            CheckImageIsDisplayed(product.OpenedImage);
         }
 
+        /// <summary>
+        /// Verifies that MD5 of product main image is the same as expected
+        /// </summary>
+        /// <param name="expectedMD5"></param>
+        /// <param name="actualMD5"></param>
+        private void CheckMD5AreTheSame(string expectedMD5, string actualMD5)
+        {
+            StringAssert.AreEqualIgnoringCase(expectedImageMD5, actualMD5);
+        }
+
+        /// <summary>
+        /// Verifies that enlarged image sizes are bigger that sizes of non-enlarged picture
+        /// </summary>
+        private void ChechEnlargedImageIsGreater(Size enlargedSize, Size regularSize)
+        {
+            Assert.Greater(enlargedSize.Height, regularSize.Height);
+            Assert.Greater(enlargedSize.Width, regularSize.Width);
+        }
         /// <summary>
         /// Checks that image is displayed on page
         /// </summary>
@@ -132,5 +146,8 @@ namespace Store.Demoqa.Tests
             StringAssert.AreEqualIgnoringCase(actualTitle, expectedTitle);
             Assert.That(DriverSingleton.Instance.Driver.Url, Contains.Substring(expectedTitle).IgnoreCase);
         }
+
+        //ToDO: install selenium grid; two processes(two singletons) similar parts(two solutions: thread local, delete singleton) - Maryna
+        //TODO: create screen repository - Maryna
     }
 }

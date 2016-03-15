@@ -72,16 +72,18 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Config.cs" />
-    <Compile Include="BrowserFactory.cs" />
     <Compile Include="Exceptions\InvalidInputValueForSearchException.cs" />
+    <Compile Include="Helpers\BrowserFactory.cs" />
+    <Compile Include="Helpers\Config.cs" />
+    <Compile Include="Helpers\DriverSingleton.cs" />
+    <Compile Include="Helpers\MD5Checker.cs" />
+    <Compile Include="Helpers\Products.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="PageBaseComponents\Footer.cs" />
     <Compile Include="PageBaseComponents\Header.cs" />
     <Compile Include="PageBaseComponents\PageFrame.cs" />
-    <Compile Include="DriverSingleton.cs" />
     <Compile Include="Pages\FaceBookPage.cs" />
     <Compile Include="Pages\Meta.cs" />
     <Compile Include="Pages\CartPage.cs" />
@@ -90,7 +92,6 @@
     <Compile Include="Pages\LoginPage.cs" />
     <Compile Include="Pages\ProductDescriptionPage.cs" />
     <Compile Include="PopUps\AddToCartPopUp.cs" />
-    <Compile Include="Products.cs" />
     <Compile Include="Pages\SearchResultsPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\BaseTest.cs" />
@@ -99,7 +100,6 @@
     <Compile Include="Tests\LoginTestSuite.cs" />
     <Compile Include="Tests\ProductPageTestSuite.cs" />
     <Compile Include="Tests\SearchTestSuite.cs" />
-    <Compile Include="Tests\StoreTestSuite.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

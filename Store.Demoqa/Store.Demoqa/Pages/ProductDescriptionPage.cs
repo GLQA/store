@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Store.Demoqa
 {
@@ -31,6 +32,12 @@ namespace Store.Demoqa
         /// </summary>
         [FindsBy(How = How.CssSelector, Using = ".product_image")]
         public IList <IWebElement> ProdPageImages { get; set; }
+
+        /// <summary>
+        /// The product description page main image
+        /// </summary>
+        [FindsBy(How = How.CssSelector, Using = ".imagecol>a[href]")]
+        public IWebElement MainImage { get; set; }
 
         /// <summary>
         /// The people who bought section
@@ -156,6 +163,26 @@ namespace Store.Demoqa
         public void OpenImage()
         {
             ClosedImage.Click();
+        }
+
+        /// <summary>
+        /// Saves products image to fileLocationPath
+        /// </summary>
+        public void SaveImage(string fileLocationPath)
+        {
+            using (WebClient webClient = new WebClient())
+            {
+                webClient.DownloadFile(GetElementReference(MainImage), fileLocationPath);
+            }
+        }
+
+        /// <summary>
+        /// Gets hyperlink reference of WebElement
+        /// </summary>
+        /// <returns></returns>
+        public string GetElementReference(IWebElement element)
+        {
+            return element.GetAttribute("href");
         }
 
         /// <summary>

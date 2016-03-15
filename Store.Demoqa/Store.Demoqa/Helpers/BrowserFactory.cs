@@ -17,10 +17,10 @@ namespace Store.Demoqa
                     return new ChromeDriver(Config.GetBrowserPath());
                 case "firefox":
                     FirefoxProfile profile = new FirefoxProfile();
-                    profile.SetPreference("browser.download.dir", Environment.GetEnvironmentVariable("TEMP"));
+                    profile.SetPreference("browser.download.folderList", 0);
                     profile.SetPreference("browser.helperApps.alwaysAsk.force", false);
                     profile.SetPreference("browser.helperApps.neverAsk.saveToDisk", "image/png");
-                    return new FirefoxDriver();  
+                    return new FirefoxDriver(profile);  
                 default:
                     return null;
             }

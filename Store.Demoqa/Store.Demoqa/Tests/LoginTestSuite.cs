@@ -7,11 +7,11 @@ namespace Store.Demoqa.Tests
     [TestFixture]
     public class LoginTestSuite : BaseTest
     {
-        private string userNAme = "qa29";
+        private string userName = "qa111";
 
-        private string password = "W0fucGsTDnVS";
+        private string password = "MQM8t%x67RX9XyVZ";
 
-        private string expectedUserGreeting = "Howdy, Qa29";
+        private string expectedUserGreeting = "Howdy, qa111";
 
         private string expectedLogInLogOutLinkName = "Log in";
 
@@ -23,7 +23,7 @@ namespace Store.Demoqa.Tests
         {
             LoginPage login = new LoginPage();
             homePage.Header.MyAccountButton.Click();
-            login.ClearAndTypeUserName(userNAme);
+            login.ClearAndTypeUserName(userName);
             login.ClearAndTypePassword(password);
             login.LoginButton.Click();
             CheckThatUserIsLoggedIn(expectedUserGreeting, homePage);

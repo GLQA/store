@@ -21,7 +21,7 @@ namespace Store.Demoqa
         [FindsBy(How = How.CssSelector, Using = "#post-29>header>h1")]
         public IWebElement CartPageHeader { get; set; }
 
-        [FindsBy(How = How.XPath, Using = ".//table/tbody//td[2]/a")]
+        [FindsBy(How = How.CssSelector, Using = ".wpsc_product_name")]
         public IList<IWebElement> listOfProductsInCart;
 
         /// <summary>
@@ -38,16 +38,14 @@ namespace Store.Demoqa
         /// </summary>
         /// <param name="prodTitle"></param>
         /// <returns></returns>
-        public bool GetProductFromCart(string prodTitle)
+        public List<string> GetProductTitlesInCart()
         {
+            List<string> titlesList = new List<string>();
             foreach (IWebElement element in listOfProductsInCart)
             {
-                if (element.Text == prodTitle)
-                {
-                    return true;
-                }
+                titlesList.Add(element.Text);
             }
-            return false;
+            return titlesList;
         }
     }
 }

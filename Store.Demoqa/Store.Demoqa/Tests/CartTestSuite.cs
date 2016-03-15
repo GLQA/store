@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Store.Demoqa.PopUps;
 using System;
+using System.Collections.Generic;
 
 namespace Store.Demoqa.Tests
 {
@@ -20,10 +21,10 @@ namespace Store.Demoqa.Tests
             string prodTitle = content.GetProductTitleByIndex(productIndex);
             AddToCartPopUp popUp = content.AddProductToTheCart(productIndex);
             popUp.ContinueShoppingButton.Click();
-            DriverSingleton.Instance.Driver.Navigate().Refresh();
+            content.RefreshPage();
             CheckNumberOfAddedProductsEqualsToNumberOfItemsInCart(homePage);
-            CartPage cart = homePage.Header.GoToCart();
-            CheckProductTitleEqualsToProductTitleInCart(prodTitle, cart);
+            CartPage cart = homePage.Header.GoToCart(); 
+            CheckCartContainsSelectedProduct(prodTitle, cart.GetProductTitlesInCart());
         }
 
         /// <summary>
@@ -40,9 +41,9 @@ namespace Store.Demoqa.Tests
         /// </summary>
         /// <param name="prodTitle">The product title.</param>
         /// <param name="cart">The cart.</param>
-        private void CheckProductTitleEqualsToProductTitleInCart(string prodTitle, CartPage cart)
+        private void CheckCartContainsSelectedProduct(string prodTitle, List<string> productsInCart)
         {
-            Assert.IsTrue(cart.GetProductFromCart(prodTitle));
+            Assert.Contains(prodTitle, productsInCart);
         }
     }
 }

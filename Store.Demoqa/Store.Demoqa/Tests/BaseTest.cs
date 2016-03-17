@@ -21,9 +21,8 @@ namespace Store.Demoqa.Tests
         {
             Browser browser = new Browser();
             driver = browser.GetDriver();
-            driver.Navigate().GoToUrl(Config.GetSite());
-            driver.Manage().Window.Maximize();
-            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(Config.TIMETOWAIT));
+            browser.GoToSiteFromConfig();
+            browser.SetDriver();
             repository = new PageRepository(driver);
             homePage = repository.Get<HomePage>();
         }

@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System;
 
 namespace Store.Demoqa.Helpers
 {
@@ -21,6 +22,27 @@ namespace Store.Demoqa.Helpers
             {
                 return Config.GetSite();
             }
+        }
+
+        public void SetDriver()
+        {
+            MaximizeWindow();
+            SetImplicitWaitFromConfig();   
+        }
+
+        public void MaximizeWindow()
+        {
+            driver.Manage().Window.Maximize();
+        }
+
+        public void SetImplicitWaitFromConfig()
+        {
+            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(Config.TIMETOWAIT));
+        }
+
+        public void GoToSiteFromConfig()
+        {
+            driver.Navigate().GoToUrl(Config.GetSite());
         }
 
         public Browser(){}

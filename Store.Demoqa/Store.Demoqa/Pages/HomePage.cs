@@ -1,7 +1,10 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
+using Store.Demoqa.Helpers;
+using Store.Demoqa.PageBaseComponents;
+using Store.Demoqa.Tests;
 
-namespace Store.Demoqa
+namespace Store.Demoqa.Pages
 {
     public class HomePage : PageFrame
     {
@@ -23,12 +26,13 @@ namespace Store.Demoqa
         [FindsBy(How = How.CssSelector, Using = ".product_description>h2")]
         public IWebElement HomeProductTitle { get; set; }
 
+        public HomePage() : base() { }
         /// <summary>
         /// Initializes a new instance of the <see cref="HomePage"/> class.
         /// </summary>
-        public HomePage() : base()
+        public HomePage(IWebDriver driver) : base(driver)
         {
-            PageFactory.InitElements(DriverSingleton.Instance.Driver, this);
+            PageFactory.InitElements(driver, this);
         }
 
         /// <summary>
@@ -38,7 +42,7 @@ namespace Store.Demoqa
         public ProductDescriptionPage GoToProductFromCarousel()
         {
             HomeProductReference.Click();
-            return new ProductDescriptionPage();
+            return BaseTest.repository.Get<ProductDescriptionPage>();
         }
 
     }

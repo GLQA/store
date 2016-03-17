@@ -1,11 +1,13 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
+using Store.Demoqa.Helpers;
+using Store.Demoqa.PageBaseComponents;
 using Store.Demoqa.PopUps;
+using Store.Demoqa.Tests;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace Store.Demoqa
+namespace Store.Demoqa.Pages
 {
     /// <summary>
     /// Class describes controls and methods from the central part of the site called Container
@@ -46,10 +48,12 @@ namespace Store.Demoqa
         /// Initializes a new instance of the <see cref="CategoryProductPage"/> class.
         /// </summary>
         /// <param name="driver">The driver.</param>
-        public CategoryProductPage() : base()
+        public CategoryProductPage(IWebDriver driver) : base(driver)
         {
-            PageFactory.InitElements(DriverSingleton.Instance.Driver, this);
+            PageFactory.InitElements(driver, this);
         }
+
+        public CategoryProductPage() : base() { }
 
         /// <summary>
         /// Adds the product to the cart.
@@ -61,7 +65,7 @@ namespace Store.Demoqa
         {
             var product = this.GetProductByIndex(index);
             product.FindElement(By.ClassName("wpsc_buy_button")).Click();
-            return new AddToCartPopUp();
+            return BaseTest.repository.Get<AddToCartPopUp>();
         }
 
         /// <summary>

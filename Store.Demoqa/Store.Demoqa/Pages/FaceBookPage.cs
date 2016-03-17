@@ -1,10 +1,14 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
+using Store.Demoqa.Helpers;
+using Store.Demoqa.PageBaseComponents;
 
-namespace Store.Demoqa
+namespace Store.Demoqa.Pages
 {
-    public class FaceBookLoginPage
+    public class FaceBookLoginPage : PageFrame
     {
+        private IWebDriver driver;
+
         [FindsBy(How = How.CssSelector, Using = "#homelink")]
         public IWebElement PageTitle { get; set; }
 
@@ -21,14 +25,17 @@ namespace Store.Demoqa
         /// <summary>
         /// Creates an instance of FaceBookLoginPage
         /// </summary>
-        public FaceBookLoginPage()
+        public FaceBookLoginPage(IWebDriver driver) : base(driver)
         {
-            PageFactory.InitElements(DriverSingleton.Instance.Driver, this);
+            this.driver = driver;
+            PageFactory.InitElements(driver, this);
         }
+
+        public FaceBookLoginPage(): base(){ }
 
         public void Close()
         {
-            DriverSingleton.Instance.Driver.Close();
+            driver.Close();
         }
     }
 }

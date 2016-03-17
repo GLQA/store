@@ -1,13 +1,15 @@
 ﻿using HtmlElements.Elements;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
+using Store.Demoqa.Helpers;
+using Store.Demoqa.PageBaseComponents;
 
 namespace Store.Demoqa.PopUps
 {
     /// <summary>
     /// Class describes work with Add to Cart pop-up
     /// </summary>
-    public class AddToCartPopUp 
+    public class AddToCartPopUp : PageFrame
 
     {
         /// <summary>
@@ -39,9 +41,11 @@ namespace Store.Demoqa.PopUps
         /// Initializes a new instance of the <see cref="AddToCartPopUp"/> class.
         /// </summary>
         /// <param name="driver">The driver.</param>
-        public AddToCartPopUp()
+        public AddToCartPopUp(IWebDriver driver) : base(driver)
         {
-            PageFactory.InitElements(DriverSingleton.Instance.Driver, this);
+            PageFactory.InitElements(driver, this);
         }
+
+        public AddToCartPopUp() : base() { }
     }
 }

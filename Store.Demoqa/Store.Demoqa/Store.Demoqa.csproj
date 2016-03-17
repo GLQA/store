@@ -27,7 +27,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>StyleCop.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -36,7 +37,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>StyleCop.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="HtmlElements, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -75,8 +77,9 @@
     <Compile Include="Exceptions\InvalidInputValueForSearchException.cs" />
     <Compile Include="Helpers\BrowserFactory.cs" />
     <Compile Include="Helpers\Config.cs" />
-    <Compile Include="Helpers\DriverSingleton.cs" />
+    <Compile Include="Helpers\DriverSetter.cs" />
     <Compile Include="Helpers\MD5Checker.cs" />
+    <Compile Include="Helpers\PageRepository.cs" />
     <Compile Include="Helpers\Products.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
@@ -106,7 +109,6 @@
     <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <None Include="obj\Debug\Store.Demoqa.csprojResolveAssemblyReference.cache" />
     <None Include="packages.config" />
-    <None Include="StyleCop.ruleset" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

@@ -1,9 +1,12 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
+using Store.Demoqa.Helpers;
+using Store.Demoqa.Pages;
+using Store.Demoqa.Tests;
 using System;
 using System.Collections.Generic;
 
-namespace Store.Demoqa
+namespace Store.Demoqa.PageBaseComponents
 {
     public class Footer
     {
@@ -53,9 +56,11 @@ namespace Store.Demoqa
         /// <summary>
         /// Creates new instance of footer
         /// </summary>
-        public Footer()
+        public Footer(){}
+
+        public Footer(IWebDriver driver)
         {
-            PageFactory.InitElements(DriverSingleton.Instance.Driver, this);
+            PageFactory.InitElements(driver, this);
         }
 
         /// <summary>
@@ -64,7 +69,7 @@ namespace Store.Demoqa
         public ProductDescriptionPage GoToRandomProduct()
         {
             ProductsInFooter[randNumberOfProduct].Click();
-            return new ProductDescriptionPage();
+            return BaseTest.repository.Get<ProductDescriptionPage>();
         }
     }
 }

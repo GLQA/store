@@ -1,7 +1,11 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
+using Store.Demoqa.Helpers;
+using Store.Demoqa.PageBaseComponents;
+using Store.Demoqa.Tests;
 
-namespace Store.Demoqa
+namespace Store.Demoqa.Pages
 {
     /// <summary>
     /// Describes controls and methods on Login Page
@@ -20,6 +24,13 @@ namespace Store.Demoqa
         [FindsBy(How = How.Id, Using = "log")]
         private IWebElement userNameField { get; set; }
 
+        internal void LogInWithCredentials(string userName, string password)
+        {
+            ClearAndTypeUserName(userName);
+            ClearAndTypePassword(password);
+            LoginButton.Click();
+        }
+
         /// <summary>
         /// The password field
         /// </summary>
@@ -30,10 +41,12 @@ namespace Store.Demoqa
         /// Initializes a new instance of the <see cref="LoginPage"/> class.
         /// </summary>
         /// <param name="driver">The driver.</param>
-        public LoginPage() : base()
+        public LoginPage(IWebDriver driver) : base(driver)
         {
-            PageFactory.InitElements(DriverSingleton.Instance.Driver, this);
+            PageFactory.InitElements(driver, this);
         }
+
+        public LoginPage() : base() { }
 
         /// <summary>
         /// Sets the name of the user.
@@ -54,5 +67,13 @@ namespace Store.Demoqa
             this.passwordField.Clear();
             this.passwordField.SendKeys(password);
         }
+
+        public Meta GetMetaSection()
+        {
+            return BaseTest.repository.Get<Meta>();
+        }
     }
+    //TODO: NUnit reports export
+    //TODO: mobile
+    //TODO: jenkins, set up jobs, send reports via email on schedule
 }

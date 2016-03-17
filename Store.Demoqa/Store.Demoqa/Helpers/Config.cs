@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Configuration;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium;
+﻿using System.Configuration;
 
-namespace Store.Demoqa
+namespace Store.Demoqa.Helpers
 {
     class Config
     {
+        public const int TIMETOWAIT = 10;
         /// <summary>
         /// Gets the site.
         /// </summary>

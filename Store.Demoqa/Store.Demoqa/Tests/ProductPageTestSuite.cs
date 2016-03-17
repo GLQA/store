@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using System.Drawing;
 using Store.Demoqa.Helpers;
+using Store.Demoqa.Pages;
 
 namespace Store.Demoqa.Tests
 {
@@ -123,17 +124,17 @@ namespace Store.Demoqa.Tests
             ProductDescriptionPage product = homePage.GoToProductFromCarousel();
             product.ClickFaceBookLikeButton();
             FaceBookLoginPage faceBookLoginPage = product.SwitchToFaceBookWindow();
-            CheckOpenedPageIsFaceBookLoginPage(faceBookLoginPage.TitleText, expectedFacebookPageTitle);
+            CheckOpenedPageIsFaceBookLoginPage(faceBookLoginPage.TitleText, faceBookLoginPage.GetPageURL(), expectedFacebookPageTitle);
             faceBookLoginPage.Close();
-            CheckFaceBookPageIsClosed();
+            CheckFaceBookPageIsClosed(product.GetWindowsQuantity());
         }
 
         /// <summary>
         /// Checks that opened FaceBook login page is closed now
         /// </summary>
-        private void CheckFaceBookPageIsClosed()
+        private void CheckFaceBookPageIsClosed(int actualWindowsQuantity)
         {
-            Assert.LessOrEqual(DriverSingleton.Instance.Driver.WindowHandles.Count, 1);
+            Assert.LessOrEqual(actualWindowsQuantity, 1);
         }
 
         /// <summary>
@@ -141,13 +142,12 @@ namespace Store.Demoqa.Tests
         /// </summary>
         /// <param name="actualTitle"></param>
         /// <param name="expectedTitle"></param>
-        private void CheckOpenedPageIsFaceBookLoginPage(string actualTitle, string expectedTitle)
+        private void CheckOpenedPageIsFaceBookLoginPage(string actualTitle, string actualURL, string expectedTitle)
         {
             StringAssert.AreEqualIgnoringCase(actualTitle, expectedTitle);
-            Assert.That(DriverSingleton.Instance.Driver.Url, Contains.Substring(expectedTitle).IgnoreCase);
+            Assert.That(actualURL, Contains.Substring(expectedTitle).IgnoreCase);
         }
 
         //ToDO: install selenium grid; two processes(two singletons) similar parts(two solutions: thread local, delete singleton) - Maryna
-        //TODO: create screen repository - Maryna
     }
 }

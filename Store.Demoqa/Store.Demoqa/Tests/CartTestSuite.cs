@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
+using Store.Demoqa.Pages;
 using Store.Demoqa.PopUps;
-using System;
 using System.Collections.Generic;
 
 namespace Store.Demoqa.Tests
@@ -18,7 +18,7 @@ namespace Store.Demoqa.Tests
         {
             CategoryProductPage content = homePage.Header.SelectProductCategory(productCategory);
             int productIndex = content.RandNumberOfProductInCategory();
-            string prodTitle = content.GetProductTitleByIndex(productIndex);
+            string prodTitle = content.GetProductTitleByIndex(productIndex).Split('–')[0];
             AddToCartPopUp popUp = content.AddProductToTheCart(productIndex);
             popUp.ContinueShoppingButton.Click();
             content.RefreshPage();
@@ -43,7 +43,7 @@ namespace Store.Demoqa.Tests
         /// <param name="cart">The cart.</param>
         private void CheckCartContainsSelectedProduct(string prodTitle, List<string> productsInCart)
         {
-            Assert.Contains(prodTitle, productsInCart);
+            StringAssert.Contains(prodTitle, productsInCart[0]);
         }
     }
 }

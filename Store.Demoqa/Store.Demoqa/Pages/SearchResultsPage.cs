@@ -1,8 +1,11 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
+using Store.Demoqa.Helpers;
+using Store.Demoqa.PageBaseComponents;
+using Store.Demoqa.Tests;
 using System.Collections.Generic;
 
-namespace Store.Demoqa
+namespace Store.Demoqa.Pages
 {
     public class SearchResultsPage : PageFrame
     {
@@ -30,15 +33,17 @@ namespace Store.Demoqa
         public ProductDescriptionPage GoToTheFirstFoundProduct()
         {
             FirstFoundProductReference.Click();
-            return new ProductDescriptionPage();
+            return BaseTest.repository.Get<ProductDescriptionPage>();
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchResultsPage"/> class.
         /// </summary>
-        public SearchResultsPage() : base()
+        public SearchResultsPage(IWebDriver driver) : base(driver)
         {
-            PageFactory.InitElements(DriverSingleton.Instance.Driver, this);
+            PageFactory.InitElements(driver, this);
         }
+
+        public SearchResultsPage() : base() { }
     }
 }

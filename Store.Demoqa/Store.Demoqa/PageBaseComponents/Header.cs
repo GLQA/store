@@ -1,15 +1,19 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.PageObjects;
+using Store.Demoqa.Helpers;
+using Store.Demoqa.Pages;
+using Store.Demoqa.Tests;
 using System;
 
-namespace Store.Demoqa
+namespace Store.Demoqa.PageBaseComponents
 {
     /// <summary>
     /// Class describes 
     /// </summary>
     public class Header
     {
+        private IWebDriver driver;
         /// <summary>
         /// My account button
         /// </summary>
@@ -92,10 +96,13 @@ namespace Store.Demoqa
         /// Initializes a new instance of the <see cref="Header"/> class.
         /// </summary>
         /// <param name="driver">The driver.</param>
-        public Header()
+        public Header(IWebDriver driver)
         {
-            PageFactory.InitElements(DriverSingleton.Instance.Driver, this);
+            this.driver = driver;
+            PageFactory.InitElements(driver, this);
         }
+
+        public Header(){}
 
         /// <summary>
         /// Selecting of product category using Product Category tab
@@ -103,10 +110,11 @@ namespace Store.Demoqa
         /// <param name="product"></param>
         public CategoryProductPage SelectProductCategory(string product)
         {
-            Actions action = new Actions(DriverSingleton.Instance.Driver);
+            Actions action = new Actions(driver);
             action.MoveToElement(this.ProductCategoryTab).Perform();
             this.GetProduct(product).Click();
-            return new CategoryProductPage();
+
+            return BaseTest.repository.Get<CategoryProductPage>();
         }
 
         /// <summary>
@@ -126,7 +134,7 @@ namespace Store.Demoqa
         public CartPage GoToCart()
         {
             this.CheckoutButton.Click();
-            return new CartPage();
+            return BaseTest.repository.Get<CartPage>();
         }
 
         /// <summary>
@@ -158,7 +166,7 @@ namespace Store.Demoqa
         {
             SearchField.SendKeys(searchValue);
             SearchField.SendKeys(Keys.Enter);
-            return new SearchResultsPage();
+            return BaseTest.repository.Get<SearchResultsPage>(); 
         }
 
         /// <summary>
@@ -174,7 +182,7 @@ namespace Store.Demoqa
                 throw new InvalidInputValueForSearchException("Search value {0} can't be found, there is no such product", title);
             else
                 searchResults.GoToTheFirstFoundProduct();
-            return new ProductDescriptionPage();
+            return BaseTest.repository.Get<ProductDescriptionPage>();
         }
 
         /// <summary>
@@ -183,7 +191,19 @@ namespace Store.Demoqa
         public HomePage GoToHomePage()
         {
             HomeButton.Click();
-            return new HomePage();
+            return BaseTest.repository.Get<HomePage>(); ;
+        }
+
+        public LoginPage GoToLoginPage()
+        {
+            MyAccountButton.Click();
+            return BaseTest.repository.Get<LoginPage>();
+        }
+
+        public LoginPage LogOut()
+        {
+            LogoutButton.Click();
+            return BaseTest.repository.Get<LoginPage>();
         }
     }
 }

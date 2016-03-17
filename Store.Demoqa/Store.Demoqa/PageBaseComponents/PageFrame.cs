@@ -1,7 +1,11 @@
-﻿namespace Store.Demoqa
+﻿using OpenQA.Selenium;
+using Store.Demoqa.Helpers;
+
+namespace Store.Demoqa.PageBaseComponents
 {
     public class PageFrame
     {
+        private IWebDriver driver;
         /// <summary>
         /// Gets the footer.
         /// </summary>
@@ -12,7 +16,7 @@
         {
             get
             {
-                return new Footer();
+                return new Footer(driver);
             }
         }
 
@@ -26,7 +30,7 @@
         {
             get
             {
-                return new Header();
+                return new Header(driver);
             }
         }
 
@@ -35,13 +39,22 @@
         /// </summary>
         public void RefreshPage()
         {
-            DriverSingleton.Instance.Driver.Navigate().Refresh();
+            driver.Navigate().Refresh();
         }
 
+        public string GetPageURL()
+        {
+            return driver.Url;
+        }
         /// <summary>
         /// Initializes a new instance of the <see cref="PageFrame"/> class.
         /// </summary>
-        public PageFrame(){}
+        public PageFrame(IWebDriver driver)
+        {
+            this.driver = driver;
+        }
+
+        public PageFrame(){ }
     }
 }
       

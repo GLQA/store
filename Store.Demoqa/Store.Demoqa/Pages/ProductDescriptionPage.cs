@@ -1,19 +1,26 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
+using Store.Demoqa.Helpers;
+using Store.Demoqa.PageBaseComponents;
+using Store.Demoqa.Tests;
 using System.Collections.Generic;
 using System.Net;
 
-namespace Store.Demoqa
+namespace Store.Demoqa.Pages
 {
     public class ProductDescriptionPage : PageFrame
     {
+        private IWebDriver driver;
         /// <summary>
         /// Initializes a new instance of the <see cref="ProductDescriptionPage"/> class.
         /// </summary>
-        public ProductDescriptionPage() : base()
+        public ProductDescriptionPage(IWebDriver driver) : base(driver)
         {
-           PageFactory.InitElements(DriverSingleton.Instance.Driver, this);
+            this.driver = driver;
+            PageFactory.InitElements(driver, this);
         }
+
+        public ProductDescriptionPage() : base() { }
 
         /// <summary>
         /// The product title
@@ -133,7 +140,7 @@ namespace Store.Demoqa
         /// </summary>
         public void GoToFaceBookFrame()
         {
-            DriverSingleton.Instance.Driver.SwitchTo().Frame(FaceBookContainer);
+            driver.SwitchTo().Frame(FaceBookContainer);
         }
 
         /// <summary>
@@ -143,7 +150,7 @@ namespace Store.Demoqa
         {
             GoToFaceBookFrame();
             FaceBookLikeButton.Click();
-            if (DriverSingleton.Instance.Driver.WindowHandles.Count == 1)
+            if (driver.WindowHandles.Count == 1)
             {
                 RefreshPage();
                 ClickFaceBookLikeButton();
@@ -190,8 +197,13 @@ namespace Store.Demoqa
         /// </summary>
         public FaceBookLoginPage SwitchToFaceBookWindow()
         {
-            DriverSingleton.Instance.Driver.SwitchTo().Window(DriverSingleton.Instance.Driver.WindowHandles[1]);
-            return new FaceBookLoginPage();
+            driver.SwitchTo().Window(driver.WindowHandles[1]);
+            return BaseTest.repository.Get<FaceBookLoginPage>();
+        }
+
+        public int GetWindowsQuantity()
+        {
+            return driver.WindowHandles.Count;
         }
     }
 }

@@ -4,7 +4,7 @@ using OpenQA.Selenium.Chrome;
 using System;
 
 
-namespace Store.Demoqa
+namespace Store.Demoqa.Helpers
 {
     class BrowserFactory
     {
@@ -16,11 +16,7 @@ namespace Store.Demoqa
                 case "chrome":
                     return new ChromeDriver(Config.GetBrowserPath());
                 case "firefox":
-                    FirefoxProfile profile = new FirefoxProfile();
-                    profile.SetPreference("browser.download.folderList", 0);
-                    profile.SetPreference("browser.helperApps.alwaysAsk.force", false);
-                    profile.SetPreference("browser.helperApps.neverAsk.saveToDisk", "image/png");
-                    return new FirefoxDriver(profile);  
+                    return new FirefoxDriver();  
                 default:
                     return null;
             }

@@ -1,4 +1,4 @@
-﻿namespace Store.Demoqa
+﻿namespace Store.Demoqa.Helpers
 {
     /// <summary>
     /// Enum describes product categories

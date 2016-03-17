@@ -1,14 +1,11 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Store.Demoqa.Helpers;
+using Store.Demoqa.PageBaseComponents;
 
 namespace Store.Demoqa.Pages
 {
-    class Meta : PageFrame
+    public class Meta : PageFrame
     {
         /// <summary>
         /// Gets or sets the logout button.
@@ -22,11 +19,11 @@ namespace Store.Demoqa.Pages
         /// <summary>
         /// Initializes a new instance of the <see cref="Meta"/> class.
         /// </summary>
-        public Meta() : base()
+        public Meta(IWebDriver driver) : base(driver)
         {
-            PageFactory.InitElements(DriverSingleton.Instance.Driver, this);
+            PageFactory.InitElements(driver, this);
         }
 
-
+        public Meta() : base() { }
     }
 }

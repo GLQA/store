@@ -1,14 +1,10 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
-using System;
+using Store.Demoqa.Helpers;
+using Store.Demoqa.PageBaseComponents;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Store.Demoqa.Pages;
 
-
-namespace Store.Demoqa
+namespace Store.Demoqa.Pages
 {
     /// <summary>
     /// Class describes controls and methods on Cart page 
@@ -28,10 +24,12 @@ namespace Store.Demoqa
         /// Initializes a new instance of the <see cref="CartPage"/> class.
         /// </summary>
         /// <param name="driver">The driver.</param>
-        public CartPage() : base()
+        public CartPage(IWebDriver driver) : base(driver)
         {
-            PageFactory.InitElements(DriverSingleton.Instance.Driver, this);
+            PageFactory.InitElements(driver, this);
         }
+
+        public CartPage() : base() { }
 
         /// <summary>
         /// Gets product from Cart

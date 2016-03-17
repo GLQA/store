@@ -1,4 +1,8 @@
 ﻿using NUnit.Framework;
+using OpenQA.Selenium;
+using Store.Demoqa.Helpers;
+using Store.Demoqa.Pages;
+using System;
 
 namespace Store.Demoqa.Tests
 {
@@ -6,6 +10,8 @@ namespace Store.Demoqa.Tests
     public class BaseTest
     {
         public HomePage homePage;
+        public static PageRepository repository;
+        private IWebDriver driver;
 
         /// <summary>
         /// Sets up creation of new HomePage before each test in suite
@@ -13,7 +19,13 @@ namespace Store.Demoqa.Tests
         [SetUp]
         public virtual void Init()
         {
-            homePage = new HomePage();
+            Browser browser = new Browser();
+            driver = browser.GetDriver();
+            driver.Navigate().GoToUrl(Config.GetSite());
+            driver.Manage().Window.Maximize();
+            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(Config.TIMETOWAIT));
+            repository = new PageRepository(driver);
+            homePage = repository.Get<HomePage>();
         }
 
         /// <summary>
@@ -22,7 +34,7 @@ namespace Store.Demoqa.Tests
         [TearDown]
         public virtual void CloseBrowser()
         {
-            DriverSingleton.Instance.Close();
+            driver.Dispose();
         }
     }
 }

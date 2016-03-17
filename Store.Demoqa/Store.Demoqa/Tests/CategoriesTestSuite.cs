@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Store.Demoqa.Pages;
 
 namespace Store.Demoqa.Tests
 {

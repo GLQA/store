@@ -21,16 +21,13 @@ namespace Store.Demoqa.Tests
         [Test]
         public void LoginAndLogoutVerification()
         {
-            LoginPage login = new LoginPage();
-            homePage.Header.MyAccountButton.Click();
-            login.ClearAndTypeUserName(userName);
-            login.ClearAndTypePassword(password);
-            login.LoginButton.Click();
+            LoginPage loginPage = homePage.Header.GoToLoginPage();
+            loginPage.LogInWithCredentials(userName, password);
             CheckThatUserIsLoggedIn(expectedUserGreeting, homePage);
-            homePage.Header.LogoutButton.Click();
-            DriverSingleton.Instance.Driver.Navigate().Refresh();
-            Meta meta = new Meta();
-            CheckThatUserLoggedOut(expectedLogInLogOutLinkName, meta);
+            homePage.Header.LogOut();
+            loginPage.RefreshPage();
+            Meta metaSection = loginPage.GetMetaSection();
+            CheckThatUserLoggedOut(expectedLogInLogOutLinkName, metaSection);
         }
 
         /// <summary>

@@ -74,6 +74,5 @@ namespace Store.Demoqa.Pages
         }
     }
     //TODO: NUnit reports export
-    //TODO: mobile
     //TODO: jenkins, set up jobs, send reports via email on schedule
 }

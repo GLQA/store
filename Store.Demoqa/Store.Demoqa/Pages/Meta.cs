@@ -1,6 +1,5 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
-using Store.Demoqa.Helpers;
 using Store.Demoqa.PageBaseComponents;
 
 namespace Store.Demoqa.Pages

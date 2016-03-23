@@ -7,6 +7,7 @@ using Store.Demoqa.Pages;
 namespace Store.Demoqa.Tests
 {
     [TestFixture]
+    [Parallelizable(ParallelScope.Self)]
     public class ProductPageTestSuite : BaseTest
     {
         private string productToCheckImageEnlargement = "Skullcandy";
@@ -146,8 +147,6 @@ namespace Store.Demoqa.Tests
         {
             StringAssert.AreEqualIgnoringCase(actualTitle, expectedTitle);
             Assert.That(actualURL, Contains.Substring(expectedTitle).IgnoreCase);
-        }
-
-        //ToDO: install selenium grid; two processes(two singletons) similar parts(two solutions: thread local, delete singleton) - Maryna
+        } 
     }
 }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 namespace Store.Demoqa.Tests
 {
     [TestFixture]
+    [Parallelizable(ParallelScope.Self)]
     public class CartTestSuite : BaseTest
     {
         private string productCategory = "iPhones";

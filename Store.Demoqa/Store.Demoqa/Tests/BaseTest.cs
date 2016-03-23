@@ -2,7 +2,6 @@
 using OpenQA.Selenium;
 using Store.Demoqa.Helpers;
 using Store.Demoqa.Pages;
-using System;
 
 namespace Store.Demoqa.Tests
 {
@@ -35,5 +34,12 @@ namespace Store.Demoqa.Tests
         {
             driver.Dispose();
         }
+
+        [OneTimeTearDown]
+        public void ConvertReport()
+        {
+            XMLToHTMLConverter converter = new XMLToHTMLConverter();
+            converter.TranformXMLToHTML();
+        }    
     }
 }

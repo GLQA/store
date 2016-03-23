@@ -4,6 +4,7 @@ using Store.Demoqa.Pages;
 namespace Store.Demoqa.Tests
 {
     [TestFixture]
+    [Parallelizable(ParallelScope.Self)]
     public class CategoriesTestSuite : BaseTest
     {
         private string productCategory = "iPhones";

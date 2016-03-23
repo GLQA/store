@@ -1,10 +1,38 @@
 ﻿using System.Configuration;
+using System.IO;
 
 namespace Store.Demoqa.Helpers
 {
     class Config
     {
-        public const int TIMETOWAIT = 10;
+        public const int TIME_TO_WAIT = 20;
+
+        public const string GRID_HUB_PATH = "http://localhost:4444/wd/hub";
+
+        public static string SchemaFilePath
+        {
+            get
+            {
+                return Path.GetFullPath("ReportConveringSchema.xslt");
+            }
+        }
+        
+        public static string TestResultsXMLFilePath
+        {
+            get
+            {
+                return Path.GetFullPath("../TestResult.xml");
+            }
+        }
+
+        public static string TestResultsHTMLFilePath 
+        {
+            get
+            {
+                return Path.GetFullPath("../TestResultHTML.html");
+            }
+        }
+        
         /// <summary>
         /// Gets the site.
         /// </summary>

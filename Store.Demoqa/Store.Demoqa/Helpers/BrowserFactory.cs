@@ -1,25 +1,27 @@
-﻿using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using System;
-
+﻿using System;
+using OpenQA.Selenium.Remote;
 
 namespace Store.Demoqa.Helpers
 {
     class BrowserFactory
     {
-        public static IWebDriver CreateDriverInstance()
+        public static RemoteWebDriver CreateDriverInstance()
         {
-           string browserName = Config.GetBrowser();
+            DesiredCapabilities capability;
+            string browserName = Config.GetBrowser();
+
             switch (browserName)
             {
                 case "chrome":
-                    return new ChromeDriver(Config.GetBrowserPath());
+                    capability = DesiredCapabilities.Chrome();
+                    break;
                 case "firefox":
-                    return new FirefoxDriver();  
+                    capability = DesiredCapabilities.Firefox();
+                    break;
                 default:
                     return null;
             }
+            return new RemoteWebDriver(new Uri(Config.GRID_HUB_PATH), capability);
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 namespace Store.Demoqa.Tests
 {
     [TestFixture]
+    [Parallelizable(ParallelScope.Self)]
     public class SearchTestSuite : BaseTest
     {
         /// <summary>

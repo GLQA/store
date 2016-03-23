@@ -15,7 +15,7 @@ namespace Store.Demoqa.Helpers
             }
             return driver;
         }
-        
+
         private string SITEURL
         {
             get
@@ -27,7 +27,7 @@ namespace Store.Demoqa.Helpers
         public void SetDriver()
         {
             MaximizeWindow();
-            SetImplicitWaitFromConfig();   
+            SetImplicitWaitFromConfig();
         }
 
         public void MaximizeWindow()
@@ -37,7 +37,7 @@ namespace Store.Demoqa.Helpers
 
         public void SetImplicitWaitFromConfig()
         {
-            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(Config.TIMETOWAIT));
+            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(Config.TIME_TO_WAIT));
         }
 
         public void GoToSiteFromConfig()

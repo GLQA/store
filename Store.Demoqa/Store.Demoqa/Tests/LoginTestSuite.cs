@@ -1,10 +1,11 @@
 ﻿using NUnit.Framework;
 using Store.Demoqa.Pages;
-using System;
 
 namespace Store.Demoqa.Tests
 {
     [TestFixture]
+    [Parallelizable(ParallelScope.Self)]
+
     public class LoginTestSuite : BaseTest
     {
         private string userName = "qa111";

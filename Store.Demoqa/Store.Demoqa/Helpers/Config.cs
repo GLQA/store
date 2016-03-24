@@ -13,7 +13,7 @@ namespace Store.Demoqa.Helpers
         {
             get
             {
-                return Path.GetFullPath("ReportConveringSchema.xslt");
+                return Path.GetFullPath("../../Helpers/ReportConveringSchema.xslt");
             }
         }
         
@@ -21,7 +21,7 @@ namespace Store.Demoqa.Helpers
         {
             get
             {
-                return Path.GetFullPath("../TestResult.xml");
+                return Path.GetFullPath("TestResult.xml");
             }
         }
 
@@ -29,7 +29,7 @@ namespace Store.Demoqa.Helpers
         {
             get
             {
-                return Path.GetFullPath("../TestResultHTML.html");
+                return Path.GetFullPath("TestResultHTML.html");
             }
         }
         

@@ -3,10 +3,10 @@
   <xsl:template match="/">
     <html>
       <head>
-        <title>Отчет об автоматизированном тестировании</title>
+        <title>Automation testing report</title>
       </head>
       <body>
-        <h1 align="center">Отчет об автоматизированном тестировании</h1>
+        <h1 align="center">Automation testing report</h1>
 
         <table border="0" cellpadding="2" cellspacing="0" width="95%" style="border: #dcdcdc 1px solid;">
           <xsl:variable name="percent" select="format-number((test-results/@total - test-results/@errors) div test-results/@total * 100,'#.00')"/>
@@ -37,24 +37,21 @@
           </xsl:if>
         </table>
 
-        <h2 align="center">Результаты</h2>
+        <h2 align="center">Results</h2>
         <table border="0" cellpadding="2" cellspacing="0" width="95%" style="border: #dcdcdc 1px solid;">
           <tr valign="top">
             <td>
-              <b>Тестовых сценариев</b>
+              <b>Test scenarios</b>
             </td>
             <td>
-              <b>Успешных</b>
+              <b>Passed</b>
             </td>
 
             <td>
-              <b>С ошибками</b>
+              <b>Failed</b>
             </td>
             <td>
-              <b>Успешных</b>
-            </td>
-            <td>
-              <b>Общее время выполнения</b>
+              <b>Implementation time</b>
             </td>
           </tr>
           <tr>
@@ -76,14 +73,14 @@
           </tr>
         </table>
 
-        <h2 align="center">Техническая информация</h2>
+        <h2 align="center">Technical information</h2>
         <table border="0" cellpadding="2" cellspacing="0" width="95%" style="border: #dcdcdc 1px solid;">
           <tr>
             <td>
-              <b>Программное обеспечение</b>
+              <b>Software</b>
             </td>
             <td>
-              <b>Версия</b>
+              <b>Version</b>
             </td>
           </tr>
           <tr>
@@ -128,29 +125,29 @@
           </tr>
         </table>
 
-        <h2 align="center" >Результаты в разрезе сценариев</h2>
+        <h2 align="center" >Results as per scenarios</h2>
         <table border="0" cellpadding="2" cellspacing="0" width="95%" style="border: #dcdcdc 1px solid;">
           <tr>
             <td width="25%">
               <center>
-                <b>Тестовый сценарий</b>
+                <b>Test scenario</b>
               </center>
             </td>
 
             <td width="15%" align="left">
               <center>
-                <b>Результат</b>
+                <b>Result</b>
               </center>
             </td>
             <td width="25%" align="left">
               <center>
-                <b>Детали ошибки</b>
+                <b>Error details</b>
               </center>
             </td>
 
             <td width="15%" align="left">
               <center>
-                <b>Время выполнения</b>
+                <b>Implementation time</b>
               </center>
             </td>
 

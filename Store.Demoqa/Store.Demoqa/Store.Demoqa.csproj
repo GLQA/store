@@ -81,9 +81,6 @@
     <Compile Include="Helpers\PageRepository.cs" />
     <Compile Include="Helpers\Products.cs" />
     <Compile Include="Helpers\XMLToHTMLConverter.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="PageBaseComponents\Footer.cs" />
     <Compile Include="PageBaseComponents\Header.cs" />
     <Compile Include="PageBaseComponents\PageFrame.cs" />
@@ -106,8 +103,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <None Include="obj\Debug\Store.Demoqa.csprojResolveAssemblyReference.cache" />
     <None Include="packages.config" />
     <None Include="Settings.StyleCop" />
   </ItemGroup>
@@ -115,27 +110,11 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll" />
-    <Content Include="bin\Debug\nunit.framework.dll" />
-    <Content Include="bin\Debug\nunit.framework.xml" />
-    <Content Include="bin\Debug\Store.Demoqa.dll" />
-    <Content Include="bin\Debug\Store.Demoqa.pdb" />
-    <Content Include="bin\Debug\WebDriver.dll" />
-    <Content Include="bin\Debug\WebDriver.Support.dll" />
-    <Content Include="bin\Debug\WebDriver.Support.xml" />
-    <Content Include="bin\Debug\WebDriver.xml" />
     <Content Include="drivers\chromedriver.exe" />
     <Content Include="Helpers\ReportConveringSchema.xslt" />
-    <Content Include="obj\Debug\Store.Demoqa.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\Debug\Store.Demoqa.dll" />
-    <Content Include="obj\Debug\Store.Demoqa.pdb" />
-    <Content Include="obj\Debug\StyleCopViolations.xml" />
     <Content Include="Readme.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Release\" />
-    <Folder Include="obj\Debug\TempPE\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

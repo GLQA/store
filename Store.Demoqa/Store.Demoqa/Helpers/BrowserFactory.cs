@@ -1,7 +1,7 @@
 ﻿using System;
 using OpenQA.Selenium.Remote;
 
-namespace Store.Demoqa.Helpers
+namespace Store.Helpers
 {
     class BrowserFactory
     {

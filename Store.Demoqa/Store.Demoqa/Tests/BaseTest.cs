@@ -1,9 +1,9 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
-using Store.Demoqa.Helpers;
-using Store.Demoqa.Pages;
+using Store.Helpers;
+using Store.Pages;
 
-namespace Store.Demoqa.Tests
+namespace Store.Tests
 {
     [TestFixture]
     public class BaseTest

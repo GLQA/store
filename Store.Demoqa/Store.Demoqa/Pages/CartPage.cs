@@ -1,10 +1,9 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
-using Store.Demoqa.Helpers;
-using Store.Demoqa.PageBaseComponents;
+using Store.PageBaseComponents;
 using System.Collections.Generic;
 
-namespace Store.Demoqa.Pages
+namespace Store.Pages
 {
     /// <summary>
     /// Class describes controls and methods on Cart page 

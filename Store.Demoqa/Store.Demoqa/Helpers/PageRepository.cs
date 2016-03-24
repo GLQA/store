@@ -1,9 +1,9 @@
 ﻿using OpenQA.Selenium;
-using Store.Demoqa.PageBaseComponents;
+using Store.PageBaseComponents;
 using System;
 using System.Collections.Generic;
 
-namespace Store.Demoqa.Helpers
+namespace Store.Helpers
 {
     public class PageRepository
     {

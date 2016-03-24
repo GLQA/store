@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using System;
 
-namespace Store.Demoqa.Helpers
+namespace Store.Helpers
 {
     public class Browser
     {

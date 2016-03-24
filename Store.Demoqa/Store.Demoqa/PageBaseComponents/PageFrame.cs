@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
-using Store.Demoqa.Helpers;
 
-namespace Store.Demoqa.PageBaseComponents
+namespace Store.PageBaseComponents
 {
     public class PageFrame
     {

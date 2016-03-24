@@ -1,7 +1,7 @@
 ﻿using System.Configuration;
 using System.IO;
 
-namespace Store.Demoqa.Helpers
+namespace Store.Helpers
 {
     class Config
     {

@@ -1,11 +1,9 @@
-﻿using System;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
-using Store.Demoqa.Helpers;
-using Store.Demoqa.PageBaseComponents;
-using Store.Demoqa.Tests;
+using Store.PageBaseComponents;
+using Store.Tests;
 
-namespace Store.Demoqa.Pages
+namespace Store.Pages
 {
     /// <summary>
     /// Describes controls and methods on Login Page

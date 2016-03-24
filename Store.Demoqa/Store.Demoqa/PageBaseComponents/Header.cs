@@ -1,12 +1,12 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.PageObjects;
-using Store.Demoqa.Helpers;
-using Store.Demoqa.Pages;
-using Store.Demoqa.Tests;
+using Store.Helpers;
+using Store.Pages;
+using Store.Tests;
 using System;
 
-namespace Store.Demoqa.PageBaseComponents
+namespace Store.PageBaseComponents
 {
     /// <summary>
     /// Class describes 

@@ -1,10 +1,8 @@
-﻿using HtmlElements.Elements;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
-using Store.Demoqa.Helpers;
-using Store.Demoqa.PageBaseComponents;
+using Store.PageBaseComponents;
 
-namespace Store.Demoqa.PopUps
+namespace Store.PopUps
 {
     /// <summary>
     /// Class describes work with Add to Cart pop-up

@@ -1,13 +1,12 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
-using Store.Demoqa.Helpers;
-using Store.Demoqa.PageBaseComponents;
-using Store.Demoqa.PopUps;
-using Store.Demoqa.Tests;
+using Store.PageBaseComponents;
+using Store.PopUps;
+using Store.Tests;
 using System;
 using System.Collections.Generic;
 
-namespace Store.Demoqa.Pages
+namespace Store.Pages
 {
     /// <summary>
     /// Class describes controls and methods from the central part of the site called Container

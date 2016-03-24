@@ -1,12 +1,11 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
-using Store.Demoqa.Helpers;
-using Store.Demoqa.Pages;
-using Store.Demoqa.Tests;
+using Store.Pages;
+using Store.Tests;
 using System;
 using System.Collections.Generic;
 
-namespace Store.Demoqa.PageBaseComponents
+namespace Store.PageBaseComponents
 {
     public class Footer
     {

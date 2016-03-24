@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Store.Demoqa
+namespace Store
 {
     /// <summary>
     /// Required product does not exist and can't be found

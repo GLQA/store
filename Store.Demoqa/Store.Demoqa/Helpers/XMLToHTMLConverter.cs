@@ -2,7 +2,7 @@
 using System.Xml.XPath;
 using System.Xml.Xsl;
 
-namespace Store.Demoqa.Helpers
+namespace Store.Helpers
 {
     public class XMLToHTMLConverter
     {

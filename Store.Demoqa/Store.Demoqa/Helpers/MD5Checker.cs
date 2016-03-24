@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Store.Demoqa.Helpers
+namespace Store.Helpers
 {
     public class MD5Checker
     {

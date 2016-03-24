@@ -1,8 +1,8 @@
 ﻿using NUnit.Framework;
-using Store.Demoqa.Pages;
+using Store.Pages;
 using System.Collections.Generic;
 
-namespace Store.Demoqa.Tests
+namespace Store.Tests
 {
     [TestFixture]
     [Parallelizable(ParallelScope.Self)]

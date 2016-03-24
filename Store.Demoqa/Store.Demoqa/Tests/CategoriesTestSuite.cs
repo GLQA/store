@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
-using Store.Demoqa.Pages;
+using Store.Pages;
 
-namespace Store.Demoqa.Tests
+namespace Store.Tests
 {
     [TestFixture]
     [Parallelizable(ParallelScope.Self)]

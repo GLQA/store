@@ -1,12 +1,11 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
-using Store.Demoqa.Helpers;
-using Store.Demoqa.PageBaseComponents;
-using Store.Demoqa.Tests;
+using Store.PageBaseComponents;
+using Store.Tests;
 using System.Collections.Generic;
 using System.Net;
 
-namespace Store.Demoqa.Pages
+namespace Store.Pages
 {
     public class ProductDescriptionPage : PageFrame
     {

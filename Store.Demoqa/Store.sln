@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.Demoqa", "Store.Demoqa\Store.Demoqa.csproj", "{45CB7385-CA6C-458F-BEAF-FD7CE0C39547}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store", "Store.Demoqa\Store.csproj", "{45CB7385-CA6C-458F-BEAF-FD7CE0C39547}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

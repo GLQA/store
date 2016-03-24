@@ -1,8 +1,8 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
-using Store.Demoqa.PageBaseComponents;
+using Store.PageBaseComponents;
 
-namespace Store.Demoqa.Pages
+namespace Store.Pages
 {
     public class Meta : PageFrame
     {

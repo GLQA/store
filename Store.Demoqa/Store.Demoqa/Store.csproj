@@ -107,7 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="drivers\chromedriver.exe" />
-    <Content Include="Helpers\ReportConveringSchema.xslt" />
+    <Content Include="Helpers\ReportConvertingSchema.xslt" />
     <Content Include="Readme.txt" />
   </ItemGroup>
   <ItemGroup />

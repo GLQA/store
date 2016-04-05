@@ -21,7 +21,7 @@ namespace Store.Helpers
                 default:
                     return null;
             }
-            //capability.SetCapability("jenkins.nodeName", "(master)");
+            capability.SetCapability("jenkins.nodeName", "(master)");
             return new RemoteWebDriver(new Uri(Config.GRID_HUB_PATH), capability);
         }
     }

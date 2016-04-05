@@ -39,7 +39,7 @@ namespace Store.Tests
         public void ConvertReport()
         {
             XMLToHTMLConverter converter = new XMLToHTMLConverter();
-            converter.TranformXMLToHTML();
+            //converter.TranformXMLToHTML();
         }    
     }
 }

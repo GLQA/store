@@ -14,6 +14,8 @@ namespace Store.Helpers
             XPathDocument docToConvert = new XPathDocument(Config.TestResultsXMLFilePath);
             XmlTextWriter writer = new XmlTextWriter(Config.TestResultsHTMLFilePath, null);
             transformer.Transform(docToConvert, null, writer);
+            reader.Close();
+            writer.Close();
         }
     }
 }

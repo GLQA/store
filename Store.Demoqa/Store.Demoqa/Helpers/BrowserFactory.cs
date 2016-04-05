@@ -21,7 +21,7 @@ namespace Store.Helpers
                 default:
                     return null;
             }
-            return new RemoteWebDriver(new Uri(Config.GRID_HUB_PATH), capability.SetCapability());
+            return new RemoteWebDriver(new Uri(Config.GRID_HUB_PATH), capability);
         }
     }
 }

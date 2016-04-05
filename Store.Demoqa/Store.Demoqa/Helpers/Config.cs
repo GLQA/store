@@ -13,7 +13,7 @@ namespace Store.Helpers
         {
             get
             {
-                return Path.GetFullPath("../../Helpers/ReportConvertingSchema.xslt");
+                return Path.GetFullPath("Helpers/ReportConvertingSchema.xslt");
             }
         }
         
